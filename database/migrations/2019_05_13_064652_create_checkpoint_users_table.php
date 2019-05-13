@@ -15,8 +15,10 @@ class CreateCheckpointUsersTable extends Migration
     {
         Schema::create('checkpoint_users', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('user_id');
-            $table->integer('checkpoint_id');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('checkpoint_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('checkpoint_id')->references('id')->on('checkpoints')->onDelete('cascade');
             $table->timestamps();
         });
     }

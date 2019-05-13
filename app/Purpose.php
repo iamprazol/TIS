@@ -9,4 +9,8 @@ class Purpose extends Model
     protected $fillable = [
         'id', 'purpose'
     ];
+
+    public function information(){
+        return $this->hasMany('App\Information');
+    }
 }

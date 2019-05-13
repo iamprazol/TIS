@@ -12,7 +12,21 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::post('login', 'UserController@authenticate');
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => ['jwt.verify']], function() {
+    Route::post('add-user', 'UserController@addUser');
+    Route::get('my-profile', 'UserController@getAuthenticatedUser');
+    Route::put('profile-edit', 'UserController@update');
+    Route::post('add-information', 'InformationController@addInformation');
+    Route::post('delete-purpose/{id}', 'PurposeController@deletePurpose');
+
+    Route::group(['middleware' => ['admin']], function () {
+       Route::post('add-purpose', 'PurposeController@addPurpose');
+       Route::get('purpose', 'PurposeController@index');
+       Route::post('add-checkpoint', 'CheckpointController@addCheckpoint');
+       Route::get('checkpoint', 'CheckpointController@index');
+       Route::post('delete-checkpoint/{id}', 'CheckpointController@deleteCheckpoint');
+       Route::get('checkpoint-user', 'CheckpointUserController@index');
+    });
 });
