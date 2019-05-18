@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Information extends Model
 {
     protected $fillable = [
-        'id', 'user_id', 'purpose_id', 'tourist_name', 'country_name', 'age', 'visa_period'
+        'id', 'checkpoint_id', 'purpose_id', 'tourist_name', 'country_name', 'age', 'visa_period', 'editable'
     ];
 
-    public function user(){
-        return $this->belongsTo('App\User');
+    public function checkpoint(){
+        return $this->belongsTo('App\Checkpoint');
     }
 
     public function purpose(){

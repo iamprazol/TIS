@@ -61,8 +61,4 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasOne('App\CheckpointUser');
     }
 
-    public function information(){
-        return $this->hasMany('App\Information');
-    }
-
 }

@@ -15,14 +15,15 @@ class CreateInformationTable extends Migration
     {
         Schema::create('information', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('checkpoint_id');
             $table->unsignedBigInteger('purpose_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('checkpoint_id')->references('id')->on('checkpoints')->onDelete('cascade');
             $table->foreign('purpose_id')->references('id')->on('purposes')->onDelete('cascade');
             $table->string('country_name');
             $table->string('tourist_name');
             $table->integer('age');
             $table->date('visa_period');
+            $table->boolean('editable')->default(1);
             $table->timestamps();
         });
 

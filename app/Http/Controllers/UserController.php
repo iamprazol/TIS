@@ -2,88 +2,85 @@
 
 namespace App\Http\Controllers;
 
-use App\CheckpointUser;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
 use App\User;
-use App\Http\Resources\UserResource as UserResource;
+use App\Http\Requests\UserRequest;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function authenticate(Request $request)
+    /**
+     * Display a listing of the users
+     *
+     * @param  \App\User  $model
+     * @return \Illuminate\View\View
+     */
+    public function index(User $model)
     {
-        $credentials = $request->only('email', 'password');
-        $user = User::where('email', $request->email)->first();
-        try {
-            if (!$token = JWTAuth::attempt($credentials)) {
-                return response()->json(['error' => 'invalid_credentials', 'status' => 400], 400);
-            }
-        } catch (JWTException $e) {
-            return response()->json(['error' => 'could_not_create_token', 'status' => 500 ], 500);
-        }
-        $data = new UserResource($user);
-        return response()->json(['data' => $data,'token' => $token, 'message' => 'Users details listed successfully', 'status' => 200], 200);
+        return view('users.index', ['users' => $model->paginate(15)]);
     }
 
-    public function addUser(Request $request)
+    /**
+     * Show the form for creating a new user
+     *
+     * @return \Illuminate\View\View
+     */
+    public function create()
     {
-        $validator = Validator::make($request->all(), [
-            'full_name' => 'required|string|max:255|min:2',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-            'phone' => 'required|regex:/^\+?(977)?(98)[0-9]{8}?/|max:14',
-        ]);
-
-        if($validator->fails()){
-            return response()->json(['errors' => $validator->errors(), 'status' => 400], 400);
-        }
-
-        $user = User::create([
-            'full_name' => $request->get('full_name'),
-            'email' => $request->get('email'),
-            'password' => Hash::make($request->get('password')),
-            'phone' => $request->phone,
-        ]);
-
-        $checkpoint = CheckpointUser::create([
-            'user_id' => $user->id,
-            'checkpoint_id' => $request->checkpoint_id
-        ]);
-
-        $data = new UserResource($user);
-        return response()->json(['data' => $data, 'message' => 'User has been created successfully', 'status' => '201'],201);
+        return view('users.create');
     }
 
-    public function getAuthenticatedUser()
+    /**
+     * Store a newly created user in storage
+     *
+     * @param  \App\Http\Requests\UserRequest  $request
+     * @param  \App\User  $model
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(UserRequest $request, User $model)
     {
-        $user = Auth::user();
-        $data = new UserResource($user);
-        return $this->responser($user, $data, 'User details listed successfully');
+        $model->create($request->merge(['password' => Hash::make($request->get('password'))])->all());
+
+        return redirect()->route('user.index')->withStatus(__('User successfully created.'));
     }
 
-    public function update(Request $r){
-
-        $validator = Validator::make($r->all(), [
-            'full_name' => 'string|max:255|min:2',
-            'email' => 'string|email|max:255|unique:users',
-            'password' => 'string|min:6|confirmed',
-            'phone' => 'regex:/^\+?(977)?(98)[0-9]{8}?/|max:14',
-        ]);
-
-        if($validator->fails()){
-            return response()->json(['errors' => $validator->errors(), 'status' => 400], 400);
-        }
-
-        $user = Auth::user();
-        $user->update($r->all());
-
-        $data = new UserResource($user);
-        return $this->responser($user, $data, "Your details has been updated successfully");
+    /**
+     * Show the form for editing the specified user
+     *
+     * @param  \App\User  $user
+     * @return \Illuminate\View\View
+     */
+    public function edit(User $user)
+    {
+        return view('users.edit', compact('user'));
     }
 
+    /**
+     * Update the specified user in storage
+     *
+     * @param  \App\Http\Requests\UserRequest  $request
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(UserRequest $request, User  $user)
+    {
+        $user->update(
+            $request->merge(['password' => Hash::make($request->get('password'))])
+                ->except([$request->get('password') ? '' : 'password']
+        ));
 
+        return redirect()->route('user.index')->withStatus(__('User successfully updated.'));
+    }
+
+    /**
+     * Remove the specified user from storage
+     *
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy(User  $user)
+    {
+        $user->delete();
+
+        return redirect()->route('user.index')->withStatus(__('User successfully deleted.'));
+    }
 }

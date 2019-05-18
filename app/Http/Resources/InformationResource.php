@@ -17,11 +17,14 @@ class InformationResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'checkpoint_id' => $this->checkpoint_id,
+            'checkpoint_name' => $this->checkpoint->checkpoint_name,
             'tourist_name' => $this->tourist_name,
             'country_name' => $this->country_name,
             'age' => $this->age,
             'purpose' => $this->purpose->purpose,
             'visa_period' => Carbon::parse($this->visa_period)->format('d/m/Y'),
+            'editable' => $this->editable
         ];
     }
 }
