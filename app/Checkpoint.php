@@ -13,4 +13,8 @@ class Checkpoint extends Model
     public function checkpointuser(){
         return $this->hasOne('App\CheckpointUser');
     }
+
+    public function information(){
+        return $this->hasMany('App\Information');
+    }
 }

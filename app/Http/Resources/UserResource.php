@@ -26,7 +26,7 @@ class UserResource extends JsonResource
     }
 
     public function is_admin(){
-        $admin = $this->admin;
+        $admin = $this->is_admin;
         if($admin == 0){
             return 'Checkpoint User';
         } else {
