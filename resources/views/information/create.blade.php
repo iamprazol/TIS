@@ -24,6 +24,22 @@
                             <h6 class="heading-small text-muted mb-4">{{ __('Tourist information') }}</h6>
                             <div class="pl-lg-4">
                                 <div class="form-group">
+                                    <label class="form-control-label" for="checkpoint_id">{{ __('Checkpoint Name') }}</label>
+                                    <div class="form-group">
+                                        @if(auth()->user()->is_admin == 1)
+                                        <select name="checkpoint_id" class="custom-select" id="checkpoint_id" required>
+                                            <option value="" selected="">Choose One</option>
+                                            @foreach($checkpoints as $checkpoint)
+                                                <option value="{{ $checkpoint->id }}">{{ $checkpoint->checkpoint_name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @else
+                                            <select name="checkpoint_id" class="custom-select" id="checkpoint_id" required>
+                                                <option value="{{ $user->checkpoituser->checkpoint_id }}" selected="">{{ $user->checkpoint_user->checkpoint->checkpoint_name }}</option>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="form-control-label" for="purpose_id">{{ __('Purpose') }}</label>
                                     <div class="form-group">
                                         <select name="purpose_id" class="custom-select" id="purpose_id" required>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Checkpoint;
 use App\Purpose;
 use Carbon\Carbon;
+use http\Client\Curl\User;
 use Illuminate\Http\Request;
 use App\Information;
 use Illuminate\Support\Facades\Auth;
@@ -38,8 +39,15 @@ class InformationController extends Controller
     }
 
     public function create(){
-        $purpose = Purpose::all();
-        return view('information.create')->with('purposes', $purpose);
+        $user = Auth::user();
+        if($user->is_admin == 1) {
+            $checkpoint = Checkpoint::all();
+            $purpose = Purpose::all();
+            return view('information.create')->with('purposes', $purpose)->with('checkpoints', $checkpoint);
+        } else {
+            $purpose = Purpose::all();
+            return view('information.create')->with('purposes', $purpose);
+        }
     }
 
     public function store(Request $r){
@@ -50,7 +58,7 @@ class InformationController extends Controller
             ]);
 
         $information = Information::create([
-            'checkpoint_id' => Auth::user()->checkpointuser->checkpoint_id,
+            'checkpoint_id' => $r->checkpoint_id,
             'purpose_id' => $r->purpose_id,
             'tourist_name' => $r->tourist_name,
             'country_name' => $r->country_name,
