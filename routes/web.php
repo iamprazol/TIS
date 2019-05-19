@@ -31,12 +31,22 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('edit-information/{id}', ['uses' => 'InformationController@editInformation', 'as' => 'information.edit']);
     Route::post('update-information/{id}', ['uses' => 'InformationController@updateInformation', 'as' => 'information.update']);
 
+    //Purposes
+    Route::get('purpose', ['uses' => 'PurposeController@index', 'as' => 'purpose.index']);
+    Route::get('create-purpose', ['uses' => 'PurposeController@create', 'as' => 'purpose.create']);
+    Route::post('add-purpose', ['uses' => 'PurposeController@store', 'as' => 'purpose.store']);
+    Route::post('delete-purpose/{id}', ['uses' => 'PurposeController@deletePurpose', 'as' => 'purpose.destroy']);
 
+    //checkpoint
+    Route::get('checkpoint', ['uses' => 'CheckpointController@index', 'as' => 'checkpoint.index']);
+    Route::get('create-checkpoint', ['uses' => 'CheckpointController@create', 'as' => 'checkpoint.create']);
+    Route::post('add-checkpoint', ['uses' => 'CheckpointController@store', 'as' => 'checkpoint.store']);
+    Route::post('delete-checkpoint/{id}', ['uses' => 'CheckpointController@deleteCheckpoint', 'as' => 'checkpoint.destroy']);
 
     Route::post('add-user', 'UserController@addUser');
     Route::get('information-by-checkpoint/{id}', 'InformationController@checkpointInformation');
 
-    Route::post('delete-purpose/{id}', 'PurposeController@deletePurpose');
+   /* Route::post('delete-purpose/{id}', 'PurposeController@deletePurpose');
 
     Route::group(['middleware' => ['admin']], function () {
         Route::post('add-purpose', 'PurposeController@addPurpose');
@@ -45,6 +55,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('checkpoint', 'CheckpointController@index');
         Route::post('delete-checkpoint/{id}', 'CheckpointController@deleteCheckpoint');
         Route::get('checkpoint-user', 'CheckpointUserController@index');
-    });
+    });*/
 });
 

@@ -71,8 +71,18 @@
             <!-- Navigation -->
             <ul class="navbar-nav">
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('checkpoint.index') }}">
+                        <i class="ni ni-pin-3"></i>{{ __('Checkpoint') }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('purpose.index') }}">
+                        <i class="ni ni-satisfied"></i>{{ __('Purpose') }}
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link active" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
-                        <i class="fab fa-laravel" style="color: #f4645f;"></i>
+                        <i class="ni ni-circle-08" style="color: #f4645f;"></i>
                         <span class="nav-link-text" style="color: #f4645f;">{{ __('User') }}</span>
                     </a>
 

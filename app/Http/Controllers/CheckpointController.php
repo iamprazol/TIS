@@ -10,28 +10,34 @@ use Illuminate\Support\Facades\Validator;
 class CheckpointController extends Controller
 {
     public function index(){
-        $checkpoint = Checkpoint::all();
-        $data = CheckpointResource::collection($checkpoint);
-        return $this->responser($checkpoint, $data, 'Checkpoints listed successfully');
+        $checkpoint = Checkpoint::orderBy('checkpoint_name', 'asc')->paginate(15);
+        return view('checkpoint.index')->with('checkpoints', $checkpoint);
+
+/*        $data = CheckpointResource::collection($checkpoint);
+        return $this->responser($checkpoint, $data, 'Checkpoints listed successfully');*/
     }
 
-    public function addCheckpoint(Request $r){
-        $validator = Validator::make($r->all(), [
+    public function create(){
+        return view('checkpoint.create');
+    }
+
+    public function store(Request $r){
+        $this->Validate($r, [
             'checkpoint_name' => 'required|string|max:255|min:2'
         ]);
 
-        if($validator->fails()){
-            return response()->json(['errors' => $validator->errors(), 'status' => 400], 400);
-        }
-
         $checkpoint = Checkpoint::create($r->all());
-        $data = new CheckpointResource($checkpoint);
-        return $this->responser($checkpoint, $data, 'Checkpoint added successfully');
+        return redirect()->route('checkpoint.index')->with('checkpoints', $checkpoint)->withStatus(__('Checkpoint successfully added.'));
+
+        /*$data = new CheckpointResource($checkpoint);
+        return $this->responser($checkpoint, $data, 'Checkpoint added successfully');*/
     }
 
     public function deleteCheckpoint($id){
         $checkpoint = Checkpoint::find($id);
         $checkpoint->delete();
-        return response()->json(['message' => 'The specified checkpoint Deleted successfully', 'status' => 200], 200);
+        return redirect()->route('checkpoint.index')->with('checkpoints', $checkpoint)->withStatus(__('Checkpoint successfully deleted'));
+
+        // return response()->json(['message' => 'The specified checkpoint Deleted successfully', 'status' => 200], 200);
     }
 }
