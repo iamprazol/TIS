@@ -26,7 +26,7 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => [
+            'full_name' => [
                 'required', 'min:3'
             ],
             'email' => [
@@ -34,6 +34,9 @@ class UserRequest extends FormRequest
             ],
             'password' => [
                 $this->route()->user ? 'nullable' : 'required', 'confirmed', 'min:6'
+            ],
+            'phone' => [
+                'required', 'max:10',
             ]
         ];
     }

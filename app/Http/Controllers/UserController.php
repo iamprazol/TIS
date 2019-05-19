@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Checkpoint;
+use App\CheckpointUser;
 use App\User;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Hash;
@@ -16,7 +18,7 @@ class UserController extends Controller
      */
     public function index(User $model)
     {
-        return view('users.index', ['users' => $model->paginate(15)]);
+        return view('users.index', ['users' => $model->where('is_admin', 0)->paginate(15)]);
     }
 
     /**
@@ -26,7 +28,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users.create');
+        $checkpoint = Checkpoint::all();
+        return view('users.create')->with('checkpoints', $checkpoint);
     }
 
     /**
@@ -36,10 +39,13 @@ class UserController extends Controller
      * @param  \App\User  $model
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(UserRequest $request, User $model)
+    public function store(UserRequest $request)
     {
-        $model->create($request->merge(['password' => Hash::make($request->get('password'))])->all());
-
+        $user = User::create($request->merge(['password' => Hash::make($request->get('password'))])->except('checkpoint_id'));
+        CheckpointUser::create([
+           'user_id' => $user->id,
+           'checkpoint_id' => $request->checkpoint_id
+        ]);
         return redirect()->route('user.index')->withStatus(__('User successfully created.'));
     }
 

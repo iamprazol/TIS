@@ -23,13 +23,24 @@
                             
                             <h6 class="heading-small text-muted mb-4">{{ __('User information') }}</h6>
                             <div class="pl-lg-4">
-                                <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="checkpoint_id">{{ __('Checkpoint Name') }}</label>
+                                    <div class="form-group">
+                                        <select name="checkpoint_id" class="custom-select" id="checkpoint_id" required>
+                                            <option value="" selected="">Choose One</option>
+                                            @foreach($checkpoints as $checkpoint)
+                                                <option value="{{ $checkpoint->id }}">{{ $checkpoint->checkpoint_name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group{{ $errors->has('full_name') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="full_name">{{ __('Name') }}</label>
-                                    <input type="text" name="full_name" id="full_name" class="form-control form-control-alternative{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Name') }}" value="{{ old('name') }}" required autofocus>
+                                    <input type="text" name="full_name" id="full_name" class="form-control form-control-alternative{{ $errors->has('full_name') ? ' is-invalid' : '' }}" placeholder="{{ __('Name') }}" value="{{ old('full_name') }}" required autofocus>
 
-                                    @if ($errors->has('name'))
+                                    @if ($errors->has('full_name'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('name') }}</strong>
+                                            <strong>{{ $errors->first('full_name') }}</strong>
                                         </span>
                                     @endif
                                 </div>
