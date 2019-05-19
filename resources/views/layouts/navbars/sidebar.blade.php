@@ -91,6 +91,11 @@
                         </ul>
                     </div>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('information.index') }}">
+                        <i class="ni ni-single-02"></i>{{ __('Tourist Information') }}
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

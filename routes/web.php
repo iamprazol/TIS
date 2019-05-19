@@ -24,13 +24,17 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
 
+	//Information
+    Route::get('information', ['uses' => 'InformationController@index', 'as' => 'information.index']);
+    Route::get('create-information', ['uses' => 'InformationController@create', 'as' => 'information.create']);
+    Route::post('add-information', ['uses' => 'InformationController@store', 'as' => 'information.store']);
+    Route::get('edit-information/{id}', ['uses' => 'InformationController@editInformation', 'as' => 'information.edit']);
+    Route::post('update-information/{id}', ['uses' => 'InformationController@updateInformation', 'as' => 'information.update']);
+
+
+
     Route::post('add-user', 'UserController@addUser');
-    Route::get('my-profile', 'UserController@getAuthenticatedUser');
-    Route::put('profile-edit', 'UserController@update');
-    Route::post('add-information', 'InformationController@addInformation');
-    Route::get('information', 'InformationController@index');
     Route::get('information-by-checkpoint/{id}', 'InformationController@checkpointInformation');
-    Route::put('edit-information/{id}', 'InformationController@editInformation');
 
     Route::post('delete-purpose/{id}', 'PurposeController@deletePurpose');
 
