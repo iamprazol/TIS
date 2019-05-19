@@ -71,13 +71,14 @@
             <!-- Navigation -->
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('checkpoint.index') }}">
-                        <i class="ni ni-pin-3"></i>{{ __('Checkpoint') }}
-                    </a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="{{ route('purpose.index') }}">
                         <i class="ni ni-satisfied"></i>{{ __('Purpose') }}
+                    </a>
+                </li>
+                @if(auth()->user()->is_admin == 1)
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('checkpoint.index') }}">
+                        <i class="ni ni-pin-3"></i>{{ __('Checkpoint') }}
                     </a>
                 </li>
                 <li class="nav-item">
@@ -89,11 +90,6 @@
                     <div class="collapse show" id="navbar-examples">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('profile.edit') }}">
-                                    {{ __('User profile') }}
-                                </a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link" href="{{ route('user.index') }}">
                                     {{ __('User Management') }}
                                 </a>
@@ -101,6 +97,7 @@
                         </ul>
                     </div>
                 </li>
+                @endif
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('information.index') }}">
                         <i class="ni ni-single-02"></i>{{ __('Tourist Information') }}
