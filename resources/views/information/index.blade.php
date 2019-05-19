@@ -33,6 +33,7 @@
                         <table class="table align-items-center table-flush">
                             <thead class="thead-light">
                             <tr>
+                                <th scope="col">{{ __('Checkpoint') }}</th>
                                 <th scope="col">{{ __('Name') }}</th>
                                 <th scope="col">{{ __('Country Name') }}</th>
                                 <th scope="col">{{ __('Purpose') }}</th>
@@ -44,6 +45,7 @@
                             <tbody>
                             @foreach ($tourists as $tourist)
                                 <tr>
+                                    <td>{{ $tourist->checkpoint->checkpoint_name }}</td>
                                     <td>{{ $tourist->tourist_name }}</td>
                                     <td>{{ $tourist->country_name}}</td>
                                     <td>{{ $tourist->purpose->purpose }}</td>

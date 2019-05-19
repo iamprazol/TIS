@@ -76,27 +76,16 @@
                     </a>
                 </li>
                 @if(auth()->user()->is_admin == 1)
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('checkpoint.index') }}">
-                        <i class="ni ni-pin-3"></i>{{ __('Checkpoint') }}
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
-                        <i class="ni ni-circle-08" style="color: #f4645f;"></i>
-                        <span class="nav-link-text" style="color: #f4645f;">{{ __('User') }}</span>
-                    </a>
-
-                    <div class="collapse show" id="navbar-examples">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('user.index') }}">
-                                    {{ __('User Management') }}
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('checkpoint.index') }}">
+                            <i class="ni ni-pin-3"></i>{{ __('Checkpoint') }}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('user.index') }}">
+                            <i class="ni ni-circle-08"></i>{{ __('Users') }}
+                        </a>
+                    </li>
                 @endif
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('information.index') }}">
