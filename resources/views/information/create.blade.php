@@ -35,7 +35,8 @@
                                         </select>
                                         @else
                                             <select name="checkpoint_id" class="custom-select" id="checkpoint_id" required>
-                                                <option value="{{ $user->checkpoituser->checkpoint_id }}" selected="">{{ $user->checkpoint_user->checkpoint->checkpoint_name }}</option>
+                                                <option value="{{ $user->checkpointuser->checkpoint_id }}" selected="">{{ $user->checkpointuser->checkpoint->checkpoint_name }}</option>
+                                            </select>
                                         @endif
                                     </div>
                                 </div>

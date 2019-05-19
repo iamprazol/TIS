@@ -46,7 +46,7 @@ class InformationController extends Controller
             return view('information.create')->with('purposes', $purpose)->with('checkpoints', $checkpoint);
         } else {
             $purpose = Purpose::all();
-            return view('information.create')->with('purposes', $purpose);
+            return view('information.create')->with('purposes', $purpose)->with('user', $user);
         }
     }
 
