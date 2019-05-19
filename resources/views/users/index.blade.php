@@ -44,7 +44,11 @@
                                 @foreach ($users as $user)
                                     <tr>
                                         <td>{{ $user->full_name }}</td>
-                                        <td>{{ $user->checkpointuser->checkpoint->checkpoint_name }}</td>
+                                        <td>@if($user->checkpointuser != null)
+                                                {{ $user->checkpointuser->checkpoint->checkpoint_name }}</td>
+                                        @else
+                                            {{ 'Null' }}
+                                        @endif
                                         <td>
                                             <a href="mailto:{{ $user->email }}">{{ $user->email }}</a>
                                         </td>
