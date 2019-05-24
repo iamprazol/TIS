@@ -14,7 +14,7 @@ class UserTableSeeder extends Seeder
     {
         $u1 = [
             'full_name' => 'Prajjwal Poudel',
-            'is_admin' => 1,
+            'role_id' => 1,
             'email' => 'iamprazol@gmail.com',
             'password' => bcrypt('prajjwal123'),
             'phone' => 9845690436
@@ -22,13 +22,22 @@ class UserTableSeeder extends Seeder
 
         $u2 = [
             'full_name' => 'Kushal Poudel',
-            'is_admin' => 0,
+            'role_id' => 2,
             'email' => 'ku@gmail.com',
+            'password' => bcrypt('prajjwal123'),
+            'phone' => 9855690436
+        ];
+
+        $u3 = [
+            'full_name' => 'Bikram Poudel',
+            'role_id' => 3,
+            'email' => 'bikram@gmail.com',
             'password' => bcrypt('prajjwal123'),
             'phone' => 9855690436
         ];
 
         User::create($u1);
         User::create($u2);
+        User::create($u3);
     }
 }

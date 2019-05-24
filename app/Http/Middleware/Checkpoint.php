@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
-class Admin
+class Checkpoint
 {
     /**
      * Handle an incoming request.
@@ -16,10 +16,9 @@ class Admin
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user()->role_id == 1) {
+        if (Auth::user()->role_id == 2 || Auth::user()->role_id == 1) {
             return $next($request);
         } else {
             return redirect('home');
-        }
-    }
+        }    }
 }

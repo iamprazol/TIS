@@ -18,7 +18,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'full_name', 'email', 'password', 'phone',
+        'full_name', 'email', 'password', 'phone', 'disable'
         ];
 
     /**
@@ -50,13 +50,16 @@ class User extends Authenticatable implements JWTSubject
     }
 
     public function isAdmin(){
-        if(Auth::user()->is_admin == 1){
+        if(Auth::user()->role_id == 1){
             return true;
         } else {
             return false;
         }
     }
 
+    public function role(){
+        return $this->belongsTo('App\Role');
+    }
     public function checkpointuser(){
         return $this->hasOne('App\CheckpointUser');
     }

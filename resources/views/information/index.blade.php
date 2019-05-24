@@ -12,9 +12,11 @@
                             <div class="col-8">
                                 <h3 class="mb-0">{{ __('Tourists') }}</h3>
                             </div>
-                            <div class="col-4 text-right">
-                                <a href="{{ route('information.create') }}" class="btn btn-sm btn-primary">{{ __('Add Information') }}</a>
-                            </div>
+                            @if(auth()->user()->role_id != 3)
+                                <div class="col-4 text-right">
+                                    <a href="{{ route('information.create') }}" class="btn btn-sm btn-primary">{{ __('Add Information') }}</a>
+                                </div>
+                            @endif
                         </div>
                     </div>
 
@@ -36,10 +38,16 @@
                                 <th scope="col">{{ __('Checkpoint') }}</th>
                                 <th scope="col">{{ __('Name') }}</th>
                                 <th scope="col">{{ __('Country Name') }}</th>
-                                <th scope="col">{{ __('Purpose') }}</th>
+                                <th scope="col">{{ __('Type') }}</th>
+                                <th scope="col">{{ __('Gender') }}</th>
+                                <th scope="col">{{ __('Purposes') }}</th>
+                                <th scope="col">{{ __('Duration') }}</th>
                                 <th scope="col">{{ __('Age') }}</th>
                                 <th scope="col">{{ __('Visa Period') }}</th>
-                                <th scope="col">{{ __('Option') }}</th>
+                                <th scope="col">{{ __('Passport Number') }}</th>
+                                @if(auth()->user()->role_id != 3)
+                                    <th scope="col">{{ __('Option') }}</th>
+                                @endif
                             </tr>
                             </thead>
                             <tbody>
@@ -47,17 +55,33 @@
                                 <tr>
                                     <td>{{ $tourist->checkpoint->checkpoint_name }}</td>
                                     <td>{{ $tourist->tourist_name }}</td>
-                                    <td>{{ $tourist->country_name}}</td>
-                                    <td>{{ $tourist->purpose->purpose }}</td>
-                                    <td>{{ $tourist->age }}</td>
-                                    <td>{{ $tourist->visa_period }}</td>
+                                    <td>{{ $tourist->country->country_name}}</td>
                                     <td>
-                                        @if($tourist->editable == 1)
-                                            <a class="btn  btn-sm btn-primary" href="{{ route('information.edit', ['id' => $tourist->id]) }}">{{ __('Edit') }}</a>
+                                        @if($tourist->tourist_type == 0)
+                                            {{ "Domestic" }}
                                         @else
-                                            <button class="btn btn-sm btn-secondary">{{__('UnEditable')}}</button>
+                                            {{ "International" }}
                                         @endif
                                     </td>
+                                    <td>{{ $tourist->gender }}</td>
+                                    <td>
+                                        @foreach($tourist->userpurpose as $p)
+                                            {{ $text[] = $p->purpose->purpose }} ,
+                                        @endforeach
+                                    </td>
+                                    <td>{{ $tourist->duration }}</td>
+                                    <td>{{ $tourist->age }}</td>
+                                    <td>{{ $tourist->visa_period }}</td>
+                                    <td>{{ $tourist->passport_number }}</td>
+                                    @if(auth()->user()->role_id != 3)
+                                        <td>
+                                            @if($tourist->editable == 1)
+                                                <a class="btn  btn-sm btn-primary" href="{{ route('information.edit', ['id' => $tourist->id]) }}">{{ __('Edit') }}</a>
+                                            @else
+                                                <button class="btn btn-sm btn-secondary">{{__('UnEditable')}}</button>
+                                            @endif
+                                        </td>
+                                    @endif
                                 </tr>
                             @endforeach
                             </tbody>

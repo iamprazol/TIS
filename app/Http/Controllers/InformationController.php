@@ -3,13 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Checkpoint;
+use App\Countries;
 use App\Purpose;
+use App\UserPurpose;
 use Carbon\Carbon;
 use http\Client\Curl\User;
 use Illuminate\Http\Request;
 use App\Information;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\InformationResource as InformationResource;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 
 class InformationController extends Controller
@@ -40,13 +43,14 @@ class InformationController extends Controller
 
     public function create(){
         $user = Auth::user();
-        if($user->is_admin == 1) {
+        $country = Countries::all();
+        if($user->isAdmin() == 1) {
             $checkpoint = Checkpoint::all();
             $purpose = Purpose::all();
-            return view('information.create')->with('purposes', $purpose)->with('checkpoints', $checkpoint);
+            return view('information.create')->with('purposes', $purpose)->with('checkpoints', $checkpoint)->with('countries', $country);
         } else {
             $purpose = Purpose::all();
-            return view('information.create')->with('purposes', $purpose)->with('user', $user);
+            return view('information.create')->with('purposes', $purpose)->with('user', $user)->with('countries', $country);
         }
     }
 
@@ -54,17 +58,37 @@ class InformationController extends Controller
 
         $this->Validate($r, [
             'tourist_name' => 'required|string|max:255|min:2',
-            'country_name' => 'required|string|max:255|min:2'
             ]);
+
+        if($r->country_id == 154){
+            $tourist_type = 0;
+        } else {
+            $tourist_type = 1;
+        }
+
 
         $information = Information::create([
             'checkpoint_id' => $r->checkpoint_id,
-            'purpose_id' => $r->purpose_id,
+            'country_id' => $r->country_id,
             'tourist_name' => $r->tourist_name,
-            'country_name' => $r->country_name,
+            'tourist_type' => $tourist_type,
+            'gender' => $r->gender,
+            'duration' => $r->duration,
+            'passport_number' => $r->passport_number,
             'age' => $r->age,
             'visa_period' => $r->visa_period
         ]);
+
+
+        if($r->purpose_id){
+            foreach ($r->purpose_id as $purpose_id){
+                UserPurpose::create([
+                    'information_id' => $information->id,
+                    'purpose_id' => $purpose_id
+                ]);
+            }
+        }
+
         return redirect()->route('information.index')->with('tourists', $information)->withStatus(__('Information successfully added.'));
 
         /*if($validator->fails()){
@@ -84,16 +108,29 @@ class InformationController extends Controller
     {
         $this->Validate($request, [
             'tourist_name' => 'required|string|max:255|min:2',
-            'country_name' => 'required|string|max:255|min:2'
         ]);
 
         $information = Information::find($id);
-        $information->purpose_id = $request->purpose_id;
         $information->tourist_name = $request->tourist_name;
-        $information->country_name = $request->country_name;
         $information->age = $request->age;
+        $information->gender = $request->gender;
+        $information->duration = $request->duration;
+        $information->passport_number = $request->passport_number;
         $information->visa_period = $request->visa_period;
         $information->save();
+
+        foreach ($information->userpurpose as $userpurpose) {
+            $userpurpose->delete();
+        }
+
+        if($request->purpose_id) {
+            foreach ($request->purpose_id as $purpose_id) {
+                UserPurpose::create([
+                    'information_id' => $information->id,
+                    'purpose_id' => $purpose_id
+                ]);
+            }
+        }
 
         return redirect()->route('information.index')->with('tourists', $information)->withStatus(__('Information updated successfully'));
 
@@ -103,4 +140,21 @@ class InformationController extends Controller
        return response()->json(['message' => 'Information cannot be edited', 'status' => 403], '403');
    */
     }
+
+    public function search(Request $request)
+    {
+        $data = [];
+
+
+        if($request->has('q')){
+            $search = $request->q;
+            $data = Checkpoint::select("id","name")
+                ->where('name','LIKE',"%$search%")
+                ->get();
+        }
+
+
+        return response()->json($data);
+    }
+
 }

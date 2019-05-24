@@ -36,42 +36,51 @@
                                     <th scope="col">{{ __('Name') }}</th>
                                     <th scope="col">{{ __('Checkpoint') }}</th>
                                     <th scope="col">{{ __('Email') }}</th>
-                                    <th scope="col">{{ __('Creation Date') }}</th>
-                                    <th scope="col"></th>
+                                    <th scope="col">{{ __('Phone Number') }}</th>
+                                    <th scope="col">{{ __('Status') }}</th>
+                                    <th scope="col">{{__('Option')}}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($users as $user)
                                     <tr>
                                         <td>{{ $user->full_name }}</td>
-                                        <td>@if($user->checkpointuser != null)
-                                                {{ $user->checkpointuser->checkpoint->checkpoint_name }}</td>
-                                        @else
-                                            {{ 'Null' }}
-                                        @endif
+                                        <td>
+                                            @if($user->checkpointuser != null)
+                                                {{ $user->checkpointuser->checkpoint->checkpoint_name }}
+                                            @else
+                                                {{ 'Null' }}
+                                            @endif
+                                        </td>
                                         <td>
                                             <a href="mailto:{{ $user->email }}">{{ $user->email }}</a>
                                         </td>
                                         <td>{{ $user->phone }}</td>
+                                        <td>
+                                            @if($user->disable == 0)
+                                                @if($user->role_id == 2)
+                                                    <a class="btn btn-sm btn-twitter" href="{{ route('make.admin', ['id' => $user->id]) }}">{{ __('Make Admin') }}</a>
+                                                @elseif($user->role_id == 1)
+                                                    <a class="btn btn-sm btn-twitter" href="{{ route('remove.admin', ['id' => $user->id]) }}">{{ __('Remove Admin') }}</a>
+                                                @else
+                                                    {{ 'Guest' }}
+                                                @endif
+                                            @else
+                                                {{ 'Disabled' }}
+                                            @endif
+                                        </td>
                                         <td class="text-right">
                                             <div class="dropdown">
                                                 <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     <i class="fas fa-ellipsis-v"></i>
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                    @if ($user->id != auth()->id())
-                                                        <form action="{{ route('user.destroy', $user) }}" method="post">
-                                                            @csrf
-                                                            @method('delete')
-                                                            
-                                                            <a class="dropdown-item" href="{{ route('user.edit', $user) }}">{{ __('Edit') }}</a>
-                                                            <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this user?") }}') ? this.parentElement.submit() : ''">
-                                                                {{ __('Delete') }}
-                                                            </button>
-                                                        </form>    
+                                                    @if($user->disable == 0)
+                                                        <a class="dropdown-item" href="{{ route('disable.user', ['id' => $user->id]) }}">{{ __('Disable User') }}</a>
                                                     @else
-                                                        <a class="dropdown-item" href="{{ route('profile.edit') }}">{{ __('Edit') }}</a>
+                                                        <a class="dropdown-item" href="{{ route('enable.user', ['id' => $user->id]) }}">{{ __('Enable User') }}</a>
                                                     @endif
+                                                    <a class="dropdown-item" href="{{ route('profile.edit') }}">{{ __('Edit') }}</a>
                                                 </div>
                                             </div>
                                         </td>

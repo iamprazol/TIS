@@ -10,7 +10,7 @@ class Purpose extends Model
         'id', 'purpose'
     ];
 
-    public function information(){
-        return $this->hasMany('App\Information');
+    public function userpurpose(){
+        return $this->hasMany('App\UserPurpose');
     }
 }
