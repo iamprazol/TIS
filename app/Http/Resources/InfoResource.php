@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Http\Resources;
-use Carbon\Carbon;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Carbon\Carbon;
 
-class InformationResource extends JsonResource
+class InfoResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,9 +18,7 @@ class InformationResource extends JsonResource
         return [
             'id' => $this->id,
             'nepali_date' => $this->nepali_date,
-            'checkpoint_id' => $this->checkpoint_id,
             'checkpoint_name' => $this->checkpoint->checkpoint_name,
-            'country_id' => $this->country_id,
             'country_name' => $this->country->country_name,
             'tourist_name' => $this->tourist_name,
             'tourist_type' => $this->type(),
@@ -30,7 +28,6 @@ class InformationResource extends JsonResource
             'gender' => $this->gender,
             'visa_period' => Carbon::parse($this->visa_period)->format('d/m/Y'),
             'passport_number' => $this->passport_number,
-            'editable' => $this->editable
         ];
     }
 
@@ -39,7 +36,7 @@ class InformationResource extends JsonResource
             $purpose[] = $pu->purpose->purpose;
         }
         $purposes = implode(",", $purpose);
-        return $purpose;
+        return $purposes;
     }
 
     public function type(){

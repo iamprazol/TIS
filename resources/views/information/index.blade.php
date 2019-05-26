@@ -13,10 +13,10 @@
                                 <h3 class="mb-0">{{ __('Tourists') }}</h3>
                             </div>
                         </div>
-                        <hr>
+                        <hr style="margin-bottom: 1rem !important;">
                     </div>
                     <div class="row">
-                        <div class="col-9">
+                        <div class="col-8">
                             <form action="{{ route('information.search') }}" method="get">
                                 @csrf
                                 <div class="form-group">
@@ -24,7 +24,7 @@
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="form-group">
-                                                <input name="year" class="custom-select" id="year" style="margin-left: 1rem; font-size: 0.82rem; height:1.8rem;" required>
+                                                <input name="year" class="form-control" id="year" style="margin-left: 1rem; font-size: 0.82rem; height:1.8rem;" required>
                                             </div>
                                         </div>
                                     <div class="col-4 text-right">
@@ -34,11 +34,22 @@
                                 </div>
                             </form>
                         </div>
-                        @if(auth()->user()->role_id != 3)
-                            <div class="col-3 text-right">
-                                <a href="{{ route('information.create') }}" class="btn btn-sm btn-primary" style="margin-top: 2rem; margin-right: 1rem;">{{ __('Add Information') }}</a>
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col-6 text-right">
+
+                                    <form method='post' action={{ route('export.information') }}>
+                                        @csrf
+                                        <input class="btn btn-sm btn-twitter" type="submit" name="exportexcel" value= '{{ __('Excel Export')}}' style="margin-top: 2rem; margin-right: 1rem;">
+                                    </form>
+                                </div>
+                                @if(auth()->user()->role_id != 3)
+                                    <div class="col-6 text-left">
+                                        <a href="{{ route('information.create') }}" class="btn btn-sm btn-primary" style="margin-top: 2rem; margin-right: 1rem;">{{ __('Add Information') }}</a>
+                                    </div>
+                                @endif
                             </div>
-                        @endif
+                        </div>
                     </div>
 
                     <div class="col-12">

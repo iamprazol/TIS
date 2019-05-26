@@ -7,14 +7,13 @@ use App\Countries;
 use App\Purpose;
 use App\UserPurpose;
 use Carbon\Carbon;
-use http\Client\Curl\User;
 use Illuminate\Http\Request;
 use App\Information;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\InformationResource as InformationResource;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Validator;
 use App\DateConverter;
+use App\Exports\UsersExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class InformationController extends Controller
 {
@@ -163,6 +162,15 @@ class InformationController extends Controller
         }
 
         return view('information.index')->with('tourists', $informations);
+    }
+
+    public function export(Request $request){
+
+        if ($request->input('exportexcel') != null ){
+            return Excel::download(new UsersExport, 'information.xlsx');
+        }
+
+        return redirect()->action('InformationController@index');
     }
 
 }
