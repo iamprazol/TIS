@@ -23,32 +23,38 @@
 
                             <h6 class="heading-small text-muted mb-4">{{ __('Tourist information') }}</h6>
                             <div class="pl-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label" for="checkpoint_id">{{ __('Checkpoint Name') }}</label>
-                                    <div class="form-group">
-                                        @if(auth()->user()->isAdmin())
-                                        <select name="checkpoint_id" class="custom-select" id="checkpoint_id" required>
-                                            <option value="" selected="">Choose One</option>
-                                            @foreach($checkpoints as $checkpoint)
-                                                <option value="{{ $checkpoint->id }}">{{ $checkpoint->checkpoint_name }}</option>
-                                            @endforeach
-                                        </select>
-                                        @else
-                                            <select name="checkpoint_id" class="custom-select" id="checkpoint_id" required>
-                                                <option value="{{ $user->checkpointuser->checkpoint_id }}" selected="">{{ $user->checkpointuser->checkpoint->checkpoint_name }}</option>
-                                            </select>
-                                        @endif
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="checkpoint_id">{{ __('Checkpoint Name') }}</label>
+                                            <div class="form-group">
+                                                @if(auth()->user()->isAdmin())
+                                                    <select name="checkpoint_id" class="custom-select" id="checkpoint_id" required>
+                                                        <option value="" selected="">Choose One</option>
+                                                        @foreach($checkpoints as $checkpoint)
+                                                            <option value="{{ $checkpoint->id }}">{{ $checkpoint->checkpoint_name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                @else
+                                                    <select name="checkpoint_id" class="custom-select" id="checkpoint_id" required>
+                                                        <option value="{{ $user->checkpointuser->checkpoint_id }}" selected="">{{ $user->checkpointuser->checkpoint->checkpoint_name }}</option>
+                                                    </select>
+                                                @endif
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-control-label" for="country_id">{{ __('Country Name') }}</label>
-                                    <div class="form-group">
-                                        <select name="country_id" class="custom-select" id="country_id" required>
-                                            <option value="" selected="">Choose One</option>
-                                            @foreach($countries as $country)
-                                                <option value="{{ $country->id }}">{{ $country->country_name }}</option>
-                                            @endforeach
-                                        </select>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="country_id">{{ __('Country Name') }}</label>
+                                            <div class="form-group">
+                                                <select name="country_id" class="form-control" id="country_id" required>
+                                                    <option value="" selected="">Choose One</option>
+                                                    @foreach($countries as $country)
+                                                        <option value="{{ $country->id }}">{{ $country->country_name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group{{ $errors->has('tourist_name') ? ' has-danger' : '' }}">
