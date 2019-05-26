@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\InformationResource as InformationResource;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
+use App\DateConverter;
 
 class InformationController extends Controller
 {
@@ -66,6 +67,12 @@ class InformationController extends Controller
             $tourist_type = 1;
         }
 
+        $year = Carbon::now()->format('Y');
+        $month = Carbon::now()->format('m');
+        $day = Carbon::now()->format('d');
+        $converter = new DateConverter();
+        $converter->setEnglishDate($year, $month, $day);
+        $nepali_date = $converter->getNepaliYear()."/".$converter->getNepaliMonth()."/".$converter->getNepaliDate();
 
         $information = Information::create([
             'checkpoint_id' => $r->checkpoint_id,
@@ -76,7 +83,8 @@ class InformationController extends Controller
             'duration' => $r->duration,
             'passport_number' => $r->passport_number,
             'age' => $r->age,
-            'visa_period' => $r->visa_period
+            'visa_period' => $r->visa_period,
+            'nepali_date' => $nepali_date
         ]);
 
 
@@ -143,18 +151,18 @@ class InformationController extends Controller
 
     public function search(Request $request)
     {
-        $data = [];
-
-
-        if($request->has('q')){
-            $search = $request->q;
-            $data = Checkpoint::select("id","name")
-                ->where('name','LIKE',"%$search%")
-                ->get();
+        $informations = Information::orderBy('checkpoint_id', 'asc')->where('nepali_date', 'like', '%'.$request->year.'%')->paginate(15);
+        foreach ($informations as $i){
+            $now = Carbon::now();
+            $aday = Carbon::parse($i->created_at)->addDay();
+            if($now >= $aday) {
+                $i->editable = 0;
+                $i->save();
+            }
+            $info[] = $i;
         }
 
-
-        return response()->json($data);
+        return view('information.index')->with('tourists', $informations);
     }
 
 }

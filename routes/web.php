@@ -23,11 +23,11 @@ Route::middleware(['auth'])->group( function () {
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
     Route::get('information', ['uses' => 'InformationController@index', 'as' => 'information.index']);
+    Route::get('search-information', ['uses' => 'InformationController@search', 'as' => 'information.search']);
 
     Route::group(['middleware' => ['checkpoint']], function () {
 
         //Information
-        Route::get('search-checkpoint', ['uses' => 'InformationController@search', 'as' => 'search.checkpoint']);
         Route::get('create-information', ['uses' => 'InformationController@create', 'as' => 'information.create']);
         Route::post('add-information', ['uses' => 'InformationController@store', 'as' => 'information.store']);
         Route::get('edit-information/{id}', ['uses' => 'InformationController@editInformation', 'as' => 'information.edit']);

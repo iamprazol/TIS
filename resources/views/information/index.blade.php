@@ -12,12 +12,33 @@
                             <div class="col-8">
                                 <h3 class="mb-0">{{ __('Tourists') }}</h3>
                             </div>
-                            @if(auth()->user()->role_id != 3)
-                                <div class="col-4 text-right">
-                                    <a href="{{ route('information.create') }}" class="btn btn-sm btn-primary">{{ __('Add Information') }}</a>
-                                </div>
-                            @endif
                         </div>
+                        <hr>
+                    </div>
+                    <div class="row">
+                        <div class="col-9">
+                            <form action="{{ route('information.search') }}" method="get">
+                                @csrf
+                                <div class="form-group">
+                                    <label class="form-control-label" for="year" style="margin-left: 1rem;">{{ __('Year') }}</label>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <input name="year" class="custom-select" id="year" style="margin-left: 1rem; font-size: 0.82rem; height:1.8rem;" required>
+                                            </div>
+                                        </div>
+                                    <div class="col-4 text-right">
+                                        <input class="btn btn-primary btn-pill d-flex ml-auto mr-auto" name="submit" type="submit" value="Search" style="height:1.8rem; font-size: 0.82rem; line-height: 0.5rem;">
+                                    </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        @if(auth()->user()->role_id != 3)
+                            <div class="col-3 text-right">
+                                <a href="{{ route('information.create') }}" class="btn btn-sm btn-primary" style="margin-top: 2rem; margin-right: 1rem;">{{ __('Add Information') }}</a>
+                            </div>
+                        @endif
                     </div>
 
                     <div class="col-12">
@@ -35,6 +56,7 @@
                         <table class="table align-items-center table-flush">
                             <thead class="thead-light">
                             <tr>
+                                <th scope="col">{{ __('Created At') }}</th>
                                 <th scope="col">{{ __('Checkpoint') }}</th>
                                 <th scope="col">{{ __('Name') }}</th>
                                 <th scope="col">{{ __('Country Name') }}</th>
@@ -53,6 +75,7 @@
                             <tbody>
                             @foreach ($tourists as $tourist)
                                 <tr>
+                                    <td>{{ $tourist->nepali_date }}</td>
                                     <td>{{ $tourist->checkpoint->checkpoint_name }}</td>
                                     <td>{{ $tourist->tourist_name }}</td>
                                     <td>{{ $tourist->country->country_name}}</td>

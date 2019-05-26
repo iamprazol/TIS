@@ -27,6 +27,7 @@ class CreateInformationTable extends Migration
             $table->date('visa_period')->nullable();
             $table->string('passport_number')->nullable();
             $table->boolean('editable')->default(1);
+            $table->date('nepali_date')->nullable();
             $table->timestamps();
         });
 

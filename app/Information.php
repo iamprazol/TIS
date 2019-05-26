@@ -18,7 +18,8 @@ class Information extends Model
         'gender',
         'visa_period',
         'passport_number',
-        'editable'
+        'editable',
+        'nepali_date'
     ];
 
     public function checkpoint(){
