@@ -20,5 +20,6 @@ class Checkpoint
             return $next($request);
         } else {
             return redirect('home');
-        }    }
+        }
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Checkpoint;
 use App\CheckpointUser;
+use App\Role;
 use App\User;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Auth;
@@ -30,7 +31,8 @@ class UserController extends Controller
     public function create()
     {
         $checkpoint = Checkpoint::all();
-        return view('users.create')->with('checkpoints', $checkpoint);
+        $role = Role::find(2);
+        return view('users.create')->with('checkpoints', $checkpoint)->with('role', $role);
     }
 
     /**
@@ -43,6 +45,7 @@ class UserController extends Controller
     public function store(UserRequest $request)
     {
         $user = User::create($request->merge(['password' => Hash::make($request->get('password'))])->except('checkpoint_id'));
+
         CheckpointUser::create([
            'user_id' => $user->id,
            'checkpoint_id' => $request->checkpoint_id

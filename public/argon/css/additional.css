@@ -1,0 +1,23 @@
+.bg-gradient-primary{
+    background: linear-gradient(87deg, #172 0, #1a17 100%) !important;
+    opacity: 0.8;
+}
+
+.select2-container--default .select2-selection--single{
+    border: none !important;
+}
+
+.select2-container .select2-selection--single .select2-selection__rendered{
+    line-height: 1.5;
+    display: block;
+    width: 100%;
+    height: calc(2.75rem + 2px);
+    padding: .625rem .75rem;
+    transition: all .2s cubic-bezier(.68, -.55, .265, 1.55);
+    color: #8898aa;
+    border: 1px solid #cad1d7;
+    border-radius: .375rem;
+    background-color: #fff;
+    background-clip: padding-box;
+    box-shadow: none;
+}

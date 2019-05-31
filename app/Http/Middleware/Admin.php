@@ -19,7 +19,7 @@ class Admin
         if (Auth::user()->role_id == 1) {
             return $next($request);
         } else {
-            return redirect('home');
+            echo 'you are not an admin';
         }
     }
 }

@@ -7,8 +7,8 @@
     ])   
 
     <div class="container-fluid mt--7">
-        <div class="row ml-5">
-            <div class="col-xl-8 order-xl-1">
+        <div class="row ml-5 mr-5">
+            <div class="col-md-12">
                 <div class="card bg-secondary shadow">
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
@@ -32,13 +32,13 @@
                             @endif
 
                             <div class="pl-lg-4">
-                                <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-name">{{ __('Name') }}</label>
-                                    <input type="text" name="name" id="input-name" class="form-control form-control-alternative{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Name') }}" value="{{ old('name', auth()->user()->name) }}" required autofocus>
+                                <div class="form-group{{ $errors->has('full_name') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label" for="full_name">{{ __('Full Name') }}</label>
+                                    <input type="text" name="full_name" id="full_name" class="form-control form-control-alternative{{ $errors->has('full_name') ? ' is-invalid' : '' }}" placeholder="{{ __('You Name') }}" value="{{ old('name', auth()->user()->full_name) }}" required autofocus>
 
-                                    @if ($errors->has('name'))
+                                    @if ($errors->has('full_name'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('name') }}</strong>
+                                            <strong>{{ $errors->first('full_name') }}</strong>
                                         </span>
                                     @endif
                                 </div>
@@ -49,6 +49,16 @@
                                     @if ($errors->has('email'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('email') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                                <div class="form-group{{ $errors->has('phone') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label" for="phone">{{ __('Phone') }}</label>
+                                    <input type="tel" name="phone" id="phone" class="form-control form-control-alternative{{ $errors->has('phone') ? ' is-invalid' : '' }}" placeholder="{{ __('Phone') }}" value="{{ old('phone', auth()->user()->phone) }}" required>
+
+                                    @if ($errors->has('phone'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('phone') }}</strong>
                                         </span>
                                     @endif
                                 </div>
@@ -109,7 +119,7 @@
                 </div>
             </div>
         </div>
-        
+
         @include('layouts.footers.auth')
     </div>
 @endsection

@@ -1,7 +1,7 @@
 @extends('layouts.app', ['title' => __('User Management')])
 
 @section('content')
-    @include('users.partials.header', ['title' => __('Add User')])   
+    @include('users.partials.header', ['title' => __('Add Checkpoint User')])
 
     <div class="container-fluid mt--7">
         <div class="row">
@@ -31,6 +31,14 @@
                                             @foreach($checkpoints as $checkpoint)
                                                 <option value="{{ $checkpoint->id }}">{{ $checkpoint->checkpoint_name }}</option>
                                             @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label" for="role_id">{{ __('Role') }}</label>
+                                    <div class="form-group">
+                                        <select name="role_id" class="custom-select" id="role_id" required>
+                                                <option value="{{ $role->id }}">{{ $role->role_name }}</option>
                                         </select>
                                     </div>
                                 </div>

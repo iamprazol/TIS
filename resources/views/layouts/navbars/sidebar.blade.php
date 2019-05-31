@@ -73,14 +73,14 @@
 
                 @if(auth()->user()->role_id == 1 || auth()->user()->role_id == 2)
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('checkpoint.index') }}">
-                            <i class="ni ni-pin-3"></i>{{ __('Checkpoint') }}
+                        <a class="nav-link" href="{{ route('purpose.index') }}">
+                            <i class="ni ni-satisfied"></i>{{ __('Purpose') }}
                         </a>
                     </li>
                     @if(auth()->user()->role_id == 1)
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('purpose.index') }}">
-                                <i class="ni ni-satisfied"></i>{{ __('Purpose') }}
+                            <a class="nav-link" href="{{ route('checkpoint.index') }}">
+                                <i class="ni ni-pin-3"></i>{{ __('Checkpoint') }}
                             </a>
                         </li>
                         <li class="nav-item">

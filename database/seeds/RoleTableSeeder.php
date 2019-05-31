@@ -17,7 +17,7 @@ class RoleTableSeeder extends Seeder
         ];
 
         $r2 = [
-            'role_name' => 'Admin',
+            'role_name' => 'Checkpoint User',
         ];
 
         $r3 = [
