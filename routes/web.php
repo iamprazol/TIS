@@ -23,8 +23,7 @@ Route::middleware(['auth'])->group( function () {
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
     Route::get('information', ['uses' => 'InformationController@index', 'as' => 'information.index']);
-    Route::get('search-information', ['uses' => 'InformationController@search', 'as' => 'information.search']);
-    Route::post('/export-information',['uses' => 'InformationController@export', 'as' => 'export.information']);
+    Route::get('search-information', ['uses' => 'InformationController@searchInformation', 'as' => 'information.search']);
 
 
     Route::group(['middleware' => ['checkpoint']], function () {

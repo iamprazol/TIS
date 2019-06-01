@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Checkpoint;
 use App\Countries;
+use App\Exports\InformationExport;
+use App\Http\Resources\InfoResource;
+use App\Info;
 use App\Purpose;
 use App\UserPurpose;
 use Carbon\Carbon;
@@ -12,7 +15,7 @@ use App\Information;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\InformationResource as InformationResource;
 use App\DateConverter;
-use App\Exports\UsersExport;
+use Illuminate\Validation\Rules\In;
 use Maatwebsite\Excel\Facades\Excel;
 
 class InformationController extends Controller
@@ -28,18 +31,23 @@ class InformationController extends Controller
             }
             $info[] = $i;
         }
+        $purposes = Purpose::all();
 
-        return view('information.index')->with('tourists', $informations);
+        return view('information.index')->with('tourists', $informations)->with('purposes', $purposes);
 
         /*$data = InformationResource::collection($information);
         return $this->responser($information, $data, 'All Tourist Information Listed Successfully');*/
     }
+
+    ///////////////////////////////////
 
     public function checkpointInformation($id){
         $information = Information::where('checkpoint_id', $id)->paginate(15);
         $data = InformationResource::collection($information);
         return $this->responser($information, $data, 'All Tourist Information of a specific checkpoint Listed Successfully');
     }
+
+    ///////////////////////////////////
 
     public function create(){
         $user = Auth::user();
@@ -53,6 +61,8 @@ class InformationController extends Controller
             return view('information.create')->with('purposes', $purpose)->with('user', $user)->with('countries', $country);
         }
     }
+
+    //////////////////////////////////
 
     public function store(Request $r){
 
@@ -105,11 +115,15 @@ class InformationController extends Controller
         return $this->responser($information, $data, 'Information of tourist added successfully');*/
     }
 
+    ///////////////////////////////////
+
     public function editInformation($id){
         $tourist = Information::find($id);
         $purpose = Purpose::all();
         return view('information.edit')->with('purposes', $purpose)->with('tourist', $tourist);
     }
+
+    //////////////////////////////////
 
     public function updateInformation(Request $request, $id)
     {
@@ -148,29 +162,47 @@ class InformationController extends Controller
    */
     }
 
-    public function search(Request $request)
-    {
-        $informations = Information::orderBy('checkpoint_id', 'asc')->where('nepali_date', 'like', '%'.$request->year.'%')->paginate(15);
-        foreach ($informations as $i){
-            $now = Carbon::now();
-            $aday = Carbon::parse($i->created_at)->addDay();
-            if($now >= $aday) {
-                $i->editable = 0;
-                $i->save();
-            }
-            $info[] = $i;
-        }
+    /////////////////////////////////////
 
-        return view('information.index')->with('tourists', $informations);
+    public function searchInformation(Request $filters)
+    {
+        if($filters->has('submit')) {
+            $purposes = Purpose::all();
+            $information = $this->search($filters);
+            return view('information.index')->with('tourists', $information)->with('purposes', $purposes);
+        } elseif($filters->has('exportexcel')){
+            $infors = InfoResource::collection($this->search($filters));
+            $information = new InformationExport($infors);
+            return Excel::download($information, 'information.xlsx');
+        }
     }
 
-    public function export(Request $request){
+    public function search(Request $filters){
+        if ($filters->has('from') && $filters->has('to')) {
+            $information = Information::whereBetween('nepali_date', [$filters->from, $filters->to])->get();
 
-        if ($request->input('exportexcel') != null ){
-            return Excel::download(new UsersExport, 'information.xlsx');
+            if ($filters->has('purpose_id')) {
+                $purpose_ids = explode(",", $filters->purpose_id);
+
+                foreach ($purpose_ids as $purpose_id) {
+                    $userpurpose = UserPurpose::where('purpose_id', $purpose_id)->get();
+                    foreach ($userpurpose as $up) {
+                        $info_id[] = $up->information_id;
+                    }
+                }
+
+                foreach ($info_id as $id) {
+                    $infos = $information->find($id);
+                    if ($infos != null) {
+                        $infors[] = $infos;
+                    } else {
+                        $infors = null;
+                    }
+                }
+                $information = $infors;
+            }
         }
-
-        return redirect()->action('InformationController@index');
+        return collect($information);
     }
 
 }

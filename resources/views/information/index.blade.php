@@ -16,37 +16,54 @@
                         <hr style="margin-bottom: 1rem !important;">
                     </div>
                     <div class="row">
-                        <div class="col-8">
+                        <div class="col-10">
                             <form action="{{ route('information.search') }}" method="get">
                                 @csrf
                                 <div class="form-group">
-                                    <label class="form-control-label" for="year" style="margin-left: 1rem;">{{ __('Year') }}</label>
                                     <div class="row">
-                                        <div class="col-6">
+                                        <div class="col-8">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                            <label class="form-control-label" for="from" style="margin-left: 1rem;">{{ __('From') }}</label>
                                             <div class="form-group">
-                                                <input name="year" class="form-control" id="year" style="margin-left: 1rem; font-size: 0.82rem; height:1.8rem;" required>
+                                                <input name="from" class="form-control" id="from" style="margin-left: 1rem; font-size: 0.82rem; height:1.8rem;"  placeholder="2076-02-15" value="{{ old('from') }}" required>
+                                            </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label class="form-control-label" for="to" style="margin-left: 1rem;">{{ __('To') }}</label>
+                                                    <div class="form-group">
+                                                        <input name="to" class="form-control" id="to" style="margin-left: 1rem; font-size: 0.82rem; height:1.8rem;" placeholder="2076-02-16"  value="{{ old('to') }}" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label class="form-control-label" for="purpose_id" style="margin-left: 1rem;">{{ __('Purpose') }}</label>
+                                                    <div class="form-group">
+                                                        <select name="purpose_id" class="custom-select" id="purpose_id" style="margin-left: 1rem; font-size: 0.82rem; height:1.8rem;">
+                                                            <option disabled selected value>Choose One</option>
+                                                            @foreach($purposes as $purpose)
+                                                                <option value="{{ $purpose->id }}">{{ $purpose->purpose }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    <div class="col-4 text-right">
-                                        <input class="btn btn-primary btn-pill d-flex ml-auto mr-auto" name="submit" type="submit" value="Search" style="height:1.8rem; font-size: 0.82rem; line-height: 0.5rem;">
+                                    <div class="col-2 text-left">
+                                        <input class="btn btn-primary btn-pill d-flex ml-auto mr-auto" name="submit" type="submit" value="Search" style="height:1.8rem; font-size: 0.82rem; line-height: 0.5rem; margin-top: 1.9rem;">
                                     </div>
+                                        <div class="col-2 text-left">
+                                        <input class="btn btn-sm btn-twitter" type="submit" name="exportexcel" value= '{{ __('Excel Export')}}' style="margin-top: 2rem; margin-right: 1rem;">
+                                        </div>
                                     </div>
                                 </div>
                             </form>
                         </div>
-                        <div class="col-4">
+                        <div class="col-2">
                             <div class="row">
-                                <div class="col-6 text-right">
-
-                                    <form method='post' action={{ route('export.information') }}>
-                                        @csrf
-                                        <input class="btn btn-sm btn-twitter" type="submit" name="exportexcel" value= '{{ __('Excel Export')}}' style="margin-top: 2rem; margin-right: 1rem;">
-                                    </form>
-                                </div>
                                 @if(auth()->user()->role_id != 3)
-                                    <div class="col-6 text-left">
-                                        <a href="{{ route('information.create') }}" class="btn btn-sm btn-primary" style="margin-top: 2rem; margin-right: 1rem;">{{ __('Add Information') }}</a>
-                                    </div>
+                                <div class="col-6 text-left">
+                                    <a href="{{ route('information.create') }}" class="btn btn-sm btn-primary" style="margin-top: 2rem; margin-right: 1rem;">{{ __('Add Information') }}</a>
+                                </div>
                                 @endif
                             </div>
                         </div>
@@ -120,11 +137,6 @@
                             @endforeach
                             </tbody>
                         </table>
-                    </div>
-                    <div class="card-footer py-4">
-                        <nav class="d-flex justify-content-end" aria-label="...">
-                            {{ $tourists->links() }}
-                        </nav>
                     </div>
                 </div>
             </div>
