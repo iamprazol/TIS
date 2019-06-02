@@ -6,8 +6,9 @@ use App\Checkpoint;
 use App\Countries;
 use App\Exports\InformationExport;
 use App\Http\Resources\InfoResource;
-use App\Info;
+use App\Request as Req;
 use App\Purpose;
+use App\User;
 use App\UserPurpose;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -120,7 +121,14 @@ class InformationController extends Controller
     public function editInformation($id){
         $tourist = Information::find($id);
         $purpose = Purpose::all();
-        return view('information.edit')->with('purposes', $purpose)->with('tourist', $tourist);
+        $user = Auth::user();
+
+        $request = Req::where('information_id', $id)->first();
+        if($request != null){
+            $request->is_approved = 0;
+            $request->save();
+        }
+        return view('information.edit')->with('purposes', $purpose)->with('tourist', $tourist)->with('user', $user);
     }
 
     //////////////////////////////////
@@ -205,11 +213,55 @@ class InformationController extends Controller
         return collect($information);
     }
 
+    ////////////////////////////////////
+
     public function purposeChart(){
         $purposes = Purpose::all();
         $userpurpose = UserPurpose::all();
         return view('charts.purpose')->with('purposes', $purposes)->with('userpurpose', $userpurpose);
     }
+
+    ///////////////////////////////////
+
+    public function editIndex()
+    {
+        if (Auth::user()->role_id == 1) {
+            $request = Req::where('is_approved', 0)->get();
+            return view('request.request')->with('requests', $request);
+        } elseif (Auth::user()->role_id == 2){
+            $user_id = Auth::user()->id;
+            $request = Req::where('user_id', $user_id)->where('is_approved', 1)->get();
+            return view('request.index')->with('requests', $request);
+        }
+    }
+
+    public function requestForEdit($id){
+        $information = Information::find($id);
+        Req::create([
+            'information_id' => $id,
+            'user_id' => Auth::id()
+        ]);
+        return redirect()->route('request.edit')->with('informations', $information)->withStatus(__('Information edit request sent successfully'));
+    }
+
+    public function requestApprove($id){
+        $requests = Req::find($id);
+        $requests->is_approved = 1;
+        $requests->save();
+
+        $request = Req::orderBy('created_at', 'asc')->where('is_approved', 0)->get();
+        return view('request.request')->with('requests', $request)->withStatus(__('Information edit request approved successfully'));
+    }
+
+    public function requestReject($id){
+        $requests = Req::find($id);
+        $requests->delete();
+
+        $request = Req::orderBy('created_at', 'asc')->where('is_approved', 0)->get();
+        return view('request.request')->with('requests', $request)->withStatus(__('Information edit request rejected successfully'));
+    }
+
+    ///////////////////////////////////
 
     public function informationChart(){
         $male[] = null; $female[] = null; $others[] = null;

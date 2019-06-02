@@ -127,17 +127,27 @@
                                     <td>{{ $tourist->passport_number }}</td>
                                     @if(auth()->user()->role_id != 3)
                                         <td>
-                                            @if($tourist->editable == 1)
-                                                <a class="btn  btn-sm btn-primary" href="{{ route('information.edit', ['id' => $tourist->id]) }}">{{ __('Edit') }}</a>
+                                            @if(auth()->user()->checkpointuser->checkpoint_id == $tourist->checkpoint_id)
+                                                @if($tourist->editable == 1)
+                                                    <a class="btn  btn-sm btn-primary" href="{{ route('information.edit', ['id' => $tourist->id]) }}">{{ __('Edit') }}</a>
+                                                @else
+                                                    <a class="btn btn-sm btn-success" href="{{ route('request.sent', ['id' => $tourist->id]) }}">{{__('Request For Edit')}}</a>
+                                                @endif
                                             @else
-                                                <button class="btn btn-sm btn-secondary">{{__('UnEditable')}}</button>
+                                                <a class="btn btn-sm btn-secondary">{{__('Uneditable')}}</a>
                                             @endif
+
                                         </td>
                                     @endif
                                 </tr>
                             @endforeach
                             </tbody>
                         </table>
+                    </div>
+                    <div class="card-footer py-4">
+                        <nav class="d-flex justify-content-end" aria-label="...">
+                            {{ $tourists->links() }}
+                        </nav>
                     </div>
                 </div>
             </div>

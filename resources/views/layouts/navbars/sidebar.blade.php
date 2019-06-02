@@ -96,6 +96,11 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="{{ route('request.edit') }}">
+                            <i class="ni ni-single-02"></i>{{ __('Edit Request') }}
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link active" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
                             <i class="ni ni-shop" style="color: #f4645f;"></i>
                             <span class="nav-link-text" style="color: #f4645f;">{{ __('Statistics') }}</span>

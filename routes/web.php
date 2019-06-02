@@ -44,6 +44,12 @@ Route::middleware(['auth'])->group( function () {
 
 
         Route::get('information-by-checkpoint/{id}', 'InformationController@checkpointInformation');
+        Route::get('request-index', ['uses' => 'InformationController@editIndex', 'as' => 'request.edit']);
+        Route::get('request-sent/{id}', ['uses' => 'InformationController@requestForEdit', 'as' => 'request.sent']);
+        Route::get('request-approve/{id}', ['uses' => 'InformationController@requestApprove', 'as' => 'request.approve']);
+        Route::get('request-reject/{id}', ['uses' => 'InformationController@requestReject', 'as' => 'request.reject']);
+
+
 
 
         Route::group(['middleware' => ['admin']], function () {

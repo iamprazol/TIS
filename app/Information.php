@@ -30,6 +30,10 @@ class Information extends Model
         return $this->hasMany('App\UserPurpose');
     }
 
+    public function request(){
+        return $this->hasMany('App\Request');
+    }
+
     public function country(){
         return $this->belongsTo('App\Countries');
     }

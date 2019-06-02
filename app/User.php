@@ -60,6 +60,11 @@ class User extends Authenticatable implements JWTSubject
     public function role(){
         return $this->belongsTo('App\Role');
     }
+
+    public function Request(){
+        return $this->hasMany('App\Request');
+    }
+
     public function checkpointuser(){
         return $this->hasOne('App\CheckpointUser');
     }
