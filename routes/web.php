@@ -24,6 +24,8 @@ Route::middleware(['auth'])->group( function () {
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
     Route::get('information', ['uses' => 'InformationController@index', 'as' => 'information.index']);
     Route::get('search-information', ['uses' => 'InformationController@searchInformation', 'as' => 'information.search']);
+    Route::get('information-chart', ['uses' => 'InformationController@informationChart', 'as' => 'chart.info']);
+    Route::get('purpose-chart', ['uses' => 'InformationController@purposeChart', 'as' => 'chart.purpose']);
 
 
     Route::group(['middleware' => ['checkpoint']], function () {

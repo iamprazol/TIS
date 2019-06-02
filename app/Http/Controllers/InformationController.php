@@ -205,4 +205,39 @@ class InformationController extends Controller
         return collect($information);
     }
 
+    public function purposeChart(){
+        $purposes = Purpose::all();
+        $userpurpose = UserPurpose::all();
+        return view('charts.purpose')->with('purposes', $purposes)->with('userpurpose', $userpurpose);
+    }
+
+    public function informationChart(){
+        $male[] = null; $female[] = null; $others[] = null;
+        $informations = Information::all();
+        foreach ($informations as $information){
+            if($information->gender == 'Male'){
+                $male[] = $information;
+            } elseif($information->gender == 'Female'){
+                $female[] = $information;
+            } else {
+                $others[] = $information;
+            }
+        }
+        $domestic[] = null; $international[] = null;
+
+        foreach ($informations as $information){
+            if($information->tourist_type == 0){
+                $domestic[] = $information;
+            } else {
+                $international[] = $information;
+            }
+        }
+
+
+        $checkpoints = Checkpoint::all();
+        return view('charts.info')->with('checkpoints', $checkpoints)->with('informations', $information)
+            ->with('international', sizeof(array_filter($international)))->with('domestic', sizeof(array_filter($domestic)))
+            ->with('male', sizeof(array_filter($male)))->with('female', sizeof(array_filter($female)))->with('others', sizeof(array_filter($others)));
+    }
+
 }

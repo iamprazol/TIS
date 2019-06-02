@@ -14,9 +14,10 @@ class DatabaseSeeder extends Seeder
         $this->call(UserTableSeeder::class);
         $this->call(CheckpointTableSeeder::class);
         $this->call(CheckpointUserTableSeeder::class);
-        $this->call(InformationTableSeeder::class);
-        $this->call(PurposeTableSeeder::class);
         $this->call(ReviewTableSeeder::class);
         $this->call(RoleTableSeeder::class);
+        factory('App\Purpose', 10)->create();
+        factory('App\Information', 335)->create();
+        factory('App\UserPurpose', 500)->create();
     }
 }

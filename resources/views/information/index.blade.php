@@ -16,12 +16,12 @@
                         <hr style="margin-bottom: 1rem !important;">
                     </div>
                     <div class="row">
-                        <div class="col-10">
+                        <div class="col-9">
                             <form action="{{ route('information.search') }}" method="get">
                                 @csrf
                                 <div class="form-group">
                                     <div class="row">
-                                        <div class="col-8">
+                                        <div class="col-6">
                                             <div class="row">
                                                 <div class="col-md-4">
                                             <label class="form-control-label" for="from" style="margin-left: 1rem;">{{ __('From') }}</label>
@@ -48,26 +48,27 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    <div class="col-2 text-left">
-                                        <input class="btn btn-primary btn-pill d-flex ml-auto mr-auto" name="submit" type="submit" value="Search" style="height:1.8rem; font-size: 0.82rem; line-height: 0.5rem; margin-top: 1.9rem;">
-                                    </div>
-                                        <div class="col-2 text-left">
-                                        <input class="btn btn-sm btn-twitter" type="submit" name="exportexcel" value= '{{ __('Excel Export')}}' style="margin-top: 2rem; margin-right: 1rem;">
+                                        <div class="col-4">
+                                            <div class="row">
+                                                <div class="col-6 text-left">
+                                                    <input class="btn btn-primary btn-pill d-flex ml-auto mr-auto" name="submit" type="submit" value="Search" style="height:1.8rem; font-size: 0.82rem; line-height: 0.5rem; margin-top: 1.9rem;">
+                                                </div>
+                                                <div class="col-6 text-left">
+                                                    <input class="btn btn-sm btn-twitter" type="submit" name="exportexcel" value= '{{ __('Excel Export')}}' style="margin-top: 2rem; margin-left: 2rem;">
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </form>
                         </div>
-                        <div class="col-2">
-                            <div class="row">
-                                @if(auth()->user()->role_id != 3)
-                                <div class="col-6 text-left">
-                                    <a href="{{ route('information.create') }}" class="btn btn-sm btn-primary" style="margin-top: 2rem; margin-right: 1rem;">{{ __('Add Information') }}</a>
-                                </div>
-                                @endif
+                        @if(auth()->user()->role_id != 3)
+                            <div class="col-3 text-left">
+                                <a href="{{ route('information.create') }}" class="btn btn-sm btn-primary" style="margin-top: 2rem; margin-right: 1rem;">{{ __('Add Information') }}</a>
                             </div>
-                        </div>
+                        @endif
                     </div>
+
 
                     <div class="col-12">
                         @if (session('status'))

@@ -20,7 +20,12 @@ class CheckpointTableSeeder extends Seeder
             'checkpoint_name' => 'Ramdi Bridge'
         ];
 
+        $c3 = [
+            'checkpoint_name' => 'Airport'
+        ];
+
         Checkpoint::create($c1);
         Checkpoint::create($c2);
+        Checkpoint::create($c3);
     }
 }

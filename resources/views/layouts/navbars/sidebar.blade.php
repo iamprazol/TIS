@@ -94,7 +94,29 @@
                         <a class="nav-link" href="{{ route('information.index') }}">
                             <i class="ni ni-single-02"></i>{{ __('Tourist Information') }}
                         </a>
-                </li>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                            <i class="ni ni-shop" style="color: #f4645f;"></i>
+                            <span class="nav-link-text" style="color: #f4645f;">{{ __('Statistics') }}</span>
+                        </a>
+
+                        <div class="collapse show" id="navbar-examples">
+                            <ul class="nav nav-sm flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('chart.info') }}">
+                                        <i class="ni ni-single-02"></i>{{ __('Information Chart') }}
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('chart.purpose') }}">
+                                        <i class="ni ni-single-02"></i>{{ __('Purpose Chart') }}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
             </ul>
         </div>
     </div>
