@@ -32,10 +32,11 @@ class InfoResource extends JsonResource
     }
 
     public function purpose(){
+        $purpose[] = null;
         foreach ($this->userpurpose as $pu ){
             $purpose[] = $pu->purpose->purpose;
         }
-        $purposes = implode(",", $purpose);
+        $purposes = implode(",", array_filter($purpose));
         return $purposes;
     }
 

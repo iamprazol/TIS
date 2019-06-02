@@ -125,8 +125,7 @@ class InformationController extends Controller
 
         $request = Req::where('information_id', $id)->first();
         if($request != null){
-            $request->is_approved = 0;
-            $request->save();
+            $request->delete();
         }
         return view('information.edit')->with('purposes', $purpose)->with('tourist', $tourist)->with('user', $user);
     }
@@ -177,7 +176,7 @@ class InformationController extends Controller
         if($filters->has('submit')) {
             $purposes = Purpose::all();
             $information = $this->search($filters);
-            return view('information.index')->with('tourists', $information)->with('purposes', $purposes);
+            return view('information.search')->with('tourists', $information)->with('purposes', $purposes);
         } elseif($filters->has('exportexcel')){
             $infors = InfoResource::collection($this->search($filters));
             $information = new InformationExport($infors);
@@ -210,6 +209,7 @@ class InformationController extends Controller
                 $information = $infors;
             }
         }
+
         return collect($information);
     }
 

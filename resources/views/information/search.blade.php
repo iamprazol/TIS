@@ -24,10 +24,10 @@
                                         <div class="col-6">
                                             <div class="row">
                                                 <div class="col-md-4">
-                                            <label class="form-control-label" for="from" style="margin-left: 1rem;">{{ __('From') }}</label>
-                                            <div class="form-group">
-                                                <input name="from" class="form-control" id="from" style="margin-left: 1rem; font-size: 0.82rem; height:1.8rem;"  placeholder="2076-02-15" value="{{ old('from') }}" required>
-                                            </div>
+                                                    <label class="form-control-label" for="from" style="margin-left: 1rem;">{{ __('From') }}</label>
+                                                    <div class="form-group">
+                                                        <input name="from" class="form-control" id="from" style="margin-left: 1rem; font-size: 0.82rem; height:1.8rem;"  placeholder="2076-02-15" value="{{ old('from') }}" required>
+                                                    </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <label class="form-control-label" for="to" style="margin-left: 1rem;">{{ __('To') }}</label>
@@ -134,7 +134,7 @@
                                                     @if($tourist->editable == 1)
                                                         <a class="btn  btn-sm btn-primary" href="{{ route('information.edit', ['id' => $tourist->id]) }}">{{ __('Edit') }}</a>
                                                     @else
-                                                    <a class="btn btn-sm btn-success" href="{{ route('request.sent', ['id' => $tourist->id]) }}">{{__('Request For Edit')}}</a>
+                                                        <a class="btn btn-sm btn-success" href="{{ route('request.sent', ['id' => $tourist->id]) }}">{{__('Request For Edit')}}</a>
                                                     @endif
                                                 @else
                                                     <a class="btn btn-sm btn-secondary">{{__('Uneditable')}}</a>
@@ -148,11 +148,6 @@
                             @endforeach
                             </tbody>
                         </table>
-                    </div>
-                    <div class="card-footer py-4">
-                        <nav class="d-flex justify-content-end" aria-label="...">
-                            {{ $tourists->links() }}
-                        </nav>
                     </div>
                 </div>
             </div>

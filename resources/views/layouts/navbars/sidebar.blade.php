@@ -95,11 +95,13 @@
                             <i class="ni ni-single-02"></i>{{ __('Tourist Information') }}
                         </a>
                     </li>
+                    @if(auth()->user()->role_id != 3)
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('request.edit') }}">
                             <i class="ni ni-single-02"></i>{{ __('Edit Request') }}
                         </a>
                     </li>
+                    @endif
                     <li class="nav-item">
                         <a class="nav-link active" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
                             <i class="ni ni-shop" style="color: #f4645f;"></i>
