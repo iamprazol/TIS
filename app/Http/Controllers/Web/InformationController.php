@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Web;
 
+use App\Http\Controllers\Controller;
 use App\Checkpoint;
 use App\Countries;
 use App\Exports\InformationExport;
@@ -16,7 +17,6 @@ use App\Information;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\InformationResource as InformationResource;
 use App\DateConverter;
-use Illuminate\Validation\Rules\In;
 use Maatwebsite\Excel\Facades\Excel;
 
 class InformationController extends Controller

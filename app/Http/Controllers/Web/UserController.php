@@ -1,14 +1,22 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Web;
 
+use App\Http\Controllers\Controller;
 use App\Checkpoint;
 use App\CheckpointUser;
 use App\Role;
 use App\User;
 use App\Http\Requests\UserRequest;
+use Carbon\Carbon;
+use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -136,5 +144,53 @@ class UserController extends Controller
         } else {
             return redirect()->route('user.index')->withStatus(__('Action not permitted.'));
         }
+    }
+
+    public function forgotPassword(){
+        return view('auth.passwords.email');
+    }
+
+    public function sendResetLinkEmail(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+        'email' => 'required|email',
+        ]);
+
+            if( $user = User::where('email', $request->input('email') )->first() )
+            {
+                $token = Str::random(64);
+
+                DB::table(config('auth.passwords.users.table'))->insert([
+                    'email' => $user->email,
+                    'token' => $token,
+                    'created_at' => Carbon::now()
+                ]);
+
+                Notification::send($user , new \App\Notifications\PasswordResetNotification($token));
+                return redirect()->route('login')->withStatus(__('Password Reset Email Has Been Sent'));
+
+            } else {
+                return redirect()->back()->withErrors($validator->errors()->add('email', 'Email not found'));
+            }
+
+
+    }
+
+    public function resetPasswordForm($token){
+        return view('auth.passwords.reset')->with('token', $token);
+    }
+
+    public function resetPassword(Request $request){
+        $this->validate($request, [
+            'email' => 'required|email',
+            'password' => 'required|string|min:6',
+            'password_confirmation' => 'required|same:password',
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+        $user->password = bcrypt($request->password);
+        $user->save();
+        return redirect()->route('login')->withStatus(__('Password Changed Successfully .'));
+
     }
 }

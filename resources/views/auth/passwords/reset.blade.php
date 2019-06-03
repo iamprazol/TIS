@@ -11,7 +11,7 @@
                         <div class="text-center text-muted mb-4">
                             <small>{{ __('Reset Password') }}</small>
                         </div>
-                        <form role="form" method="POST" action="{{ route('password.update') }}">
+                        <form role="form" method="POST" action="{{ route('newpassword.reset') }}">
                             @csrf
 
                             <input type="hidden" name="token" value="{{ $token }}">

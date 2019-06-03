@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Purpose;
+use App\UserPurpose;
 class HomeController extends Controller
 {
     /**
@@ -21,6 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('dashboard');
-    }
+        $purposes = Purpose::all();
+        $userpurpose = UserPurpose::all();
+        return view('charts.purpose')->with('purposes', $purposes)->with('userpurpose', $userpurpose);    }
 }
