@@ -11,13 +11,6 @@
                         <div class="text-center text-muted mb-4">
                             <small>{{ __('Reset password') }}</small>
                         </div>
-
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                        @endif
-
                         <form role="form" method="POST" action="{{ route('password.change') }}">
                             @csrf
 
@@ -29,7 +22,7 @@
                                     <input class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Email') }}" type="email" name="email" value="{{ old('email') }}" required autofocus>
                                 </div>
                                 @if ($errors->has('email'))
-                                    <span class="invalid-feedback" role="alert">
+                                    <span class="invalid-feedback" style="display: block;" role="alert">
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
                                 @endif

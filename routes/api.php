@@ -12,25 +12,62 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::post('login', 'UserController@authenticate');
+Route::post('login', 'Api\UserController@authenticate');
 
 Route::group(['middleware' => ['jwt.verify']], function() {
-    Route::post('add-user', 'UserController@addUser');
-    Route::get('my-profile', 'UserController@getAuthenticatedUser');
-    Route::put('profile-edit', 'UserController@update');
-    Route::post('add-information', 'InformationController@addInformation');
-    Route::get('information', 'InformationController@index');
-    Route::get('information-by-checkpoint/{id}', 'InformationController@checkpointInformation');
-    Route::put('edit-information/{id}', 'InformationController@editInformation');
+    Route::post('logout', 'Api\UserController@logout');
+    Route::get('my-profile', 'Api\UserController@getAuthenticatedUser');
+    Route::put('profile-edit', 'Api\UserController@update');
+    Route::get('information', 'Api\InformationController@index');
+    Route::get('search-information', 'Api\InformationController@search');
 
-    Route::post('delete-purpose/{id}', 'PurposeController@deletePurpose');
+    Route::middleware(['apicheckpoint'])->prefix('checkpoint')->group( function () {
+        Route::post('logout', 'UserController@logout');
+        Route::get('my-profile', 'Api\UserController@getAuthenticatedUser');
+        Route::put('profile-edit', 'Api\UserController@update');
+        Route::get('information', 'Api\InformationController@index');
+        Route::get('search-information', 'Api\InformationController@search');
 
-    Route::group(['middleware' => ['admin']], function () {
-       Route::post('add-purpose', 'PurposeController@addPurpose');
-       Route::get('purpose', 'PurposeController@index');
-       Route::post('add-checkpoint', 'CheckpointController@addCheckpoint');
-       Route::get('checkpoint', 'CheckpointController@index');
-       Route::post('delete-checkpoint/{id}', 'CheckpointController@deleteCheckpoint');
-       Route::get('checkpoint-user', 'CheckpointUserController@index');
+        Route::post('add-information', 'Api\InformationController@addInformation');
+        Route::put('edit-information/{id}', 'Api\InformationController@editInformation');
+        Route::post('add-purpose', 'Api\PurposeController@addPurpose');
+        Route::get('purpose', 'Api\PurposeController@index');
+        Route::post('delete-purpose/{id}', 'Api\PurposeController@deletePurpose');
+
+        Route::get('countries', 'Api\CountryController@index');
+        Route::get('request-sent/{id}', 'Api\InformationController@requestForEdit');
+        Route::get('my-request-list', 'Api\InformationController@myRequestIndex');
+
+    });
+
+    Route::middleware(['apiadmin'])->prefix('admin')->group( function () {
+        Route::post('logout', 'UserController@logout');
+        Route::get('my-profile', 'Api\UserController@getAuthenticatedUser');
+        Route::put('profile-edit', 'Api\UserController@update');
+        Route::get('information', 'Api\InformationController@index');
+        Route::get('search-information', 'Api\InformationController@search');
+
+        Route::get('countries', 'Api\CountryController@index');
+
+        Route::post('add-purpose', 'Api\PurposeController@addPurpose');
+        Route::get('purpose', 'Api\PurposeController@index');
+        Route::post('delete-purpose/{id}', 'Api\PurposeController@deletePurpose');
+
+        Route::post('add-checkpoint', 'Api\CheckpointController@addCheckpoint');
+        Route::get('checkpoints', 'Api\CheckpointController@index');
+        Route::post('delete-checkpoint/{id}', 'Api\CheckpointController@deleteCheckpoint');
+
+        Route::post('add-user', 'Api\UserController@addUser');
+        Route::get('users', 'Api\UserController@userList');
+        Route::post('make-admin/{id}', 'Api\UserController@makeAdmin');
+        Route::post('remove-admin/{id}', 'Api\UserController@removeAdmin');
+        Route::post('enable-user/{id}', 'Api\UserController@enableUser');
+        Route::post('disable-user/{id}', 'Api\UserController@disableUser');
+
+        Route::post('add-information', 'Api\InformationController@addInformation');
+        Route::put('edit-information/{id}', 'Api\InformationController@editInformation');
+        Route::get('request-approve/{id}', 'Api\InformationController@requestApprove');
+        Route::get('request-reject/{id}', 'Api\InformationController@requestReject');
+        Route::get('request-list', 'Api\InformationController@requestIndex');
     });
 });

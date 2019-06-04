@@ -20,22 +20,24 @@ class UserResource extends JsonResource
             'full_name' => $this->full_name,
             'email' => $this->email,
             'phone' => $this->phone,
-            'is_admin' => $this->is_admin(),
+            'role' => $this->is_admin(),
             'checkpoint' => $this->checkpoint()
         ];
     }
 
     public function is_admin(){
-        $admin = $this->is_admin;
-        if($admin == 0){
+        $admin = $this->role_id;
+        if($admin == 2){
             return 'Checkpoint User';
-        } else {
+        } elseif($admin == 1){
             return 'Admin';
+        } else {
+            return 'Guest';
         }
     }
 
     public function checkpoint(){
-        if($this->is_admin == 0) {
+        if($this->role_id == 2) {
             if ($this->checkpointuser != null) {
                 return $this->checkpointuser->checkpoint->checkpoint_name;
             } else {

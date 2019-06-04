@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
-class Admin
+class ApiCheckpoint
 {
     /**
      * Handle an incoming request.
@@ -16,10 +16,10 @@ class Admin
      */
     public function handle($request, Closure $next)
     {
-            if (Auth::user()->role_id == 1) {
-                return $next($request);
-            } else {
-                echo 'you are not an admin';
-            }
+        if (Auth::user()->role_id == 2) {
+            return $next($request);
+        } else {
+            return response()->json(['message' => 'You\'re not authorised to visit this site', 'status' => 401], 401);
+        }
     }
 }

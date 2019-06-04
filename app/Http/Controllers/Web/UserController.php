@@ -153,7 +153,7 @@ class UserController extends Controller
     public function sendResetLinkEmail(Request $request)
     {
         $validator = Validator::make($request->all(), [
-        'email' => 'required|email',
+            'email' => 'required|email',
         ]);
 
             if( $user = User::where('email', $request->input('email') )->first() )
@@ -167,7 +167,7 @@ class UserController extends Controller
                 ]);
 
                 Notification::send($user , new \App\Notifications\PasswordResetNotification($token));
-                return redirect()->route('login')->withStatus(__('Password Reset Email Has Been Sent'));
+                return redirect()->route('login')->withStatus(__('Password Reset Email Has Been Sent to your Email address'));
 
             } else {
                 return redirect()->back()->withErrors($validator->errors()->add('email', 'Email not found'));
@@ -181,16 +181,20 @@ class UserController extends Controller
     }
 
     public function resetPassword(Request $request){
-        $this->validate($request, [
+        $validator = Validator::make($request->all(), [
             'email' => 'required|email',
-            'password' => 'required|string|min:6',
-            'password_confirmation' => 'required|same:password',
+            'password' => 'required|confirmed|min:6',
         ]);
 
-        $user = User::where('email', $request->email)->first();
-        $user->password = bcrypt($request->password);
-        $user->save();
-        return redirect()->route('login')->withStatus(__('Password Changed Successfully .'));
+        $verified = DB::table(config('auth.passwords.users.table'))->where('token', $request->token)->first();
 
+        if($request->email == $verified->email) {
+            $user = User::where('email', $request->email)->first();
+            $user->password = bcrypt($request->password);
+            $user->save();
+            return redirect()->route('login')->withStatus(__('Password Changed Successfully .'));
+        } else {
+            return redirect()->back()->withErrors($validator->errors()->add('email', 'Enter email we send verification code to!'));
+        }
     }
 }
