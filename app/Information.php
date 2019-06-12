@@ -19,7 +19,9 @@ class Information extends Model
         'visa_period',
         'passport_number',
         'editable',
-        'nepali_date'
+        'nepali_date',
+        'provisional_card',
+        'status'
     ];
 
     public function checkpoint(){

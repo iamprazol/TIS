@@ -57,16 +57,27 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group{{ $errors->has('tourist_name') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="tourist_name">{{ __('Tourist Name') }}</label>
-                                    <input name="tourist_name" id="tourist_name" class="form-control form-control-alternative{{ $errors->has('tourist_name') ? ' is-invalid' : '' }}" placeholder="{{ __('Tourist Name') }}" value="{{ old('tourist_name') }}" required>
+                                <div class="row" style="margin-top: 1rem;">
+                                    <div class="col-md-6">
+                                        <div class="form-group{{ $errors->has('tourist_name') ? ' has-danger' : '' }}">
+                                            <label class="form-control-label" for="tourist_name">{{ __('Tourist Name') }}</label>
+                                            <input name="tourist_name" id="tourist_name" class="form-control form-control-alternative{{ $errors->has('tourist_name') ? ' is-invalid' : '' }}" placeholder="{{ __('Tourist Name') }}" value="{{ old('tourist_name') }}" required>
 
-                                    @if ($errors->has('tourist_name'))
-                                        <span class="invalid-feedback" role="alert">
+                                            @if ($errors->has('tourist_name'))
+                                                <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('tourist_name') }}</strong>
                                         </span>
-                                    @endif
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="passport_number">{{ __('Passport Number') }}</label>
+                                            <input name="passport_number" id="passport_number" class="form-control" placeholder="{{ __('Enter Passport Number (Mandatory)') }}" value="{{ old('passport_number') }}" required >
+                                        </div>
+                                    </div>
                                 </div>
+
                                 <div class="form-group">
                                     <label class="form-control-label" for="purpose_id">{{ __('Purpose') }}</label>
                                     <div class="form-group list-inline" style="margin-left: .5rem">
@@ -108,8 +119,8 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="form-control-label" for="passport_number">{{ __('Passport Number') }}</label>
-                                            <input name="passport_number" id="passport_number" class="form-control" placeholder="{{ __('Enter Passport Number (Not Mandatory)') }}" value="{{ old('passport_number') }}" >
+                                            <label class="form-control-label" for="provisional_card">{{ __('Provisional Card Number') }}</label>
+                                            <input name="provisional_card" id="provisional_card" class="form-control" placeholder="{{ __('Enter Provisional Card Number (Not Mandatory)') }}" value="{{ old('provisional_card') }}" >
                                         </div>
                                     </div>
                                 </div>

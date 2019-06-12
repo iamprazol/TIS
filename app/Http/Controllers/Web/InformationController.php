@@ -92,6 +92,7 @@ class InformationController extends Controller
             'gender' => $r->gender,
             'duration' => $r->duration,
             'passport_number' => $r->passport_number,
+            'provisional_card' => $r->provisional_card,
             'age' => $r->age,
             'visa_period' => $r->visa_period,
             'nepali_date' => $nepali_date
@@ -106,6 +107,10 @@ class InformationController extends Controller
                 ]);
             }
         }
+
+        $country = Countries::find($r->country_id);
+        $country->count = $country->count + 1;
+        $country->save();
 
         return redirect()->route('information.index')->with('tourists', $information)->withStatus(__('Information successfully added.'));
 
@@ -144,6 +149,7 @@ class InformationController extends Controller
         $information->gender = $request->gender;
         $information->duration = $request->duration;
         $information->passport_number = $request->passport_number;
+        $information->provisional_card = $request->provisional_card;
         $information->visa_period = $request->visa_period;
         $information->save();
 
@@ -221,6 +227,7 @@ class InformationController extends Controller
         return view('charts.purpose')->with('purposes', $purposes)->with('userpurpose', $userpurpose);
     }
 
+
     ///////////////////////////////////
 
     public function editIndex()
@@ -285,11 +292,27 @@ class InformationController extends Controller
             }
         }
 
+        $maxcount = 0; $count[] = null; $name[] = null;
+        $country = Countries::orderBy('count', 'desc')->get()->take(8);
+        foreach ($country as $c){
+            $name[] = $c->country_name;
+            $count[] = $c->count;
+            $maxcount = $maxcount + $c->count;
+        }
+
+        $countries = Countries::orderBy('count', 'desc')->get();
+        $totalcount = 0;
+        foreach ($countries as $co){
+            $totalcount = $totalcount + $co->count;
+        }
+
+        $mincount = $totalcount - $maxcount;
 
         $checkpoints = Checkpoint::all();
         return view('charts.info')->with('checkpoints', $checkpoints)->with('informations', $information)
             ->with('international', sizeof(array_filter($international)))->with('domestic', sizeof(array_filter($domestic)))
-            ->with('male', sizeof(array_filter($male)))->with('female', sizeof(array_filter($female)))->with('others', sizeof(array_filter($others)));
+            ->with('male', sizeof(array_filter($male)))->with('female', sizeof(array_filter($female)))->with('others', sizeof(array_filter($others)))
+            ->with('country_name', array_filter($name))->with('count', array_filter($count))->with('otherscount', $mincount);
     }
 
 }

@@ -98,6 +98,7 @@
                                 <th scope="col">{{ __('Age') }}</th>
                                 <th scope="col">{{ __('Visa Period') }}</th>
                                 <th scope="col">{{ __('Passport Number') }}</th>
+                                <th scope="col">{{ __('Provisional Card') }}</th>
                                 @if(auth()->user()->role_id != 3)
                                     <th scope="col">{{ __('Option') }}</th>
                                 @endif
@@ -127,7 +128,8 @@
                                     <td>{{ $tourist->age }}</td>
                                     <td>{{ $tourist->visa_period }}</td>
                                     <td>{{ $tourist->passport_number }}</td>
-                                    @if(auth()->user()->role_id != 3)
+                                    <td>{{ $tourist->provisional_card }}</td>
+                                @if(auth()->user()->role_id != 3)
                                         <td>
                                             @if(auth()->user()->role_id != 1)
                                                 @if(auth()->user()->checkpointuser->checkpoint_id == $tourist->checkpoint_id)

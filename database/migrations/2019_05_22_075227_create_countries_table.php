@@ -18,6 +18,7 @@ class CreateCountriesTable extends Migration
             $table->string('country_name');
             $table->string('TwoCharCountryCode', 2);
             $table->string('ThreeCharCountryCode', 3);
+            $table->bigInteger('count')->default(0);
             $table->timestamps();
         });
     }

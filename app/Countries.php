@@ -10,7 +10,8 @@ class Countries extends Model
         'id',
         'country_name',
         'TwoCharCountryCode',
-        'ThreeCharCountryCode'
+        'ThreeCharCountryCode',
+        'count'
     ];
 
     public function information(){

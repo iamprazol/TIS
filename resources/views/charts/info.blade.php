@@ -4,6 +4,24 @@
     @include('layouts.headers.cards')
 
     <div class="container-fluid mt--7">
+        <div class="col-xl-12">
+            <div class="card shadow">
+                <div class="card-header bg-transparent">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="mb-0">Tourist By Country</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <!-- Chart -->
+                    <div class="chart">
+                        <canvas id="myCountryChart" class="chart-canvas"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="row mt-5">
         <div class="col-xl-4">
             <div class="card shadow">
@@ -57,6 +75,7 @@
                 </div>
             </div>
 
+
            {{-- <div class="col-xl-6 mb-5 mb-xl-0">
                 <div class="card shadow">
                     <div class="card-header border-0">
@@ -108,7 +127,6 @@
 
 
         </div>
-
         @include('layouts.footers.auth')
     </div>
 @endsection
@@ -203,6 +221,39 @@
                     borderColor: [
                         'rgba(153, 102, 255, 1)',
                         'rgba(255, 159, 64, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+
+        });
+    </script>
+
+    <script>
+        var ctx = document.getElementById("myCountryChart").getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: [@foreach($country_name as $name)
+                        "{{ $name }}",
+                    @endforeach
+                    "Others"
+                ],
+                datasets: [{
+                    label: 'Total number of tourists',
+                    data: [@foreach($count as $c)
+                        {{ $c }},
+                        @endforeach
+                        {{ $otherscount }}
+                    ],
+                    backgroundColor: [ @foreach($country_name as $name)
+                        'rgba({{ rand(0,255) }}, {{ rand(0,255) }}, {{ rand(0,255) }}, 0.4)',
+                        @endforeach
+
+                    ],
+                    borderColor: [ @foreach($country_name as $name)
+                        'rgba({{ rand(0,255) }}, {{ rand(0,255) }}, {{ rand(0,255) }}, 1)',
+                        @endforeach
                     ],
                     borderWidth: 1
                 }]
