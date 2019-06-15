@@ -92,6 +92,13 @@
                                         <i class="ni ni-single-copy-04"></i>{{ __('Exit Information') }}
                                     </a>
                                 </li>
+                                @if(auth()->user()->role_id == 1)
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('info.validate') }}">
+                                            <i class="ni ni-check-bold"></i>{{ __('Check Validation') }}
+                                        </a>
+                                    </li>
+                                @endif
                             </ul>
                         </div>
                     </li>

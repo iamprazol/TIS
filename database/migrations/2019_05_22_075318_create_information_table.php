@@ -16,7 +16,7 @@ class CreateInformationTable extends Migration
         Schema::create('information', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('checkpoint_id');
-            $table->unsignedBigInteger('country_id');
+            $table->unsignedBigInteger('countries_id');
             $table->foreign('checkpoint_id')->references('id')->on('checkpoints')->onDelete('cascade');
             $table->string('tourist_name');
             $table->boolean('tourist_type')->default(0);

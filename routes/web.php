@@ -79,6 +79,10 @@ Route::middleware(['auth'])->group( function () {
             Route::post('add-checkpoint', ['uses' => 'Web\CheckpointController@store', 'as' => 'checkpoint.store']);
             Route::post('delete-checkpoint/{id}', ['uses' => 'Web\CheckpointController@deleteCheckpoint', 'as' => 'checkpoint.destroy']);
 
+            Route::get('validate', ['uses' => 'Web\ExitInfoController@valid', 'as' => 'info.validate']);
+            Route::get('check-validation', ['uses' => 'Web\ExitInfoController@validateInfo', 'as' => 'check.validation']);
+
+
         });
 
         /*  Route::post('add-purpose', 'PurposeController@addPurpose');

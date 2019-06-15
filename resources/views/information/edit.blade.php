@@ -45,8 +45,8 @@
                                         <div class="form-group">
                                             <label class="form-control-label" for="country_id">{{ __('Country Name') }}</label>
                                             <div class="form-group">
-                                                <select name="country_id" class="custom-select" id="country_id" required>
-                                                    <option value="{{ $tourist->country_id }}" selected="">{{ $tourist->country->country_name }}</option>
+                                                <select name="country_id" class="custom-select" id="country_id">
+                                                    <option value="{{ $tourist->country_id }}" selected="">{{ $tourist->countries->country_name }}</option>
                                                 </select>
                                             </div>
                                         </div>

@@ -110,7 +110,7 @@
                                     <td>{{ $tourist->nepali_date }}</td>
                                     <td>{{ $tourist->checkpoint->checkpoint_name }}</td>
                                     <td>{{ $tourist->tourist_name }}</td>
-                                    <td>{{ $tourist->country->country_name}}</td>
+                                    <td>{{ $tourist->countries->country_name}}</td>
                                     <td>
                                         @if($tourist->tourist_type == 0)
                                             {{ "Domestic" }}

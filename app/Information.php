@@ -9,10 +9,9 @@ class Information extends Model
     protected $fillable = [
         'id',
         'checkpoint_id',
-        'country_id',
+        'countries_id',
         'tourist_name',
         'tourist_type',
-        'country_name',
         'duration',
         'age',
         'gender',
@@ -36,7 +35,7 @@ class Information extends Model
         return $this->hasMany('App\Request');
     }
 
-    public function country(){
+    public function countries(){
         return $this->belongsTo('App\Countries');
     }
 }

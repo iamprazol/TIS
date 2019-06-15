@@ -229,7 +229,7 @@
         });
     </script>
 
-    <script>
+   <script>
         var ctx = document.getElementById("myCountryChart").getContext('2d');
         var myChart = new Chart(ctx, {
             type: 'bar',

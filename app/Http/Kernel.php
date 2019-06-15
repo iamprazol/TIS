@@ -68,7 +68,6 @@ class Kernel extends HttpKernel
         'apiadmin' => \App\Http\Middleware\ApiAdmin::class,
         'checkpoint' => \App\Http\Middleware\Checkpoint::class,
         'apicheckpoint' => \App\Http\Middleware\ApiCheckpoint::class,
-
     ];
 
     /**

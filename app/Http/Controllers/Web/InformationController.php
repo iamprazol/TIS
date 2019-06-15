@@ -22,7 +22,7 @@ use Maatwebsite\Excel\Facades\Excel;
 class InformationController extends Controller
 {
     public function index(){
-        $informations = Information::orderBy('checkpoint_id', 'asc')->paginate(15);
+        $informations = Information::orderBy('created_at', 'desc')->orderBy('checkpoint_id', 'asc')->paginate(15);
         foreach ($informations as $i){
             $now = Carbon::now();
             $aday = Carbon::parse($i->created_at)->addDay();
@@ -79,11 +79,11 @@ class InformationController extends Controller
         $day = Carbon::now()->format('d');
         $converter = new DateConverter();
         $converter->setEnglishDate($year, $month, $day);
-        $nepali_date = $converter->getNepaliYear()."/".$converter->getNepaliMonth()."/".$converter->getNepaliDate();
+        $nepali_date = $converter->getNepaliYear()."-".$converter->getNepaliMonth()."-".$converter->getNepaliDate();
 
         $information = Information::create([
             'checkpoint_id' => $r->checkpoint_id,
-            'country_id' => $r->country_id,
+            'countries_id' => $r->country_id,
             'tourist_name' => $r->tourist_name,
             'tourist_type' => $tourist_type,
             'gender' => $r->gender,

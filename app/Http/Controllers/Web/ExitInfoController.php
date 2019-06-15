@@ -103,4 +103,17 @@ class ExitInfoController extends Controller
         return collect($information);
     }
 
+    ////////////////////////
+
+    public function valid(){
+        return view('exit.valid');
+    }
+
+    ///////////////////////
+
+    public function validateInfo(Request $request){
+        $entry = Information::where('passport_number', $request->passport_number)->first();
+        $exit = ExitInfo::where('passport_number', $request->passport_number)->first();
+        return view('exit.checkvalidation')->with('entry', $entry)->with('exit', $exit);
+    }
 }
