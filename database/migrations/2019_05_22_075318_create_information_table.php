@@ -27,8 +27,7 @@ class CreateInformationTable extends Migration
             $table->string('passport_number')->default(45454545454);
             $table->string('provisional_card')->nullable();
             $table->boolean('editable')->default(1);
-            $table->boolean('status')->default(0);
-            $table->date('nepali_date')->nullable();
+            $table->string('nepali_date')->nullable();
             $table->timestamps();
         });
 

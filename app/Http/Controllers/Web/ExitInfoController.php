@@ -1,0 +1,106 @@
+<?php
+
+namespace App\Http\Controllers\Web;
+
+use App\Checkpoint;
+use App\Countries;
+use App\DateConverter;
+use App\Exports\InformationExport;
+use App\Http\Resources\InfoResource;
+use App\Information;
+use App\Purpose;
+use App\UserPurpose;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\ExitInfo;
+use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+
+class ExitInfoController extends Controller
+{
+    public function index()
+    {
+        $informations = ExitInfo::orderBy('created_at', 'desc')->paginate(15);
+        return view('exit.index')->with('tourists', $informations);
+    }
+
+    ////////////////////////////
+
+    public function create(){
+        $user = Auth::user();
+        $country = Countries::all();
+        if($user->isAdmin() == 1) {
+            $checkpoint = Checkpoint::all();
+            return view('exit.create')->with('checkpoints', $checkpoint)->with('countries', $country);
+        } else {
+            return view('exit.create')->with('user', $user)->with('countries', $country);
+        }
+    }
+
+    //////////////////////////////////
+
+    public function store(Request $r){
+
+        $this->Validate($r, [
+            'tourist_name' => 'required|string|max:255|min:2',
+        ]);
+
+        if($r->country_id == 154){
+            $tourist_type = 0;
+        } else {
+            $tourist_type = 1;
+        }
+
+        $year = Carbon::now()->format('Y');
+        $month = Carbon::now()->format('m');
+        $day = Carbon::now()->format('d');
+        $converter = new DateConverter();
+        $converter->setEnglishDate($year, $month, $day);
+        $nepali_date = $converter->getNepaliYear()."-".$converter->getNepaliMonth()."-".$converter->getNepaliDate();
+
+        $information = ExitInfo::create([
+            'checkpoint_id' => $r->checkpoint_id,
+            'country_id' => $r->country_id,
+            'tourist_name' => $r->tourist_name,
+            'tourist_type' => $tourist_type,
+            'gender' => $r->gender,
+            'passport_number' => $r->passport_number,
+            'nepali_date' => $nepali_date,
+            'reviews' => $r->reviews
+        ]);
+
+
+        return redirect()->route('exitinfo.index')->with('tourists', $information)->withStatus(__('Exiting Tourists Information successfully added.'));
+    }
+
+    ////////////////////////
+
+    public function delete($id){
+        $exit = ExitInfo::find($id);
+        $exit->delete();
+
+        return redirect()->route('exitinfo.index')->withStatus(__('Exiting Tourists Information successfully deleted.'));
+
+    }
+
+    ////////////////////////
+
+    public function searchInformation(Request $filters)
+    {
+        if($filters->has('submit')) {
+            $information = $this->search($filters);
+            return view('exit.search')->with('tourists', $information);
+        }
+    }
+
+    ////////////////////////
+
+    public function search(Request $filters){
+        if ($filters->has('from') && $filters->has('to')) {
+            $information = ExitInfo::whereBetween('nepali_date', [$filters->from, $filters->to])->get();
+        }
+        return collect($information);
+    }
+
+}

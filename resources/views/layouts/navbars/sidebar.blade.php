@@ -76,20 +76,35 @@
                     @endif
                 @endif
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('information.index') }}">
-                            <i class="ni ni-single-02"></i>{{ __('Tourist Information') }}
+                        <a class="nav-link active" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                            <i class="ni ni-paper-diploma" style="color: #f4645f;"></i>
+                            <span class="nav-link-text" style="color: #f4645f;">{{ __('Tourist Information') }}</span>
                         </a>
+                        <div class="collapse show" id="navbar-examples">
+                            <ul class="nav nav-sm flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('information.index') }}">
+                                        <i class="ni ni-collection"></i>{{ __('Entry Information') }}
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('exitinfo.index') }}">
+                                        <i class="ni ni-single-copy-04"></i>{{ __('Exit Information') }}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
                     @if(auth()->user()->role_id != 3)
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('request.edit') }}">
-                            <i class="ni ni-single-02"></i>{{ __('Edit Request') }}
+                            <i class="ni ni-ruler-pencil"></i>{{ __('Edit Request') }}
                         </a>
                     </li>
                     @endif
                     <li class="nav-item">
                         <a class="nav-link active" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
-                            <i class="ni ni-shop" style="color: #f4645f;"></i>
+                            <i class="ni ni-chart-bar-32" style="color: #f4645f;"></i>
                             <span class="nav-link-text" style="color: #f4645f;">{{ __('Statistics') }}</span>
                         </a>
 
@@ -97,12 +112,12 @@
                             <ul class="nav nav-sm flex-column">
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('chart.info') }}">
-                                        <i class="ni ni-single-02"></i>{{ __('Information Chart') }}
+                                        <i class="ni ni-chart-pie-35"></i>{{ __('Information Chart') }}
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('chart.purpose') }}">
-                                        <i class="ni ni-single-02"></i>{{ __('Purpose Chart') }}
+                                        <i class="ni ni-chart-pie-35"></i>{{ __('Purpose Chart') }}
                                     </a>
                                 </li>
                             </ul>

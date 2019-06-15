@@ -17,4 +17,8 @@ class Checkpoint extends Model
     public function information(){
         return $this->hasMany('App\Information');
     }
+
+    public function exitinfo(){
+        return $this->hasMany('App\ExitInfo');
+    }
 }

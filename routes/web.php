@@ -28,8 +28,10 @@ Route::middleware(['auth'])->group( function () {
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
-    Route::get('information', ['uses' => 'Web\InformationController@index', 'as' => 'information.index']);
-    Route::get('search-information', ['uses' => 'Web\InformationController@searchInformation', 'as' => 'information.search']);
+    Route::get('entry-information', ['uses' => 'Web\InformationController@index', 'as' => 'information.index']);
+    Route::get('exit-information', ['uses' => 'Web\ExitInfoController@index', 'as' => 'exitinfo.index']);
+    Route::get('search-entry-information', ['uses' => 'Web\InformationController@searchInformation', 'as' => 'information.search']);
+    Route::get('search-exit-information', ['uses' => 'Web\ExitInfoController@searchInformation', 'as' => 'exit.search']);
     Route::get('information-chart', ['uses' => 'Web\InformationController@informationChart', 'as' => 'chart.info']);
     Route::get('purpose-chart', ['uses' => 'Web\InformationController@purposeChart', 'as' => 'chart.purpose']);
 
@@ -37,8 +39,11 @@ Route::middleware(['auth'])->group( function () {
     Route::group(['middleware' => ['checkpoint']], function () {
 
         //Information
-        Route::get('create-information', ['uses' => 'Web\InformationController@create', 'as' => 'information.create']);
-        Route::post('add-information', ['uses' => 'Web\InformationController@store', 'as' => 'information.store']);
+        Route::get('create-entry-information', ['uses' => 'Web\InformationController@create', 'as' => 'information.create']);
+        Route::get('create-exit-information', ['uses' => 'Web\ExitInfoController@create', 'as' => 'exit.create']);
+        Route::post('add-entry-information', ['uses' => 'Web\InformationController@store', 'as' => 'information.store']);
+        Route::post('add-exit-information', ['uses' => 'Web\ExitInfoController@store', 'as' => 'exit.store']);
+        Route::get('delete-exit-information/{id}', ['uses' => 'Web\ExitInfoController@delete', 'as' => 'exit.delete']);
         Route::get('edit-information/{id}', ['uses' => 'Web\InformationController@editInformation', 'as' => 'information.edit']);
         Route::post('update-information/{id}', ['uses' => 'Web\InformationController@updateInformation', 'as' => 'information.update']);
 

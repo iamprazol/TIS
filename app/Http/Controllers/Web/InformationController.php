@@ -35,9 +35,6 @@ class InformationController extends Controller
         $purposes = Purpose::all();
 
         return view('information.index')->with('tourists', $informations)->with('purposes', $purposes);
-
-        /*$data = InformationResource::collection($information);
-        return $this->responser($information, $data, 'All Tourist Information Listed Successfully');*/
     }
 
     ///////////////////////////////////

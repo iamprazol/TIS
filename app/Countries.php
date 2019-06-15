@@ -17,4 +17,8 @@ class Countries extends Model
     public function information(){
         return $this->hasMany('App\Information');
     }
+
+    public function exit(){
+        return $this->hasMany('App\ExitInfo');
+    }
 }
