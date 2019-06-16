@@ -14,6 +14,8 @@ use Illuminate\Http\Request;
 */
 Route::post('login', 'Api\UserController@authenticate');
 
+Route::get('about-us', 'Api\AboutUsController@index');
+
 Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('logout', 'Api\UserController@logout');
     Route::get('my-profile', 'Api\UserController@getAuthenticatedUser');

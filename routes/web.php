@@ -81,6 +81,8 @@ Route::middleware(['auth'])->group( function () {
 
             Route::get('validate', ['uses' => 'Web\ExitInfoController@valid', 'as' => 'info.validate']);
             Route::get('check-validation', ['uses' => 'Web\ExitInfoController@validateInfo', 'as' => 'check.validation']);
+            Route::get('about-us', ['uses' => 'Web\AboutUsController@index', 'as' => 'aboutus']);
+            Route::post('about-us-update/{id}', ['uses' => 'Web\AboutUsController@update', 'as' => 'aboutus.update']);
 
 
         });

@@ -73,6 +73,11 @@
                                 <i class="ni ni-circle-08"></i>{{ __('Users') }}
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('aboutus') }}">
+                                <i class="ni ni-chart-pie-35"></i>{{ __('About Us') }}
+                            </a>
+                        </li>
                     @endif
                 @endif
                     <li class="nav-item">

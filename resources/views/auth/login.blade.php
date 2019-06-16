@@ -55,13 +55,20 @@
                                 <button type="submit" class="btn btn-primary my-4">{{ __('Sign in') }}</button>
                             </div>
                         </form>
-                        <div class="col-6">
-                        @if (Route::has('forgot.password'))
-                            <a href="{{ route('forgot.password') }}" class="text-info">
-                                <small>{{ __('Forgot password?') }}</small>
-                            </a>
-                        @endif
-                    </div>
+                        <div class="row mt-3">
+                            <div class="col-6">
+                                @if (Route::has('forgot.password'))
+                                    <a href="{{ route('forgot.password') }}" class="text-info">
+                                        <small>{{ __('Forgot password?') }}</small>
+                                    </a>
+                                @endif
+                            </div>
+                            <div class="col-6 text-right">
+                                <a href="{{ route('register') }}" class="text-blue">
+                                    <small>{{ __('Create new account') }}</small>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
