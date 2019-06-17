@@ -21,3 +21,7 @@
     background-clip: padding-box;
     box-shadow: none;
 }
+
+.bg-white {
+    background-color: #add7a5 !important;
+}

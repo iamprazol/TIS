@@ -75,7 +75,12 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('aboutus') }}">
-                                <i class="ni ni-chart-pie-35"></i>{{ __('About Us') }}
+                                <i class="ni ni-collection"></i>{{ __('About Us') }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('contactus') }}">
+                                <i class="ni ni-collection"></i>{{ __('Contact Us') }}
                             </a>
                         </li>
                     @endif

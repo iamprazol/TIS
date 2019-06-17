@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('auth.login');
-});
+Route::get('/', ['uses' => 'Web\AboutUsController@home', 'as' => 'home']);
 Auth::routes();
 
 Route::get('/forgot-password', ['uses' => 'Web\UserController@forgotPassword', 'as' => 'forgot.password']);
@@ -82,7 +80,9 @@ Route::middleware(['auth'])->group( function () {
             Route::get('validate', ['uses' => 'Web\ExitInfoController@valid', 'as' => 'info.validate']);
             Route::get('check-validation', ['uses' => 'Web\ExitInfoController@validateInfo', 'as' => 'check.validation']);
             Route::get('about-us', ['uses' => 'Web\AboutUsController@index', 'as' => 'aboutus']);
+            Route::get('contact-us', ['uses' => 'Web\AboutUsController@contact', 'as' => 'contactus']);
             Route::post('about-us-update/{id}', ['uses' => 'Web\AboutUsController@update', 'as' => 'aboutus.update']);
+            Route::post('contact-us-update/{id}', ['uses' => 'Web\AboutUsController@contactUpdate', 'as' => 'contactus.update']);
 
 
         });
