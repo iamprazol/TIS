@@ -92,7 +92,7 @@
                                     <td>{{ $tourist->nepali_date }}</td>
                                     <td>{{ $tourist->checkpoint->checkpoint_name }}</td>
                                     <td>{{ $tourist->tourist_name }}</td>
-                                    <td>{{ $tourist->country->country_name}}</td>
+                                    <td>{{ $tourist->countries->country_name}}</td>
                                     <td>
                                         @if($tourist->tourist_type == 0)
                                             {{ "Domestic" }}
@@ -102,7 +102,7 @@
                                     </td>
                                     <td>{{ $tourist->gender }}</td>
                                     <td>{{ $tourist->passport_number }}</td>
-                                    <td>{{ substr($tourist->reviews, $limit = 20) }}</td>
+                                    <td>{{ $tourist->reviews }}</td>
                                     @if(auth()->user()->role_id != 3)
                                         <td>
                                             <a class="btn  btn-sm btn-danger" href="{{ route('exit.delete', ['id' => $tourist->id]) }}">{{ __('Delete') }}</a>

@@ -24,7 +24,7 @@ class PurposeController extends Controller
 
     public function store(Request $r){
         $this->Validate($r, [
-           'purpose' => 'required|string|max:255|min:2'
+           'purpose' => 'required|string|max:255|min:2|unique:purposes'
         ]);
         $purpose = Purpose::create($r->all());
 

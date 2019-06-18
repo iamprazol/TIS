@@ -10,7 +10,7 @@ class ExitInfo extends Model
         'id',
         'tourist_name',
         'passport_number',
-        'country_id',
+        'countries_id',
         'gender',
         'reviews',
         'tourist_type',
@@ -18,7 +18,7 @@ class ExitInfo extends Model
         'checkpoint_id'
     ];
 
-    public function country(){
+    public function countries(){
         return $this->belongsTo('App\Countries');
     }
 

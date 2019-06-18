@@ -44,6 +44,7 @@ class ExitInfoController extends Controller
 
         $this->Validate($r, [
             'tourist_name' => 'required|string|max:255|min:2',
+            'passport_number' => 'unique:exit_infos'
         ]);
 
         if($r->country_id == 154){
@@ -61,7 +62,7 @@ class ExitInfoController extends Controller
 
         $information = ExitInfo::create([
             'checkpoint_id' => $r->checkpoint_id,
-            'country_id' => $r->country_id,
+            'countries_id' => $r->country_id,
             'tourist_name' => $r->tourist_name,
             'tourist_type' => $tourist_type,
             'gender' => $r->gender,

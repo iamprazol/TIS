@@ -36,7 +36,7 @@ class UserRequest extends FormRequest
                 $this->route()->user ? 'nullable' : 'required', 'confirmed', 'min:6'
             ],
             'phone' => [
-                'required', 'max:10',
+                'required', 'max:10', 'min:10',
             ]
         ];
     }

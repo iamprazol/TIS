@@ -66,7 +66,7 @@ class InformationController extends Controller
 
         $this->Validate($r, [
             'tourist_name' => 'required|string|max:255|min:2',
-            ]);
+        ]);
 
         if($r->country_id == 154){
             $tourist_type = 0;
@@ -138,6 +138,8 @@ class InformationController extends Controller
     {
         $this->Validate($request, [
             'tourist_name' => 'required|string|max:255|min:2',
+            'passport_number' => 'required|unique:information',
+            'purpose_id' => 'required'
         ]);
 
         $information = Information::find($id);
@@ -209,6 +211,8 @@ class InformationController extends Controller
                         $infors = null;
                     }
                 }
+
+
                 $information = $infors;
             }
         }
@@ -267,49 +271,58 @@ class InformationController extends Controller
 
     ///////////////////////////////////
 
-    public function informationChart(){
-        $male[] = null; $female[] = null; $others[] = null;
+    public function informationChart()
+    {
         $informations = Information::all();
-        foreach ($informations as $information){
-            if($information->gender == 'Male'){
-                $male[] = $information;
-            } elseif($information->gender == 'Female'){
-                $female[] = $information;
-            } else {
-                $others[] = $information;
+
+        if ($informations) {
+            $male[] = null;
+            $female[] = null;
+            $others[] = null;
+            foreach ($informations as $information) {
+                if ($information->gender == 'Male') {
+                    $male[] = $information;
+                } elseif ($information->gender == 'Female') {
+                    $female[] = $information;
+                } else {
+                    $others[] = $information;
+                }
             }
-        }
-        $domestic[] = null; $international[] = null;
+            $domestic[] = null;
+            $international[] = null;
 
-        foreach ($informations as $information){
-            if($information->tourist_type == 0){
-                $domestic[] = $information;
-            } else {
-                $international[] = $information;
+            foreach ($informations as $information) {
+                if ($information->tourist_type == 0) {
+                    $domestic[] = $information;
+                } else {
+                    $international[] = $information;
+                }
             }
+
+            $maxcount = 0;
+            $count[] = null;
+            $name[] = null;
+            $country = Countries::orderBy('count', 'desc')->get()->take(8);
+            foreach ($country as $c) {
+                $name[] = $c->country_name;
+                $count[] = $c->count;
+                $maxcount = $maxcount + $c->count;
+            }
+
+            $countries = Countries::orderBy('count', 'desc')->get();
+            $totalcount = 0;
+            foreach ($countries as $co) {
+                $totalcount = $totalcount + $co->count;
+            }
+
+            $mincount = $totalcount - $maxcount;
+
+            $checkpoints = Checkpoint::all();
+            return view('charts.info')->with('checkpoints', $checkpoints)
+                ->with('international', sizeof(array_filter($international)))->with('domestic', sizeof(array_filter($domestic)))
+                ->with('male', sizeof(array_filter($male)))->with('female', sizeof(array_filter($female)))->with('others', sizeof(array_filter($others)))
+                ->with('country_name', array_filter($name))->with('count', array_filter($count))->with('otherscount', $mincount);
         }
-
-        $maxcount = 0; $count[] = null; $name[] = null;
-        $country = Countries::orderBy('count', 'desc')->get()->take(8);
-        foreach ($country as $c){
-            $name[] = $c->country_name;
-            $count[] = $c->count;
-            $maxcount = $maxcount + $c->count;
-        }
-
-        $countries = Countries::orderBy('count', 'desc')->get();
-        $totalcount = 0;
-        foreach ($countries as $co){
-            $totalcount = $totalcount + $co->count;
-        }
-
-        $mincount = $totalcount - $maxcount;
-
-        $checkpoints = Checkpoint::all();
-        return view('charts.info')->with('checkpoints', $checkpoints)->with('informations', $information)
-            ->with('international', sizeof(array_filter($international)))->with('domestic', sizeof(array_filter($domestic)))
-            ->with('male', sizeof(array_filter($male)))->with('female', sizeof(array_filter($female)))->with('others', sizeof(array_filter($others)))
-            ->with('country_name', array_filter($name))->with('count', array_filter($count))->with('otherscount', $mincount);
     }
 
 }

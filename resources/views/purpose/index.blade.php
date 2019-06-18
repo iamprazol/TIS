@@ -44,7 +44,7 @@
                                     <td>
                                         <form action="{{ route('purpose.destroy', ['id' => $purpose->id]) }}" method="post">
                                             @csrf
-                                            <button class="btn btn-sm btn-warning" type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this purpose?") }}') ? this.parentElement.submit() : ''">
+                                            <button class="btn btn-sm btn-warning" type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this purpose? All the datas related with this purpose will be deleted!!!") }}') ? this.parentElement.submit() : ''">
                                                 {{ __('Delete') }}
                                             </button>
                                         </form>

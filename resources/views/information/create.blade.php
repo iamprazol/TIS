@@ -65,15 +65,21 @@
 
                                             @if ($errors->has('tourist_name'))
                                                 <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('tourist_name') }}</strong>
-                                        </span>
+                                                    <strong>{{ $errors->first('tourist_name') }}</strong>
+                                                </span>
                                             @endif
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="form-group">
+                                        <div class="form-group{{ $errors->has('passport_number') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="passport_number">{{ __('Passport Number') }}</label>
-                                            <input name="passport_number" id="passport_number" class="form-control" placeholder="{{ __('Enter Passport Number (Mandatory)') }}" value="{{ old('passport_number') }}" required >
+                                            <input name="passport_number" id="passport_number" class="form-control form-control-alternative{{ $errors->has('passport_number') ? ' is-invalid' : '' }}" placeholder="{{ __('Enter Passport Number (Mandatory)') }}" value="{{ old('passport_number') }}" required >
+
+                                            @if ($errors->has('passport_number'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('passport_number') }}</strong>
+                                                </span>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -84,7 +90,7 @@
                                         @foreach($purposes as $purpose)
                                             <label><input class="list-inline" style="margin-left: 1.5rem" type="checkbox" name="purpose_id[]" id="purpose_id" value="{{ $purpose->id }}"> {{ $purpose->purpose }} </label>
                                         @endforeach
-                                            <label><input type="checkbox" style="margin-left: 2.5rem" onClick="selectall(this)"/>Select All</label>
+                                        <label><input type="checkbox" style="margin-left: 2.5rem" onClick="selectall(this)"/>Select All</label>
                                     </div>
                                 </div>
 
@@ -134,7 +140,7 @@
             </div>
         </div>
 
-    @include('layouts.footers.auth')
+        @include('layouts.footers.auth')
     </div>
 @endsection
 <script>

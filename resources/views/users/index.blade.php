@@ -80,7 +80,6 @@
                                                     @else
                                                         <a class="dropdown-item" href="{{ route('enable.user', ['id' => $user->id]) }}">{{ __('Enable User') }}</a>
                                                     @endif
-                                                    <a class="dropdown-item" href="{{ route('profile.edit') }}">{{ __('Edit') }}</a>
                                                 </div>
                                             </div>
                                         </td>

@@ -21,7 +21,7 @@ class InformationResource extends JsonResource
             'checkpoint_id' => $this->checkpoint_id,
             'checkpoint_name' => $this->checkpoint->checkpoint_name,
             'country_id' => $this->country_id,
-            'country_name' => $this->country->country_name,
+            'country_name' => $this->countries->country_name,
             'tourist_name' => $this->tourist_name,
             'tourist_type' => $this->type(),
             'purpose' => $this->purpose(),

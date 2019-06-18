@@ -54,7 +54,7 @@
                                     </td>
                                     <td>
                                         <div class="d-flex align-items-center">
-                                            <span class="mr-2">{{ ($purpose->userpurpose->count()/$userpurpose->count())*100 }}</span>
+                                            <span class="mr-2">@if($purpose->userpurpose->count() != null){{ ($purpose->userpurpose->count()/$userpurpose->count())*100 }} @endif</span>
                                             <div>
                                                 <div class="progress">
                                                     <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%; color: @php  sprintf('#%06X', mt_rand(0, 0xFFFFFF)); @endphp"></div>

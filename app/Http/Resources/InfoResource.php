@@ -19,7 +19,7 @@ class InfoResource extends JsonResource
             'id' => $this->id,
             'nepali_date' => $this->nepali_date,
             'checkpoint_name' => $this->checkpoint->checkpoint_name,
-            'country_name' => $this->country->country_name,
+            'country_name' => $this->countries->country_name,
             'tourist_name' => $this->tourist_name,
             'tourist_type' => $this->type(),
             'purpose' => $this->purpose(),

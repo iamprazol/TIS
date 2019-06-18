@@ -111,7 +111,7 @@
 
 
                                         <tr>
-                                            <td>Country Name :</td><td>{{ $exit->country->country_name }}</td>
+                                            <td>Country Name :</td><td>{{ $exit->countries->country_name }}</td>
                                         </tr>
 
 
