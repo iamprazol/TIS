@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Web;
 
 use App\Checkpoint;
 use App\Countries;
-use App\DateConverter;
 use App\Exports\InformationExport;
 use App\Http\Resources\InfoResource;
 use App\Information;
@@ -21,7 +20,7 @@ class ExitInfoController extends Controller
 {
     public function index()
     {
-        $informations = ExitInfo::orderBy('created_at', 'desc')->paginate(15);
+        $informations = ExitInfo::orderBy('nepali_date', 'desc')->paginate(15);
         return view('exit.index')->with('tourists', $informations);
     }
 
@@ -53,13 +52,6 @@ class ExitInfoController extends Controller
             $tourist_type = 1;
         }
 
-        $year = Carbon::now()->format('Y');
-        $month = Carbon::now()->format('m');
-        $day = Carbon::now()->format('d');
-        $converter = new DateConverter();
-        $converter->setEnglishDate($year, $month, $day);
-        $nepali_date = $converter->getNepaliYear()."-".$converter->getNepaliMonth()."-".$converter->getNepaliDate();
-
         $information = ExitInfo::create([
             'checkpoint_id' => $r->checkpoint_id,
             'countries_id' => $r->country_id,
@@ -67,7 +59,7 @@ class ExitInfoController extends Controller
             'tourist_type' => $tourist_type,
             'gender' => $r->gender,
             'passport_number' => $r->passport_number,
-            'nepali_date' => $nepali_date,
+            'nepali_date' => $r->nepali_date,
             'reviews' => $r->reviews
         ]);
 

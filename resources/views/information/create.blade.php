@@ -24,7 +24,13 @@
                             <h6 class="heading-small text-muted mb-4">{{ __('Tourist information') }}</h6>
                             <div class="pl-lg-4">
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="nepali_date">{{ __('Entry Date') }}</label>
+                                            <input name="nepali_date" id="nepali_date" class="form-control nepali-calendar" placeholder="{{ __('Pick a Nepali date') }}" value="{{ old('nepali_date') }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="form-control-label" for="checkpoint_id">{{ __('Checkpoint Name') }}</label>
                                             <div class="form-group">
@@ -43,7 +49,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="form-control-label" for="country_id">{{ __('Country Name') }}</label>
                                             <div class="form-group">

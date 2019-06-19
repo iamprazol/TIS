@@ -45,7 +45,7 @@
                                     <td>{{ $request->information->nepali_date }}</td>
                                     <td>{{ $request->information->checkpoint->checkpoint_name }}</td>
                                     <td>{{ $request->information->tourist_name }}</td>
-                                    <td>{{ $request->information->country->country_name}}</td>
+                                    <td>{{ $request->information->countries->country_name}}</td>
                                     <td>
                                         @if($request->information->tourist_type == 0)
                                             {{ "Domestic" }}

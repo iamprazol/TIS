@@ -16,13 +16,12 @@ use Illuminate\Http\Request;
 use App\Information;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\InformationResource as InformationResource;
-use App\DateConverter;
 use Maatwebsite\Excel\Facades\Excel;
 
 class InformationController extends Controller
 {
     public function index(){
-        $informations = Information::orderBy('created_at', 'desc')->orderBy('checkpoint_id', 'asc')->paginate(15);
+        $informations = Information::orderBy('nepali_date', 'desc')->orderBy('checkpoint_id', 'asc')->paginate(15);
         foreach ($informations as $i){
             $now = Carbon::now();
             $aday = Carbon::parse($i->created_at)->addDay();
@@ -74,13 +73,6 @@ class InformationController extends Controller
             $tourist_type = 1;
         }
 
-        $year = Carbon::now()->format('Y');
-        $month = Carbon::now()->format('m');
-        $day = Carbon::now()->format('d');
-        $converter = new DateConverter();
-        $converter->setEnglishDate($year, $month, $day);
-        $nepali_date = $converter->getNepaliYear()."-".$converter->getNepaliMonth()."-".$converter->getNepaliDate();
-
         $information = Information::create([
             'checkpoint_id' => $r->checkpoint_id,
             'countries_id' => $r->country_id,
@@ -92,7 +84,7 @@ class InformationController extends Controller
             'provisional_card' => $r->provisional_card,
             'age' => $r->age,
             'visa_period' => $r->visa_period,
-            'nepali_date' => $nepali_date
+            'nepali_date' => $r->nepali_date
         ]);
 
 
@@ -110,12 +102,6 @@ class InformationController extends Controller
         $country->save();
 
         return redirect()->route('information.index')->with('tourists', $information)->withStatus(__('Information successfully added.'));
-
-        /*if($validator->fails()){
-            return response()->json(['errors' => $validator->errors(), 'status' => 400], 400);
-        }
-        $data = new InformationResource($information);
-        return $this->responser($information, $data, 'Information of tourist added successfully');*/
     }
 
     ///////////////////////////////////
@@ -167,11 +153,6 @@ class InformationController extends Controller
 
         return redirect()->route('information.index')->with('tourists', $information)->withStatus(__('Information updated successfully'));
 
-        /*$data = new InformationResource($information);
-        return $this->responser($information, $data, 'Information of tourist updated successfully');
-   } else {
-       return response()->json(['message' => 'Information cannot be edited', 'status' => 403], '403');
-   */
     }
 
     /////////////////////////////////////
@@ -237,8 +218,8 @@ class InformationController extends Controller
             $request = Req::where('is_approved', 0)->get();
             return view('request.request')->with('requests', $request);
         } elseif (Auth::user()->role_id == 2){
-            $user_id = Auth::user()->id;
-            $request = Req::where('user_id', $user_id)->where('is_approved', 1)->get();
+            $user_id = Auth::id();
+            $request = Req::where('user_id', $user_id)->get();
             return view('request.index')->with('requests', $request);
         }
     }

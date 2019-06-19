@@ -18,6 +18,7 @@
         <!-- Argon CSS -->
         <link type="text/css" href="{{ asset('argon') }}/css/argon.css?v=1.0.0" rel="stylesheet">
         <link type="text/css" href="{{ asset('argon') }}/css/additional.css?v=1.0.0" rel="stylesheet">
+        <link type="text/css" href="{{ asset('argon') }}/css/nepali.datepicker.v2.2.min.css" rel="stylesheet">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet" />
 
     </head>
@@ -45,10 +46,22 @@
         
         <!-- Argon JS -->
         <script src="{{ asset('argon') }}/js/argon.js?v=1.0.0"></script>
+        <script src="{{ asset('argon') }}/js/nepali.datepicker.v2.2.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>
 
     </body>
     @yield('chart')
+
+    <script>
+        $(document).ready(function () {
+            $('.nepali-calendar').val(getNepaliDate());
+
+            $('.nepali-calendar').nepaliDatePicker({
+                npdMonth: true,
+                npdYear: true,
+            });
+        });
+    </script>
     <script type="text/javascript">
         $(document).ready( function () {
             $('#country_id').select2();
