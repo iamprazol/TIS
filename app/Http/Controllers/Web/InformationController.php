@@ -7,6 +7,7 @@ use App\Checkpoint;
 use App\Countries;
 use App\Exports\InformationExport;
 use App\Http\Resources\InfoResource;
+use App\Notifications\EditRequest;
 use App\Request as Req;
 use App\Purpose;
 use App\User;
@@ -226,10 +227,21 @@ class InformationController extends Controller
 
     public function requestForEdit($id){
         $information = Information::find($id);
+        $request = Req::where('information_id', $id)->first();
+        if($request != null) {
+            $request->delete();
+        }
+
         Req::create([
             'information_id' => $id,
             'user_id' => Auth::id()
         ]);
+
+        $admins = User::where('role_id', 1)->get();
+
+        foreach ($admins as $admin ){
+            $admin->notify(new EditRequest);
+        }
         return redirect()->route('request.edit')->with('informations', $information)->withStatus(__('Information edit request sent successfully'));
     }
 
@@ -238,6 +250,7 @@ class InformationController extends Controller
         $requests->is_approved = 1;
         $requests->save();
 
+        $requests->user->notify(new EditRequest);
         $request = Req::orderBy('created_at', 'asc')->where('is_approved', 0)->get();
         return view('request.request')->with('requests', $request)->withStatus(__('Information edit request approved successfully'));
     }
@@ -246,8 +259,14 @@ class InformationController extends Controller
         $requests = Req::find($id);
         $requests->delete();
 
+        $requests->user->notify(new EditRequest);
         $request = Req::orderBy('created_at', 'asc')->where('is_approved', 0)->get();
         return view('request.request')->with('requests', $request)->withStatus(__('Information edit request rejected successfully'));
+    }
+
+    public function markAsRead(){
+        auth()->user()->unreadNotifications->markAsRead();
+        return redirect()->route('request.edit');
     }
 
     ///////////////////////////////////

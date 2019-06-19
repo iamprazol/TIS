@@ -114,8 +114,9 @@
                     </li>
                     @if(auth()->user()->role_id != 3)
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('request.edit') }}">
-                            <i class="ni ni-ruler-pencil"></i>{{ __('Edit Request') }}
+                        <a class="nav-link" href="/markAsRead">
+                            <i class="ni ni-ruler-pencil"></i>{{ __('Edit Request') }}&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span class="badge badge-danger">{{ auth()->user()->unreadNotifications->count() }}</span>
                         </a>
                     </li>
                     @endif

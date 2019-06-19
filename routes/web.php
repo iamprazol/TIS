@@ -36,6 +36,8 @@ Route::middleware(['auth'])->group( function () {
 
     Route::group(['middleware' => ['checkpoint']], function () {
 
+        Route::get('markAsRead', ['uses' => 'Web\InformationController@markAsRead', 'as' => 'markasread']);
+
         //Information
         Route::get('create-entry-information', ['uses' => 'Web\InformationController@create', 'as' => 'information.create']);
         Route::get('create-exit-information', ['uses' => 'Web\ExitInfoController@create', 'as' => 'exit.create']);
