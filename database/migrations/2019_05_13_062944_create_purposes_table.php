@@ -16,6 +16,7 @@ class CreatePurposesTable extends Migration
         Schema::create('purposes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('purpose');
+            $table->boolean('editable')->default(1);
             $table->timestamps();
         });
     }

@@ -28,6 +28,23 @@ class CheckpointController extends Controller
         return redirect()->route('checkpoint.index')->with('checkpoints', $checkpoint)->withStatus(__('Checkpoint successfully added.'));
     }
 
+    public function edit($id){
+        $checkpoint = Checkpoint::find($id);
+        return view('checkpoint.edit')->with('checkpoint', $checkpoint);
+    }
+
+    public function update(Request $r, $id){
+        $this->Validate($r, [
+            'checkpoint_name' => 'required|string|max:255|min:2|unique:checkpoints'
+        ]);
+
+        $checkpoint = Checkpoint::find($id);
+        $checkpoint->checkpoint_name = $r->checkpoint_name;
+        $checkpoint->save();
+        return redirect()->route('checkpoint.index')->with('checkpoints', $checkpoint)->withStatus(__('Checkpoint successfully updated.'));
+    }
+
+
     public function deleteCheckpoint($id){
         $checkpoint = Checkpoint::find($id);
         $checkpoint->delete();

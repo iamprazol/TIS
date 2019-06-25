@@ -20,7 +20,12 @@ class ExitInfoController extends Controller
 {
     public function index()
     {
-        $informations = ExitInfo::orderBy('nepali_date', 'desc')->paginate(15);
+        if(Auth::user()->role_id == 2 ) {
+            $checkpoint_id = Auth::user()->checkpointuser->checkpoint_id;
+            $informations = ExitInfo::orderBy('nepali_date', 'desc')->where('checkpoint_id', $checkpoint_id)->paginate(15);
+        } else {
+            $informations = ExitInfo::orderBy('nepali_date', 'desc')->orderBy('checkpoint_id', 'asc')->paginate(15);
+        }
         return view('exit.index')->with('tourists', $informations);
     }
 
@@ -43,8 +48,13 @@ class ExitInfoController extends Controller
 
         $this->Validate($r, [
             'tourist_name' => 'required|string|max:255|min:2',
-            'passport_number' => 'unique:exit_infos'
         ]);
+
+        if(Auth::user()->role_id == 2){
+            $checkpoint_id = Auth::user()->checkpointuser->checkpoint_id;
+        } else {
+            $checkpoint_id = $r->checkpoint_id;
+        }
 
         if($r->country_id == 154){
             $tourist_type = 0;
@@ -52,19 +62,25 @@ class ExitInfoController extends Controller
             $tourist_type = 1;
         }
 
+        if(isset($r->passport_number)){
+            $passport = $r->passport_number;
+        } else {
+            $passport = 'N/A';
+        }
+
         $information = ExitInfo::create([
-            'checkpoint_id' => $r->checkpoint_id,
+            'checkpoint_id' => $checkpoint_id,
             'countries_id' => $r->country_id,
             'tourist_name' => $r->tourist_name,
             'tourist_type' => $tourist_type,
             'gender' => $r->gender,
-            'passport_number' => $r->passport_number,
+            'passport_number' => $passport,
             'nepali_date' => $r->nepali_date,
             'reviews' => $r->reviews
         ]);
 
 
-        return redirect()->route('exitinfo.index')->with('tourists', $information)->withStatus(__('Exiting Tourists Information successfully added.'));
+        return redirect()->route('exit.create')->withStatus(__('Exiting Tourists Information successfully added.'));
     }
 
     ////////////////////////
@@ -105,8 +121,8 @@ class ExitInfoController extends Controller
     ///////////////////////
 
     public function validateInfo(Request $request){
-        $entry = Information::where('passport_number', $request->passport_number)->first();
-        $exit = ExitInfo::where('passport_number', $request->passport_number)->first();
+        $entry = Information::where('passport_number', $request->passport_number)->where('tourist_name', 'like', '%'.$request->tourist_name.'%')->first();
+        $exit = ExitInfo::where('passport_number', $request->passport_number)->where('tourist_name', 'like', '%'.$request->tourist_name.'%')->first();
         return view('exit.checkvalidation')->with('entry', $entry)->with('exit', $exit);
     }
 }

@@ -16,7 +16,7 @@ class CreateExitInfosTable extends Migration
         Schema::create('exit_infos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('tourist_name');
-            $table->string('passport_number');
+            $table->string('passport_number')->default('N/A');
             $table->boolean('tourist_type')->default(1);
             $table->unsignedBigInteger('countries_id');
             $table->unsignedBigInteger('checkpoint_id');

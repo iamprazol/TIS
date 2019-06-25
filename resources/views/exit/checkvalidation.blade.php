@@ -22,6 +22,10 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-4">
+                                            <label class="form-control-label" for="tourist_name" style="margin-left: 1rem;">{{ __('Tourist Name') }}</label>
+                                            <input name="tourist_name" id="tourist_name" class="form-control" style="margin-left: 1rem; font-size: 0.82rem; height:1.8rem;" placeholder="{{ __('Tourist Name') }}" value="{{ old('tourist_name') }}" required>
+                                        </div>
+                                        <div class="col-4">
                                             <label class="form-control-label" for="passport_number" style="margin-left: 1rem;">{{ __('Passport Number') }}</label>
                                             <input name="passport_number" class="form-control" id="passport_number" style="margin-left: 1rem; font-size: 0.82rem; height:1.8rem;" value="{{ old('passport_number') }}" required>
                                         </div>

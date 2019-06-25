@@ -3,6 +3,7 @@
 @section('content')
     @include('users.partials.header', ['title' => __('Add Information')])
 
+
     <div class="container-fluid mt--7">
         <div class="row">
             <div class="col-xl-12 order-xl-1">
@@ -18,6 +19,16 @@
                         </div>
                     </div>
                     <div class="card-body">
+                        <div class="col-12">
+                            @if (session('status'))
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    {{ session('status') }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            @endif
+                        </div>
                         <form method="post" action="{{ route('information.store') }}" autocomplete="off">
                             @csrf
 
@@ -30,25 +41,22 @@
                                             <input name="nepali_date" id="nepali_date" class="form-control nepali-calendar" placeholder="{{ __('Pick a Nepali date') }}" value="{{ old('nepali_date') }}">
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label class="form-control-label" for="checkpoint_id">{{ __('Checkpoint Name') }}</label>
+                                    @if(auth()->user()->isAdmin())
+                                        <div class="col-md-4">
                                             <div class="form-group">
-                                                @if(auth()->user()->isAdmin())
+                                                <label class="form-control-label" for="checkpoint_id">{{ __('Checkpoint Name') }}</label>
+                                                <div class="form-group">
                                                     <select name="checkpoint_id" class="custom-select" id="checkpoint_id" required>
                                                         <option value="" selected="">Choose One</option>
                                                         @foreach($checkpoints as $checkpoint)
                                                             <option value="{{ $checkpoint->id }}">{{ $checkpoint->checkpoint_name }}</option>
                                                         @endforeach
                                                     </select>
-                                                @else
-                                                    <select name="checkpoint_id" class="custom-select" id="checkpoint_id" required>
-                                                        <option value="{{ $user->checkpointuser->checkpoint_id }}" selected="">{{ $user->checkpointuser->checkpoint->checkpoint_name }}</option>
-                                                    </select>
-                                                @endif
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    @endif
+
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="form-control-label" for="country_id">{{ __('Country Name') }}</label>
@@ -79,7 +87,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group{{ $errors->has('passport_number') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="passport_number">{{ __('Passport Number') }}</label>
-                                            <input name="passport_number" id="passport_number" class="form-control form-control-alternative{{ $errors->has('passport_number') ? ' is-invalid' : '' }}" placeholder="{{ __('Enter Passport Number (Mandatory)') }}" value="{{ old('passport_number') }}" required >
+                                            <input name="passport_number" id="passport_number" class="form-control form-control-alternative{{ $errors->has('passport_number') ? ' is-invalid' : '' }}" placeholder="{{ __('Enter Passport Number (Not Mandatory)') }}" value="{{ old('passport_number') }}"  >
 
                                             @if ($errors->has('passport_number'))
                                                 <span class="invalid-feedback" role="alert">
@@ -137,7 +145,9 @@
                                     </div>
                                 </div>
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
+                                    <button class="btn btn-success mt-4" type="submit" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want add this information") }}') ? this.parentElement.submit() : ''">
+                                        {{ __('Save') }}
+                                    </button>
                                 </div>
                             </div>
                         </form>

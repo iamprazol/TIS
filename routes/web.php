@@ -51,7 +51,9 @@ Route::middleware(['auth'])->group( function () {
         Route::get('purpose', ['uses' => 'Web\PurposeController@index', 'as' => 'purpose.index']);
         Route::get('create-purpose', ['uses' => 'Web\PurposeController@create', 'as' => 'purpose.create']);
         Route::post('add-purpose', ['uses' => 'Web\PurposeController@store', 'as' => 'purpose.store']);
-        Route::post('delete-purpose/{id}', ['uses' => 'Web\PurposeController@deletePurpose', 'as' => 'purpose.destroy']);
+        Route::get('edit-purpose/{id}', ['uses' => 'Web\PurposeController@edit', 'as' => 'purpose.edit']);
+        Route::post('update-purpose/{id}', ['uses' => 'Web\PurposeController@update', 'as' => 'purpose.update']);
+
 
 
         Route::get('information-by-checkpoint/{id}', 'Web\InformationController@checkpointInformation');
@@ -71,12 +73,15 @@ Route::middleware(['auth'])->group( function () {
             Route::get('remove-admin/{id}',['uses' => 'Web\UserController@removeAdmin', 'as' => 'remove.admin']);
             Route::get('enable-user/{id}',['uses' => 'Web\UserController@enableUser', 'as' => 'enable.user']);
             Route::get('disable-user/{id}',['uses' => 'Web\UserController@disableUser', 'as' => 'disable.user']);
+            Route::post('delete-purpose/{id}', ['uses' => 'Web\PurposeController@deletePurpose', 'as' => 'purpose.destroy']);
 
 
             //checkpoint
             Route::get('checkpoint', ['uses' => 'Web\CheckpointController@index', 'as' => 'checkpoint.index']);
             Route::get('create-checkpoint', ['uses' => 'Web\CheckpointController@create', 'as' => 'checkpoint.create']);
             Route::post('add-checkpoint', ['uses' => 'Web\CheckpointController@store', 'as' => 'checkpoint.store']);
+            Route::get('edit-checkpoint/{id}', ['uses' => 'Web\CheckpointController@edit', 'as' => 'checkpoint.edit']);
+            Route::post('update-checkpoint/{id}', ['uses' => 'Web\CheckpointController@update', 'as' => 'checkpoint.update']);
             Route::post('delete-checkpoint/{id}', ['uses' => 'Web\CheckpointController@deleteCheckpoint', 'as' => 'checkpoint.destroy']);
 
             Route::get('validate', ['uses' => 'Web\ExitInfoController@valid', 'as' => 'info.validate']);

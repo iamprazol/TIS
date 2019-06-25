@@ -24,7 +24,7 @@
 
                             <h6 class="heading-small text-muted mb-4">{{ __('Tourist information') }}</h6>
                             <div class="pl-lg-4">
-                                <div class="row">
+                                {{--<div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="form-control-label" for="checkpoint_id">{{ __('Checkpoint Name') }}</label>
@@ -52,6 +52,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                --}}
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group{{ $errors->has('tourist_name') ? ' has-danger' : '' }}">

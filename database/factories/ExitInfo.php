@@ -7,7 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(ExitInfo::class, function (Faker $faker) {
     return [
-        'country_id' => $faker->numberBetween(1,20),
+        'countries_id' => $faker->numberBetween(1,20),
         'checkpoint_id' => $faker->numberBetween(1,3),
         'tourist_name' => $faker->name,
         'tourist_type' =>  $faker->numberBetween(0,1),

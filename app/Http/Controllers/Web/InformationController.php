@@ -22,7 +22,12 @@ use Maatwebsite\Excel\Facades\Excel;
 class InformationController extends Controller
 {
     public function index(){
-        $informations = Information::orderBy('nepali_date', 'desc')->orderBy('checkpoint_id', 'asc')->paginate(15);
+        if(Auth::user()->role_id == 2 ) {
+            $checkpoint_id = Auth::user()->checkpointuser->checkpoint_id;
+            $informations = Information::orderBy('nepali_date', 'desc')->where('checkpoint_id', $checkpoint_id)->paginate(15);
+        } else {
+            $informations = Information::orderBy('nepali_date', 'desc')->orderBy('checkpoint_id', 'asc')->paginate(15);
+        }
         foreach ($informations as $i){
             $now = Carbon::now();
             $aday = Carbon::parse($i->created_at)->addDay();
@@ -30,7 +35,6 @@ class InformationController extends Controller
                 $i->editable = 0;
                 $i->save();
             }
-            $info[] = $i;
         }
         $purposes = Purpose::all();
 
@@ -68,20 +72,32 @@ class InformationController extends Controller
             'tourist_name' => 'required|string|max:255|min:2',
         ]);
 
+        if(Auth::user()->role_id == 2){
+            $checkpoint_id = Auth::user()->checkpointuser->checkpoint_id;
+        } else {
+            $checkpoint_id = $r->checkpoint_id;
+        }
+
         if($r->country_id == 154){
             $tourist_type = 0;
         } else {
             $tourist_type = 1;
         }
 
+        if(isset($r->passport_number)){
+            $passport = $r->passport_number;
+        } else {
+            $passport = 'N/A';
+        }
+
         $information = Information::create([
-            'checkpoint_id' => $r->checkpoint_id,
+            'checkpoint_id' => $checkpoint_id,
             'countries_id' => $r->country_id,
             'tourist_name' => $r->tourist_name,
             'tourist_type' => $tourist_type,
             'gender' => $r->gender,
             'duration' => $r->duration,
-            'passport_number' => $r->passport_number,
+            'passport_number' => $passport,
             'provisional_card' => $r->provisional_card,
             'age' => $r->age,
             'visa_period' => $r->visa_period,
@@ -102,7 +118,8 @@ class InformationController extends Controller
         $country->count = $country->count + 1;
         $country->save();
 
-        return redirect()->route('information.index')->with('tourists', $information)->withStatus(__('Information successfully added.'));
+
+        return redirect()->route('information.create')->withStatus(__('Information successfully added.'));
     }
 
     ///////////////////////////////////
@@ -125,16 +142,20 @@ class InformationController extends Controller
     {
         $this->Validate($request, [
             'tourist_name' => 'required|string|max:255|min:2',
-            'passport_number' => 'required|unique:information',
-            'purpose_id' => 'required'
         ]);
+
+        if(isset($request->passport_number)){
+            $passport = $request->passport_number;
+        } else {
+            $passport = 'N/A';
+        }
 
         $information = Information::find($id);
         $information->tourist_name = $request->tourist_name;
         $information->age = $request->age;
         $information->gender = $request->gender;
         $information->duration = $request->duration;
-        $information->passport_number = $request->passport_number;
+        $information->passport_number = $passport;
         $information->provisional_card = $request->provisional_card;
         $information->visa_period = $request->visa_period;
         $information->save();
