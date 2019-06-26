@@ -9,14 +9,19 @@
                 <div class="card shadow">
                     <div class="card-header border-0">
                         <div class="row align-items-center">
-                            <div class="col-8">
+                            <div class="col-6">
                                 <h3 class="mb-0">{{ __('Tourists') }}</h3>
                             </div>
+                            @if(auth()->user()->role_id != 3)
+                                <div class="col-6 text-right">
+                                    <a href="{{ route('information.create') }}" class="btn btn-sm btn-primary" style="margin-top: 2rem; margin-right: 1rem;">{{ __('Add Information') }}</a>
+                                </div>
+                            @endif
                         </div>
                         <hr style="margin-bottom: 1rem !important;">
                     </div>
                     <div class="row">
-                        <div class="col-9">
+                        <div class="col-12">
                             <form action="{{ route('information.search') }}" method="get">
                                 @csrf
                                 <div class="form-group">
@@ -48,13 +53,13 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-4">
+                                        <div class="col-6">
                                             <div class="row">
-                                                <div class="col-6 text-left">
+                                                <div class="col-md-4 text-left">
                                                     <input class="btn btn-primary btn-pill d-flex ml-auto mr-auto" name="submit" type="submit" value="Search" style="height:1.8rem; font-size: 0.82rem; line-height: 0.5rem; margin-top: 1.9rem;">
                                                 </div>
                                                 @if(auth()->user()->role_id != 3)
-                                                    <div class="col-6 text-left">
+                                                    <div class="col-md-8 text-left">
                                                         <input class="btn btn-sm btn-twitter" type="submit" name="exportexcel" value= '{{ __('Excel Export')}}' style="margin-top: 2rem; margin-left: 2rem;">
                                                     </div>
                                                 @endif
@@ -64,11 +69,6 @@
                                 </div>
                             </form>
                         </div>
-                        @if(auth()->user()->role_id != 3)
-                            <div class="col-3 text-left">
-                                <a href="{{ route('information.create') }}" class="btn btn-sm btn-primary" style="margin-top: 2rem; margin-right: 1rem;">{{ __('Add Information') }}</a>
-                            </div>
-                        @endif
                     </div>
 
 

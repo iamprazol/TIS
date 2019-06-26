@@ -9,14 +9,19 @@
                 <div class="card shadow">
                     <div class="card-header border-0">
                         <div class="row align-items-center">
-                            <div class="col-8">
+                            <div class="col-6">
                                 <h3 class="mb-0">{{ __('Exiting Tourists Information') }}</h3>
                             </div>
+                            @if(auth()->user()->role_id != 3)
+                                <div class="col-6 text-right">
+                                    <a href="{{ route('exit.create') }}" class="btn btn-sm btn-primary" style="margin-top: 2rem; margin-right: 1rem;">{{ __('Add Exit Information') }}</a>
+                                </div>
+                            @endif
                         </div>
                         <hr style="margin-bottom: 1rem !important;">
                     </div>
                     <div class="row">
-                        <div class="col-9">
+                        <div class="col-12">
                             <form action="{{ route('exit.search') }}" method="get">
                                 @csrf
                                 <div class="form-group">
@@ -35,24 +40,16 @@
                                                         <input name="to" class="form-control" id="to" style="margin-left: 1rem; font-size: 0.82rem; height:1.8rem;" placeholder="2076-02-16"  value="{{ old('to') }}" required>
                                                     </div>
                                                 </div>
-
-                                                <div class="col-md-4">
-                                                    <input class="btn btn-primary btn-pill d-flex ml-auto mr-auto" name="submit" type="submit" value="Search" style="height:1.8rem; font-size: 0.82rem; line-height: 0.5rem; margin-top: 1.9rem;">
-                                                </div>
                                             </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input class="btn btn-primary btn-pill d-flex ml-auto mr-auto" name="submit" type="submit" value="Search" style="height:1.8rem; font-size: 0.82rem; line-height: 0.5rem; margin-top: 1.9rem;">
                                         </div>
                                     </div>
                                 </div>
                             </form>
                         </div>
-                        @if(auth()->user()->role_id != 3)
-                            <div class="col-3 text-left">
-                                <a href="{{ route('exit.create') }}" class="btn btn-sm btn-primary" style="margin-top: 2rem; margin-right: 1rem;">{{ __('Add Exit Information') }}</a>
-                            </div>
-                        @endif
                     </div>
-
-
                     <div class="col-12">
                         @if (session('status'))
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -87,7 +84,7 @@
                                     <td>{{ $tourist->nepali_date }}</td>
                                     <td>{{ $tourist->checkpoint->checkpoint_name }}</td>
                                     <td>{{ $tourist->tourist_name }}</td>
-                                    <td>{{ $tourist->country->country_name}}</td>
+                                    <td>{{ $tourist->countries->country_name}}</td>
                                     <td>
                                         @if($tourist->tourist_type == 0)
                                             {{ "Domestic" }}
