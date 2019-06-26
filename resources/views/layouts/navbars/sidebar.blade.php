@@ -6,6 +6,7 @@
         </button>
         <!-- Brand -->
         <a class="navbar-brand pt-0" href="{{ route('home') }}">
+            <img src="{{ asset('argon') }}/img/brand/gandaki.png" class="navbar-brand-img" rel="icon" type="image/png">
             <img src="{{ asset('argon') }}/img/brand/tis-logo.png" class="navbar-brand-img" alt="...">
         </a>
         <!-- User -->

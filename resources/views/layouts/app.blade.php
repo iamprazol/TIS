@@ -7,9 +7,9 @@
 
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'TIS Dashboard') }}</title>
+        <title>Atithi Gandaki</title>
         <!-- Favicon -->
-        <link href="{{ asset('argon') }}/img/brand/tis-logo.png" rel="icon" type="image/png">
+        <link href="{{ asset('argon') }}/img/brand/gandaki.png" rel="icon" type="image/png">
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
         <!-- Icons -->
@@ -64,8 +64,40 @@
     </script>
     <script type="text/javascript">
         $(document).ready( function () {
-            $('#country_id').select2();
-            $('#checkpoint_id').select2();
+
+            function matchStart (term, text) {
+                if (text.toUpperCase().indexOf(term.toUpperCase()) == 0) {
+                    return true;
+                }
+
+                return false;
+            }
+
+            $.fn.select2.amd.require(['select2/compat/matcher'], function (oldMatcher) {
+                $("#country_id").select2({
+                    matcher: oldMatcher(matchStart)
+                });
+                $("#checkpoint_id").select2({
+                    matcher: oldMatcher(matchStart)
+                })
+            });
+        });
+
+        $('input').on("keypress", function(e) {
+            /* ENTER PRESSED*/
+            if (e.keyCode == 13) {
+                /* FOCUS ELEMENT */
+                var inputs = $(this).parents("form").eq(0).find(":input");
+                var idx = inputs.index(this);
+
+                if (idx == inputs.length - 1) {
+                    inputs[0].select()
+                } else {
+                    inputs[idx + 1].focus(); //  handles submit buttons
+                    inputs[idx + 1].select();
+                }
+                return false;
+            }
         });
     </script>
 </html>
