@@ -94,7 +94,7 @@
                                     </td>
                                     <td>{{ $tourist->gender }}</td>
                                     <td>{{ $tourist->passport_number }}</td>
-                                    <td>{{ substr($tourist->reviews, $limit = 20) }}</td>
+                                    <td>{{ substr(strip_tags($tourist->reviews), 0, 200) }}</td>
                                     @if(auth()->user()->role_id != 3)
                                         <td>
                                             <a class="btn  btn-sm btn-danger" href="{{ route('exit.delete', ['id' => $tourist->id]) }}">{{ __('Delete') }}</a>

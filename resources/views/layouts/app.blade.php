@@ -99,5 +99,8 @@
                 return false;
             }
         });
+
+        $("#edit").popover({ trigger: "hover" });
+
     </script>
 </html>

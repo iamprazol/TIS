@@ -6,8 +6,8 @@
         </button>
         <!-- Brand -->
         <a class="navbar-brand pt-0" href="{{ route('home') }}">
-            <img src="{{ asset('argon') }}/img/brand/gandaki.png" class="navbar-brand-img" rel="icon" type="image/png">
-            <img src="{{ asset('argon') }}/img/brand/tis-logo.png" class="navbar-brand-img" alt="...">
+            <img src="{{ asset('argon') }}/img/brand/atithi.png" class="navbar-brand-img" rel="icon" type="image/png" style="margin-bottom: -1rem;">
+            {{--}}<img src="{{ asset('argon') }}/img/brand/tis-logo.png" class="navbar-brand-img" alt="...">--}}
         </a>
         <!-- User -->
         <ul class="nav align-items-center d-md-none">
@@ -74,16 +74,6 @@
                                 <i class="ni ni-circle-08"></i>{{ __('Users') }}
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('aboutus') }}">
-                                <i class="ni ni-collection"></i>{{ __('About Us') }}
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('contactus') }}">
-                                <i class="ni ni-collection"></i>{{ __('Contact Us') }}
-                            </a>
-                        </li>
                     @endif
                 @endif
                     <li class="nav-item">
@@ -115,11 +105,50 @@
                     </li>
                     @if(auth()->user()->role_id != 3)
                     <li class="nav-item">
-                        <a class="nav-link" href="/markAsRead">
-                            <i class="ni ni-ruler-pencil"></i>{{ __('Edit Request') }}&nbsp;&nbsp;&nbsp;&nbsp;
-                            <span class="badge badge-danger">{{ auth()->user()->unreadNotifications->count() }}</span>
-                        </a>
+                        @if(auth()->user()->unreadNotifications->count() == 0)
+                            <a class="nav-link" id="edit" href="{{ route('markasread') }}" data-toggle="tooltip" data-color="primary" data-placement="top" data-content="No edit request found">
+                                <i class="ni ni-bell-55"></i>{{ __('Edit Request') }}&nbsp;&nbsp;&nbsp;&nbsp;
+                                <span class="badge badge-danger">{{ auth()->user()->unreadNotifications->count() }}</span>
+                            </a>
+                        @else
+                            <a class="nav-link" id="edit" href="{{ route('markasread') }}" data-toggle="tooltip" data-color="primary" data-placement="top" data-content="You have {{ auth()->user()->unreadNotifications->count() }} edit request pending">
+                                <i class="ni ni-bell-55"></i>{{ __('Edit Request') }}&nbsp;&nbsp;&nbsp;&nbsp;
+                                <span class="badge badge-danger">{{ auth()->user()->unreadNotifications->count() }}</span>
+                            </a>
+                        @endif
                     </li>
+                    @endif
+                    @if(auth()->user()->isAdmin())
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                                <i class="ni ni-shop" style="color: #f4645f;"></i>
+                                <span class="nav-link-text" style="color: #f4645f;">{{ __('Home Page') }}</span>
+                            </a>
+                            <div class="collapse show" id="navbar-examples">
+                                <ul class="nav nav-sm flex-column">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('aboutus') }}">
+                                            <i class="ni ni-ruler-pencil"></i>{{ __('About Us') }}
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('contactus') }}">
+                                            <i class="ni ni-email-83"></i>{{ __('Contact Us') }}
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('districts.index') }}">
+                                            <i class="ni ni-image"></i>{{ __('Districts') }}
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('places.index') }}">
+                                            <i class="ni ni-album-2"></i>{{ __('Places') }}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
                     @endif
                     <li class="nav-item">
                         <a class="nav-link active" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">

@@ -12,6 +12,7 @@
 */
 
 Route::get('/', ['uses' => 'Web\AboutUsController@home', 'as' => 'home']);
+Route::get('about-district/{id}', ['uses' => 'Web\AboutUsController@places', 'as' => 'home.district']);
 Auth::routes();
 
 Route::get('/forgot-password', ['uses' => 'Web\UserController@forgotPassword', 'as' => 'forgot.password']);
@@ -90,6 +91,22 @@ Route::middleware(['auth'])->group( function () {
             Route::get('contact-us', ['uses' => 'Web\AboutUsController@contact', 'as' => 'contactus']);
             Route::post('about-us-update/{id}', ['uses' => 'Web\AboutUsController@update', 'as' => 'aboutus.update']);
             Route::post('contact-us-update/{id}', ['uses' => 'Web\AboutUsController@contactUpdate', 'as' => 'contactus.update']);
+
+            //Districts
+            Route::get('districts', ['uses' => 'Web\DistrictsController@index', 'as' => 'districts.index']);
+            Route::get('create-district', ['uses' => 'Web\DistrictsController@create', 'as' => 'districts.create']);
+            Route::post('save-district', ['uses' => 'Web\DistrictsController@store', 'as' => 'districts.store']);
+            Route::get('edit-district/{id}', ['uses' => 'Web\DistrictsController@edit', 'as' => 'districts.edit']);
+            Route::post('update-district/{id}', ['uses' => 'Web\DistrictsController@update', 'as' => 'districts.update']);
+
+            //Places
+            Route::get('places', ['uses' => 'Web\PlacesController@index', 'as' => 'places.index']);
+            Route::get('create-place', ['uses' => 'Web\PlacesController@create', 'as' => 'places.create']);
+            Route::post('save-place', ['uses' => 'Web\PlacesController@store', 'as' => 'places.store']);
+            Route::get('edit-place/{id}', ['uses' => 'Web\PlacesController@edit', 'as' => 'places.edit']);
+            Route::post('update-place/{id}', ['uses' => 'Web\PlacesController@update', 'as' => 'places.update']);
+            Route::get('search-place', ['uses' => 'Web\PlacesController@search', 'as' => 'places.search']);
+
 
 
         });

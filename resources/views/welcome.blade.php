@@ -21,6 +21,7 @@
     <!-- CSS Files -->
     <link type="text/css" href="{{ asset('argon') }}/css/main.css?v=1.0.0" rel="stylesheet">
 
+    <link href="{{ asset('argon') }}/img/brand/gandaki.png" rel="icon" type="image/png">
     <title>Atithi Gandaki</title>
 </head>
 <body>
@@ -29,9 +30,8 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top ">
     <div class="mx-auto order-0">
         <a class="navbar-brand mx-auto" href="/"
-        >        <img src="{{ asset('argon') }}/img/brand/gandaki.png" rel="icon" type="image/png" style="height: 2.5rem; width: 2.5rem;">
-            <span class="text-success">Atithi </span>Gandaki</a
-        >
+        >        <img src="{{ asset('argon') }}/img/brand/atithi.png"  class="navbar-brand-img" rel="icon" type="image/png" style="height: 6vh;">
+        </a>
         <button
                 class="navbar-toggler  "
                 type="button"
@@ -256,81 +256,25 @@
 
 <!-- Cards -->
 <div class="card-columns container">
-    <div class="card border border-primary m-2">
-        <img
-                class="card-img-top"
-                src="{{ asset('argon') }}/img/userView/simon-english-672450-unsplash.jpg"
-                alt="Card image cap"
-                style="height: 30vh;"
-        />
-        <div class="card-body">
-            <h5 class="card-title">Manang</h5>
-            <p class="card-text">
-                Natural heritages are Tilicho Lake, Annapurna and Gangapurna while Cultural/Religious heritages are Gompa at Manang and Braga.
-            </p>
+    @foreach($districts as $district)
+        <div class="card border border-primary m-2">
+            <img
+                    class="card-img-top"
+                    src="{{ asset('argon') }}/img/districts/{{ $district->picture }}"
+                    alt="Card image cap"
+                    style="height: 30vh;"
+            />
+            <div class="card-body">
+                <h5 class="card-title">{{ $district->district_name }}</h5>
+                <p class="card-text">
+                    {{ substr(strip_tags($district->description), 0, 130) }}
+                </p>
+                <a href="{{ route('home.district', ['id' => $district->id]) }}" class="card-link">See More</a>
+            </div>
         </div>
-    </div>
+    @endforeach
 
-    <div class="card border border-primary m-2">
-        <img
-                class="card-img-top"
-                src="{{ asset('argon') }}/img/userView/gorkha-durbar1.jpg"
-                alt="Card image cap"
-                style="height: 30vh;"
-        />
-        <div class="card-body">
-            <h5 class="card-title">Gorkha</h5>
-            <p class="card-text">
-                Natural heritages of Gorkha are Chepe, Daraudi, Marsyangdi and Budhi Gandaki. Dhurkot's Bichitra Cave ehile the cultural heritatges are Manakamana Temple, Gorakh Nath Gorakh Kali and Horse Race
-            </p>
-        </div>
-    </div>
-
-    <div class="card border border-primary m-2">
-        <img
-                class="card-img-top"
-                src="{{ asset('argon') }}/img/userView/panchakot.jpg"
-                alt="Card image cap"
-                style="height: 30vh;"
-        />
-        <div class="card-body">
-            <h5 class="card-title">Baglung</h5>
-            <p class="card-text">
-                Bhakunde and Panchakot are sites for views of the Dhaulagiri and Annapurna ranges.Terraced fields, waterfalls, forests, deep gorges and caves are abundant throughout the area.
-            </p>
-        </div>
-    </div>
-
-    <div class="card border border-primary m-2">
-        <img
-                class="card-img-top"
-                src="{{ asset('argon') }}/img/userView/maxresdefault.jpg"
-                alt="Card image cap"
-                style="height: 30vh;"
-        />
-        <div class="card-body">
-            <h5 class="card-title">Mustang</h5>
-            <p class="card-text">
-                Most renowned places are Jomsom, Marpha-The town of Apple Orchards, Chhertosum, Chhairo, Muktinath Temple Sanctuary.
-            </p>
-        </div>
-    </div>
-
-    <div class="card border border-primary m-2">
-        <img
-                class="card-img-top"
-                src="{{ asset('argon') }}/img/userView/ghandruk-ghorepani-poon-hill-trek-in-kathmandu-558377.jpg"
-                alt="Card image cap"
-                style="height: 30vh;"
-        />
-        <div class="card-body">
-            <h5 class="card-title">Myagdi</h5>
-            <p class="card-text">
-                The world famous Poon Hill lies in the Ghara VDC of this district. Ghorepani is another attraction for travelers.
-            </p>
-        </div>
-    </div>
-
+{{--
     <div class="card bg-primary text-white text-center p-3">
         <blockquote class="blockquote mb-0">
             <p>
@@ -341,21 +285,6 @@
                 <cite title="Source Title">- Henry Miller</cite>
             </small>
         </blockquote>
-    </div>
-
-    <div class="card border border-primary m-2">
-        <img
-                class="card-img-top"
-                src="{{ asset('argon') }}/img/userView/DSC_6336-2.jpg"
-                alt="Card image cap"
-                style="height: 30vh;"
-        />
-        <div class="card-body">
-            <h5 class="card-title">Syangja</h5>
-            <p class="card-text">
-                Natural heritages of syangja are Adhi Khola, Rakta Taal, Annapurna and Gangapurna while the cultural heritages are Changchangdi Holy Place
-            </p>
-        </div>
     </div>
 
     <div class="card bg-primary text-white text-center p-3">
@@ -369,81 +298,7 @@
             </small>
         </blockquote>
     </div>
-
-    <div class="card border border-primary m-2">
-        <img
-                class="card-img-top"
-                src="{{ asset('argon') }}/img/userView/mamun-srizon-1316442-unsplash.jpg"
-                alt="Card image cap"
-                style="height: 30vh;"
-        />
-        <div class="card-body">
-            <h5 class="card-title">Kaski</h5>
-            <p class="card-text">
-                The district is full of rivers such as Seti Gandaki, Modi and Madi along with other rivulets. The district is famous for the Himalayan range with about 11 Himalayas with height greater than 7000 m.
-            </p>
-        </div>
-    </div>
-
-    <div class="card border border-primary m-2">
-        <img
-                class="card-img-top"
-                src="{{ asset('argon') }}/img/userView/Ghale-Gaun-Home-Stay-31-990x490.jpg"
-                alt="Card image cap"
-                style="height: 30vh;"
-        />
-        <div class="card-body">
-            <h5 class="card-title">Lamjung</h5>
-            <p class="card-text">
-                Natural heritages of Lamjung are Trekking route Thorang La Pass while renown places are Ghale Gaun, Pas Gaun, Bhujung
-            </p>
-        </div>
-    </div>
-
-    <div class="card border border-primary m-2">
-        <img
-                class="card-img-top"
-                src="{{ asset('argon') }}/img/userView/samrat-khadka-1125715-unsplash.jpg"
-                alt="Card image cap"
-                style="height: 30vh;"
-        />
-        <div class="card-body">
-            <h5 class="card-title">Tanahun</h5>
-            <p class="card-text">
-                Famous religious places are Akala Mai, Dhorbarahi, Devghat Tirtha isatal and there are many more.Siddha Gufa/Cage, (Biggest Cage of South Asia) Bimalnagar, Dumre, Bandipur Rural Municipality are highly popular for tourism.
-            </p>
-        </div>
-    </div>
-
-    <div class="card border border-primary m-2">
-        <img
-                class="card-img-top"
-                src="{{ asset('argon') }}/img/userView/shaswat-pic-1-1.jpg"
-                alt="Card image cap"
-                style="height: 30vh;"
-        />
-        <div class="card-body">
-            <h5 class="card-title">Nawalpur</h5>
-            <p class="card-text">
-                Shashwat Dham and Maula Kalika Temple is one of the most popular tourist spot of Nawalpur. Tourism is being highly enhanced in this place.
-            </p>
-        </div>
-    </div>
-
-    <div class="card border border-primary m-2">
-        <img
-                class="card-img-top"
-                src="{{ asset('argon') }}/img/userView/parbat.jpg"
-                alt="Card image cap"
-                style="height: 30vh;"
-        />
-        <div class="card-body">
-            <h5 class="card-title">Parbat</h5>
-            <p class="card-text">
-                Mainly famous for the Gupteshwar Cave, which is visited by thousands of pilgrims during Shivaratri.Alapeshwar cave is a famous cave in this district.
-            </p>
-        </div>
-    </div>
+    --}}
 </div>
 
 <div class="border border-info m-3 pt-3">

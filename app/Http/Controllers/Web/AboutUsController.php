@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\ContactUs;
+use App\Districts;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\AboutUs;
@@ -12,7 +13,8 @@ class AboutUsController extends Controller
     public function home(){
         $about = AboutUs::first();
         $contact = ContactUs::first();
-        return view('welcome')->with('about', $about)->with('contact', $contact);
+        $districts = Districts::orderBy('district_name', 'asc')->get();
+        return view('welcome')->with('about', $about)->with('contact', $contact)->with('districts', $districts);
     }
     public function index(){
         $about = AboutUs::first();
@@ -41,5 +43,10 @@ class AboutUsController extends Controller
         $contact->save();
         return view('aboutus.contact')->with('contact', $contact)->withStatus(__('Contact Us updated successfully.'));;
 
+    }
+
+    public function places($id){
+        $district = Districts::find($id);
+        return view('aboutdistrict')->with('district', $district);
     }
 }

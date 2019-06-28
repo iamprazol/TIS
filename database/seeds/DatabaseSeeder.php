@@ -18,9 +18,11 @@ class DatabaseSeeder extends Seeder
         $this->call(AboutUsSeeder::class);
         $this->call(PurposeTableSeeder::class);
         $this->call(ContactUsTableSeeder::class);
+        $this->call(DistrictsTableSeeder::class);
+        $this->call(PlacesTableSeeder::class);
         factory('App\Purpose', 10)->create();
         factory('App\Countries', 30)->create();
-        factory('App\Information', 335)->create();
+        factory('App\Information', 320)->create();
         factory('App\UserPurpose', 500)->create();
         factory('App\ExitInfo', 500)->create();
     }
