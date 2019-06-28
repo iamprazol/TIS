@@ -47,6 +47,7 @@ class AboutUsController extends Controller
 
     public function places($id){
         $district = Districts::find($id);
-        return view('aboutdistrict')->with('district', $district);
+        $contact = ContactUs::first();
+        return view('aboutdistrict')->with('district', $district)->with('contact', $contact);
     }
 }

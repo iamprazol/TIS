@@ -95,6 +95,143 @@
     </div>
 </div>
 
+<!-- About District -->
+<div class="border border-info m-3 pt-3">
+    <div class="mb-4 ">
+        <h2 class="text-center">
+            <span class="text-success">VISIT</span> {{ $district->district_name }}
+        </h2>
+        <p class="pl-4 pr-4 text-justify">
+            {{ $district->description }}
+        </p>
+    </div>
+</div>
+
+
+<!-- Destination -->
+@foreach($district->places as $place)
+<div class="border border-info m-3 pt-3">
+    <div class="mb-4 ">
+        <div class="row">
+            <div class="col-md-6">
+                <img
+                        class="img-fluid ml-2"
+                        style="border-radius: 5%;"
+                        src="{{ asset('argon') }}/img/districts/places/{{ $place->picture }}"
+                        alt="{{ $place->place_name }}"
+                />
+            </div>
+            <div class="col-md-6">
+                <h3 class="text-center">
+                    {{ $place->place_name }}
+                </h3>
+                <p class="pl-4 pr-4 text-justify">
+                    {{ $place->description }}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
+
+
+<!-- Footer -->
+<footer class="page-footer font-small unique-color-dark">
+    <div style="background-color: #6351ce;">
+        <div class="container">
+            <!-- Grid row-->
+            <div class="row py-4 d-flex align-items-center">
+                <!-- Grid column -->
+                <div
+                        class="col-md-6 col-lg-5 text-center text-md-left mb-4 mb-md-0"
+                >
+                    <h6 class="mb-0">Get connected with us on social networks!</h6>
+                </div>
+                <!-- Grid column -->
+
+                <!-- Grid column -->
+                <div class="col-md-6 col-lg-7 text-center text-md-right">
+                    <!-- Facebook -->
+                    <a class="fb-ic">
+                        <i class="fab fa-facebook-f white-text mr-4"> </i>
+                    </a>
+                    <!-- Twitter -->
+                    <a class="tw-ic">
+                        <i class="fab fa-twitter white-text mr-4"> </i>
+                    </a>
+                    <!-- Google +-->
+                    <a class="gplus-ic">
+                        <i class="fab fa-google-plus-g white-text mr-4"> </i>
+                    </a>
+                    <!--Linkedin -->
+                    <a class="li-ic">
+                        <i class="fab fa-linkedin-in white-text mr-4"> </i>
+                    </a>
+                    <!--Instagram-->
+                    <a class="ins-ic">
+                        <i class="fab fa-instagram white-text"> </i>
+                    </a>
+                </div>
+                <!-- Grid column -->
+            </div>
+            <!-- Grid row-->
+        </div>
+    </div>
+
+    <!-- Footer Links -->
+    <div class=" text-center text-md-left mt-5">
+        <!-- Grid row -->
+        <div class="row mt-3">
+            <!-- Grid column -->
+
+            <!-- Grid column -->
+            <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                <!-- Links -->
+                <h6 class="text-uppercase font-weight-bold">Useful links</h6>
+                <hr
+                        class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto"
+                        style="width: 60px;"
+                />
+                <p>
+                    <a href="http://www.moitfe.gandaki.gov.np/en/">
+                        Gandaki Tourism Board</a
+                    >
+                </p>
+                <p>
+                    <a href="https://www.welcomenepal.com/">Nepal Tourism Board</a>
+                </p>
+                <p>
+                    <a href="http://www.pokharamun.gov.np/">Pokhara Metropolitan</a>
+                </p>
+                <p>
+                    <a
+                            href="https://cid.nepalpolice.gov.np/index.php/cid-wings/tourist-police"
+                    >Tourist Police Pokhara</a
+                    >
+                </p>
+            </div>
+            <!-- Grid column -->
+
+            <!-- Grid column -->
+            <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                <!-- Links -->
+                <h6 class="text-uppercase font-weight-bold">Contact</h6>
+                <hr
+                        class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto"
+                        style="width: 60px;"
+                />
+
+                <p><i class="fas fa-home mr-3"></i> {{ $contact->address }}</p>
+                <p><i class="fas fa-envelope mr-3"></i> {{ $contact->email }}</p>
+                <p><i class="fas fa-phone mr-3"></i> {{ $contact->phone }}</p>
+                <p><i class="fas fa-print mr-3"></i> {{ $contact->fax }}</p>
+            </div>
+            <!-- Grid column -->
+        </div>
+        <!-- Grid row -->
+    </div>
+<!-- Footer -->
+
 <!-- Footer Links -->
 
 <!-- Copyright -->
