@@ -30,8 +30,8 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top ">
     <div class="mx-auto order-0">
         <a class="navbar-brand mx-auto" href="/"
-        >        <img src="{{ asset('argon') }}/img/brand/gandaki.png" rel="icon" type="image/png" style="height: 2.5rem; width: 2.5rem;">
-            <span class="text-success">Atithi </span>Gandaki</a
+        >        <img src="{{ asset('argon') }}/img/brand/atithi.png"  class="navbar-brand-img" rel="icon" type="image/png" style="height: 6vh;">
+        </a
         >
         <button
                 class="navbar-toggler  "
