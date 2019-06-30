@@ -83,14 +83,9 @@
                 data-slide-to="0"
                 class="active"
         ></li>
-        <li data-target="#carousel-example-2" data-slide-to="1"></li>
-        <li data-target="#carousel-example-2" data-slide-to="2"></li>
-        <li data-target="#carousel-example-2" data-slide-to="3"></li>
-        <li data-target="#carousel-example-2" data-slide-to="4"></li>
-        <li data-target="#carousel-example-2" data-slide-to="5"></li>
-        <li data-target="#carousel-example-2" data-slide-to="6"></li>
-        <li data-target="#carousel-example-2" data-slide-to="7"></li>
-        <li data-target="#carousel-example-2" data-slide-to="8"></li>
+        @for($count = 1; $count <= $carousels->count(); $count++ )
+            <li data-target="#carousel-example-2" data-slide-to="{{ $count }}"></li>
+        @endfor
     </ol>
     <!--/.Indicators-->
     <!--Slides-->
@@ -110,117 +105,24 @@
             </div>
         </div>
 
-        <div class="carousel-item">
-            <!--Mask color-->
-            <div class="view">
-                <img
-                        class="d-block w-100"
-                        src="{{ asset('argon') }}/img/userView/rune-haugseng-727710-unsplash.jpg"
-                        alt="Rafting"
-                />
-                <div class="mask rgba-black-strong"></div>
+        @foreach($carousels as $carousel)
+            <div class="carousel-item">
+                <!--Mask color-->
+                <div class="view">
+                    <img
+                            class="d-block w-100"
+                            src="{{ asset('argon') }}/img/carousel/{{ $carousel->picture }}"
+                            alt="{{ $carousel->title }}"
+                    />
+                    <div class="mask rgba-black-strong"></div>
+                </div>
+                <div class="carousel-caption">
+                    <h3 class="h3-responsive text-dark">{{ $carousel->title }}</h3>
+                    <p class="text-dark">{{ $carousel->tag }}</p>
+                </div>
             </div>
-            <div class="carousel-caption">
-                <h3 class="h3-responsive text-dark">Rafting</h3>
-                <p class="text-dark">Spread the Water</p>
-            </div>
-        </div>
+        @endforeach
 
-        <div class="carousel-item">
-            <!--Mask color-->
-            <div class="view">
-                <img
-                        class="d-block w-100"
-                        src="{{ asset('argon') }}/img/userView/madhushree-narayan-706571-unsplash.jpg"
-                        alt="Phewa Lake"
-                />
-                <div class="mask rgba-black-strong"></div>
-            </div>
-            <div class="carousel-caption">
-                <h3 class="h3-responsive">Phewa Lake</h3>
-                <p>Beautiful Lake in Pokhara</p>
-            </div>
-        </div>
-
-        <div class="carousel-item">
-            <!--Mask color-->
-            <div class="view">
-                <img
-                        class="d-block w-100"
-                        src="{{ asset('argon') }}/img/userView/mamun-srizon-1222956-unsplash.jpg"
-                        alt="Paragliding"
-                />
-                <div class="mask rgba-black-strong"></div>
-            </div>
-            <div class="carousel-caption">
-                <h3 class="h3-responsive text-dark">Paragliding</h3>
-                <p class="text-dark">Flying in the Mountains</p>
-            </div>
-        </div>
-
-        <div class="carousel-item">
-            <!--Mask color-->
-            <div class="view">
-                <img
-                        class="d-block w-100"
-                        src="{{ asset('argon') }}/img/userView/mamun-srizon-1413734-unsplash.jpg"
-                        alt="Gandaki Hills"
-                />
-                <div class="mask rgba-black-strong"></div>
-            </div>
-            <div class="carousel-caption">
-                <h3 class="h3-responsive">Gandaki Hills</h3>
-                <p>Covered in Fog Kingdom</p>
-            </div>
-        </div>
-
-        <div class="carousel-item">
-            <!--Mask color-->
-            <div class="view">
-                <img
-                        class="d-block w-100"
-                        src="{{ asset('argon') }}/img/userView/samrat-khadka-1125626-unsplash.jpg"
-                        alt="Mustang"
-                />
-                <div class="mask rgba-black-strong"></div>
-            </div>
-            <div class="carousel-caption">
-                <h3 class="h3-responsive text-dark">Mustang</h3>
-                <p class="text-dark">Desert Runes</p>
-            </div>
-        </div>
-
-        <div class="carousel-item">
-            <!--Mask color-->
-            <div class="view">
-                <img
-                        class="d-block w-100"
-                        src="{{ asset('argon') }}/img/userView/sagar-rana-311637-unsplash.jpg"
-                        alt="Birds in the Sky"
-                />
-                <div class="mask rgba-black-strong"></div>
-            </div>
-            <div class="carousel-caption">
-                <h3 class="h3-responsive ">Sky Road</h3>
-                <p>Peace in the Sky</p>
-            </div>
-        </div>
-
-        <div class="carousel-item">
-            <!--Mask color-->
-            <div class="view">
-                <img
-                        class="d-block w-100"
-                        src="{{ asset('argon') }}/img/userView/trek-4054510_960_720.jpg"
-                        alt="Longest Hanging Bridge"
-                />
-                <div class="mask rgba-black-strong"></div>
-            </div>
-            <div class="carousel-caption">
-                <h3 class="h3-responsive text-dark">Kushma</h3>
-                <p class="text-dark">Longest Hanging Bridge</p>
-            </div>
-        </div>
     </div>
 
     <!--/.Slides-->

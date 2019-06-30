@@ -59,7 +59,7 @@
                                             <input type="file" id="picture" name="picture" class="form-control{{ $errors->has('picture') ? ' is-invalid' : '' }}" placeholder="Choose a place picture to upload" value="{{ $district->picture }}"/>
                                             @if ($errors->has('picture'))
                                                 <span class="invalid-feedback">
-                                                    <strong>{{ $errors->first('picture', 'Image size must be less than 15 MB')}}</strong>
+                                                    <strong>{{ $errors->first('picture')}}</strong>
                                                 </span>
                                             @endif
                                         </div>

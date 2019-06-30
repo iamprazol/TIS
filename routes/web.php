@@ -91,7 +91,6 @@ Route::middleware(['auth'])->group( function () {
             Route::get('contact-us', ['uses' => 'Web\AboutUsController@contact', 'as' => 'contactus']);
             Route::post('about-us-update/{id}', ['uses' => 'Web\AboutUsController@update', 'as' => 'aboutus.update']);
             Route::post('contact-us-update/{id}', ['uses' => 'Web\AboutUsController@contactUpdate', 'as' => 'contactus.update']);
-
             //Districts
             Route::get('districts', ['uses' => 'Web\DistrictsController@index', 'as' => 'districts.index']);
             //Route::get('create-district', ['uses' => 'Web\DistrictsController@create', 'as' => 'districts.create']);
@@ -108,8 +107,13 @@ Route::middleware(['auth'])->group( function () {
             Route::get('search-place', ['uses' => 'Web\PlacesController@search', 'as' => 'places.search']);
             Route::post('delete-place/{id}', ['uses' => 'Web\PlacesController@delete', 'as' => 'places.destroy']);
 
-
-
+            //Carousel
+            Route::get('carousel', ['uses' => 'Web\CarouselController@index', 'as' => 'carousel.index']);
+            Route::get('create-carousel', ['uses' => 'Web\CarouselController@create', 'as' => 'carousel.create']);
+            Route::post('store-carousel', ['uses' => 'Web\CarouselController@store', 'as' => 'carousel.store']);
+            Route::get('edit-carousel/{id}', ['uses' => 'Web\CarouselController@edit', 'as' => 'carousel.edit']);
+            Route::post('update-carousel/{id}', ['uses' => 'Web\CarouselController@update', 'as' => 'carousel.update']);
+            Route::post('delete-carousel/{id}', ['uses' => 'Web\CarouselController@delete', 'as' => 'carousel.delete']);
         });
 
         /*  Route::post('add-purpose', 'PurposeController@addPurpose');

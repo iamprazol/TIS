@@ -2,20 +2,25 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Carousel;
 use App\ContactUs;
 use App\Districts;
+use App\Logo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\AboutUs;
+use Image;
 
 class AboutUsController extends Controller
 {
     public function home(){
         $about = AboutUs::first();
         $contact = ContactUs::first();
+        $carousels = Carousel::all();
         $districts = Districts::orderBy('district_name', 'asc')->get();
-        return view('welcome')->with('about', $about)->with('contact', $contact)->with('districts', $districts);
+        return view('welcome')->with('about', $about)->with('contact', $contact)->with('districts', $districts)->with('carousels', $carousels);
     }
+
     public function index(){
         $about = AboutUs::first();
         return view('aboutus.index')->with('about', $about);
@@ -42,7 +47,6 @@ class AboutUsController extends Controller
         $contact->fax = $request->fax;
         $contact->save();
         return view('aboutus.contact')->with('contact', $contact)->withStatus(__('Contact Us updated successfully.'));;
-
     }
 
     public function places($id){

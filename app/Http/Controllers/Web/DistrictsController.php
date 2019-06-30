@@ -21,7 +21,7 @@ class DistrictsController extends Controller
     public function store(Request $request){
         $this->validate($request, [
             'district_name' => 'required|min:2|string|unique:districts',
-            'picture' => 'required|max:15360'
+            'picture' => 'required|max:15360|dimensions:min_width=1500,min_height=500|mimes:jpeg,jpg,png',
         ]);
 
         $file = $request->file('picture');
@@ -46,7 +46,7 @@ class DistrictsController extends Controller
     public function update(Request $request, $id){
         $this->validate($request, [
             'district_name' => 'required|min:2|string',
-            'picture' => 'max:15360'
+            'picture' => 'max:15360|dimensions:min_width=1500,min_height=500|mimes:jpeg,jpg,png',
         ]);
 
         $district = Districts::find($id);

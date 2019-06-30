@@ -43,7 +43,7 @@
                 <div class="row">
                     <div class="col-6 collapse-brand">
                         <a href="{{ route('home') }}">
-                            <img src="{{ asset('argon') }}/img/brand/tis-logo.png">
+                            <img src="{{ asset('argon') }}/img/brand/atithi.png">
                         </a>
                     </div>
                     <div class="col-6 collapse-close">
@@ -144,6 +144,11 @@
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{ route('places.index') }}">
                                             <i class="ni ni-album-2"></i>{{ __('Places') }}
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('carousel.index') }}">
+                                            <i class="ni ni-album-2"></i>{{ __('Carousel') }}
                                         </a>
                                     </li>
                                 </ul>
