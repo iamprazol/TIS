@@ -12,11 +12,11 @@
                             <div class="col-6">
                                 <h3 class="mb-0">{{ __('District Information') }}</h3>
                             </div>
-                            @if(auth()->user()->role_id != 3)
+                            {{--@if(auth()->user()->role_id != 3)
                                 <div class="col-6 text-right">
                                     <a href="{{ route('districts.create') }}" class="btn btn-sm btn-primary" style="margin-top: 2rem; margin-right: 1rem;">{{ __('Add District') }}</a>
                                 </div>
-                            @endif
+                            @endif--}}
                         </div>
                         <hr style="margin-bottom: 1rem !important;">
                     </div>

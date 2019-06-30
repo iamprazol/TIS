@@ -73,7 +73,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="description" class="form-control-label">{{ __('Description') }}</label>
-                                    <textarea name="description" id="description" cols="30" rows="10" class="form-control"></textarea>
+                                    <textarea name="description" id="description" cols="30" rows="10" class="form-control" placeholder="Describe the speciality of the mentioned place"></textarea>
                                 </div>
                                 <div class="text-center">
                                     <button class="btn btn-success mt-4" type="submit" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want add this information") }}') ? this.parentElement.submit() : ''">

@@ -94,8 +94,8 @@ Route::middleware(['auth'])->group( function () {
 
             //Districts
             Route::get('districts', ['uses' => 'Web\DistrictsController@index', 'as' => 'districts.index']);
-            Route::get('create-district', ['uses' => 'Web\DistrictsController@create', 'as' => 'districts.create']);
-            Route::post('save-district', ['uses' => 'Web\DistrictsController@store', 'as' => 'districts.store']);
+            //Route::get('create-district', ['uses' => 'Web\DistrictsController@create', 'as' => 'districts.create']);
+            //Route::post('save-district', ['uses' => 'Web\DistrictsController@store', 'as' => 'districts.store']);
             Route::get('edit-district/{id}', ['uses' => 'Web\DistrictsController@edit', 'as' => 'districts.edit']);
             Route::post('update-district/{id}', ['uses' => 'Web\DistrictsController@update', 'as' => 'districts.update']);
 
@@ -106,6 +106,7 @@ Route::middleware(['auth'])->group( function () {
             Route::get('edit-place/{id}', ['uses' => 'Web\PlacesController@edit', 'as' => 'places.edit']);
             Route::post('update-place/{id}', ['uses' => 'Web\PlacesController@update', 'as' => 'places.update']);
             Route::get('search-place', ['uses' => 'Web\PlacesController@search', 'as' => 'places.search']);
+            Route::post('delete-place/{id}', ['uses' => 'Web\PlacesController@delete', 'as' => 'places.destroy']);
 
 
 

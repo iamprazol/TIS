@@ -77,4 +77,10 @@ class PlacesController extends Controller
         $districts = Districts::orderBy('district_name', 'asc')->get();
         return view('districts.places.index')->with('places', $places)->with('districts', $districts);
     }
+
+    public function delete($id){
+        $place = Places::find($id);
+        $place->delete();
+        return redirect()->route('places.index')->withStatus(__('Place information successfully deleted.'));
+    }
 }

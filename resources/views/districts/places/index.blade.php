@@ -26,7 +26,7 @@
                                 @csrf
                                 <div class="form-group">
                                     <div class="row">
-                                        <div class="col-4">
+                                        <div class="col-md-5">
                                             <div class="form-group">
                                                 <label class="form-control-label" for="district_id" style="margin-left: 1rem;">{{ __('District Name') }}</label>
                                                 <div class="form-group" style="margin-left: 1rem; font-size: 0.82rem; height:1.8rem;" >
@@ -39,8 +39,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
-                                            <input class="btn btn-primary btn-pill d-flex ml-auto mr-auto" name="submit" type="submit" value="Search" style="height:1.8rem; font-size: 0.82rem; line-height: 0.5rem; margin-top: 1.9rem;">
+                                        <div class="col-md-7">
+                                            <input class="btn btn-primary btn-pill d-flex ml-auto mr-auto" name="submit" type="submit" value="Search" style="height:1.8rem; font-size: 0.82rem; line-height: 0.5rem; margin-top: 2.1rem;">
                                         </div>
                                     </div>
                                 </div>
@@ -77,7 +77,13 @@
                                     <td><div class="card-img"><img src="{{ asset('argon') }}/img/districts/places/{{ $place->picture }}" style="width: 80px; height: 80px" /></div></td>
                                     <td>{{ substr(strip_tags($place->description), 0, 200) }}</td>
                                     <td>
-                                        <a class="btn  btn-sm btn-primary" href="{{ route('places.edit', ['id' => $place->id]) }}">{{ __('Edit') }}</a>
+                                        <form action="{{ route('places.destroy', ['id' => $place->id]) }}" method="post">
+                                            @csrf
+                                            <a class="btn  btn-sm btn-primary" href="{{ route('places.edit', ['id' => $place->id]) }}">{{ __('Edit') }}</a>
+                                            <button class="btn btn-sm btn-warning" type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this Place?") }}') ? this.parentElement.submit() : ''">
+                                                {{ __('Delete') }}
+                                            </button>
+                                        </form>
                                      </td>
                                 </tr>
                             @endforeach

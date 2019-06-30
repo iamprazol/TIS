@@ -101,7 +101,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="reviews" class="form-control-label">{{ __('Reviews ( If any )') }}</label>
-                                    <textarea name="reviews" id="reviews" cols="30" rows="10" class="form-control"></textarea>
+                                    <textarea name="reviews" id="reviews" cols="30" rows="10" class="form-control" placeholder="Enter the review given by the tourist"></textarea>
                                 </div>
                                 <div class="text-center">
                                     <button class="btn btn-success mt-4" type="submit" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want add this information") }}') ? this.parentElement.submit() : ''">
