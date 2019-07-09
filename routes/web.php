@@ -90,7 +90,15 @@ Route::middleware(['auth'])->group( function () {
             Route::get('about-us', ['uses' => 'Web\AboutUsController@index', 'as' => 'aboutus']);
             Route::get('contact-us', ['uses' => 'Web\AboutUsController@contact', 'as' => 'contactus']);
             Route::post('about-us-update/{id}', ['uses' => 'Web\AboutUsController@update', 'as' => 'aboutus.update']);
+            Route::post('message-update/{id}', ['uses' => 'Web\AboutUsController@updateMessage', 'as' => 'message.update']);
             Route::post('contact-us-update/{id}', ['uses' => 'Web\AboutUsController@contactUpdate', 'as' => 'contactus.update']);
+            Route::get('create-link', ['uses' => 'Web\AboutUsController@addLink', 'as' => 'link.create']);
+            Route::post('store-link', ['uses' => 'Web\AboutUsController@storeLink', 'as' => 'link.store']);
+            Route::get('edit-link/{id}', ['uses' => 'Web\AboutUsController@editLink', 'as' => 'link.edit']);
+            Route::post('update-link/{id}', ['uses' => 'Web\AboutUsController@updateLink', 'as' => 'link.update']);
+            Route::post('delete-link/{id}', ['uses' => 'Web\AboutUsController@deleteLink', 'as' => 'link.destroy']);
+
+
             //Districts
             Route::get('districts', ['uses' => 'Web\DistrictsController@index', 'as' => 'districts.index']);
             //Route::get('create-district', ['uses' => 'Web\DistrictsController@create', 'as' => 'districts.create']);

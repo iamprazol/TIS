@@ -43,13 +43,20 @@
                                     <td>{{ $purpose->purpose }}</td>
                                     <td>
                                         @if(auth()->user()->role_id == 1)
-                                            <form action="{{ route('purpose.destroy', ['id' => $purpose->id]) }}" method="post">
-                                                @csrf
+                                            @if($purpose->userpurpose->count() == 0)
+                                                <form action="{{ route('purpose.destroy', ['id' => $purpose->id]) }}" method="post">
+                                                    @csrf
+                                                    <a class="btn  btn-sm btn-primary" href="{{ route('purpose.edit', ['id' => $purpose->id]) }}">{{ __('Edit') }}</a>
+                                                    <button class="btn btn-sm btn-warning" type="button" class="dropdown-item" onclick="confirm('{{ __("No Information is associated with this purpose. Are you sure you want to delete this purpose") }}') ? this.parentElement.submit() : ''">
+                                                        {{ __('Delete') }}
+                                                    </button>
+                                                </form>
+                                            @else
                                                 <a class="btn  btn-sm btn-primary" href="{{ route('purpose.edit', ['id' => $purpose->id]) }}">{{ __('Edit') }}</a>
-                                                <button class="btn btn-sm btn-warning" type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this purpose? All the datas related with this purpose will be deleted!!!") }}') ? this.parentElement.submit() : ''">
+                                                <button class="btn btn-sm btn-outline-warning" type="button" onclick="confirm('{{ __("You cannot delete this purpose. There are ".$purpose->userpurpose->count() ." numbers of entry information associated with this purpose.") }}') ? this.parentElement.submit() : ''">
                                                     {{ __('Delete') }}
                                                 </button>
-                                            </form>
+                                            @endif
                                         @else
                                             @if($purpose->editable == 1)
                                                 <a class="btn  btn-sm btn-primary" href="{{ route('purpose.edit', ['id' => $purpose->id]) }}">{{ __('Edit') }}</a>

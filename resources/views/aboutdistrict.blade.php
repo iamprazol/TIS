@@ -85,6 +85,7 @@
                         class="d-block w-100"
                         src="{{ asset('argon') }}/img/districts/{{ $district->picture }}"
                         alt="Beautiful Mountain"
+                        style="height:75vh;"
                 />
                 <div class="mask rgba-black-light"></div>
             </div>
@@ -113,7 +114,7 @@
 <div class="border border-info m-3 pt-3">
     <div class="mb-4 ">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <img
                         class="img-fluid ml-2"
                         style="border-radius: 5%;"
@@ -121,7 +122,7 @@
                         alt="{{ $place->place_name }}"
                 />
             </div>
-            <div class="col-md-6">
+            <div class="col-md-7">
                 <h3 class="text-center">
                     {{ $place->place_name }}
                 </h3>
@@ -185,31 +186,27 @@
             <!-- Grid column -->
 
             <!-- Grid column -->
-            <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+            <div class="col-md-9 mx-auto mb-4">
                 <!-- Links -->
                 <h6 class="text-uppercase font-weight-bold">Useful links</h6>
                 <hr
-                        class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto"
+                        class="deep-purple accent-2 mb-4 mt-0 d-inline-block"
                         style="width: 60px;"
                 />
-                <p>
-                    <a href="http://www.moitfe.gandaki.gov.np/en/">
-                        Gandaki Tourism Board</a
-                    >
-                </p>
-                <p>
-                    <a href="https://www.welcomenepal.com/">Nepal Tourism Board</a>
-                </p>
-                <p>
-                    <a href="http://www.pokharamun.gov.np/">Pokhara Metropolitan</a>
-                </p>
-                <p>
-                    <a
-                            href="https://cid.nepalpolice.gov.np/index.php/cid-wings/tourist-police"
-                    >Tourist Police Pokhara</a
-                    >
-                </p>
+                <div class="row">
+                    @foreach($usefullinks as $link)
+                        <div class="col-md-3">
+                            <p>
+                                <a href="{{ $link->link }}">
+                                    {{ $link->display_name }}</a
+                                >
+                            </p>
+                        </div>
+                    @endforeach
+                </div>
             </div>
+
+
             <!-- Grid column -->
 
             <!-- Grid column -->
@@ -230,9 +227,7 @@
         </div>
         <!-- Grid row -->
     </div>
-<!-- Footer -->
-
-<!-- Footer Links -->
+    <!-- Footer Links -->
 
 <!-- Copyright -->
 <div class="footer-copyright text-center py-3">

@@ -68,6 +68,21 @@
     </div>
 </nav>
 
+        <div class="alert alert-default alert-dismissible fade show" style="margin-bottom: -0.2rem;" role="alert">
+            <div class="row">
+                <div class="col-md-2">
+                    <img src="{{ asset('argon') }}/img/districts/places/{{ $message->picture }}" class="img-fluid" rel="icon" type="image/png" style="height: 20vh; border-radius: 10%;">
+                </div>
+                <div class="col-md-10">
+                    <h5 class="text-center">{{ $message->title }}</h5>
+                    {{ $message->description }}
+                </div>
+            </div>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
 <!-- Carousel -->
 
 <!--Carousel Wrapper-->
@@ -262,32 +277,28 @@
             <!-- Grid column -->
 
             <!-- Grid column -->
-            <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-                <!-- Links -->
-                <h6 class="text-uppercase font-weight-bold">Useful links</h6>
-                <hr
-                        class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto"
-                        style="width: 60px;"
-                />
-                <p>
-                    <a href="http://www.moitfe.gandaki.gov.np/en/">
-                        Gandaki Tourism Board</a
-                    >
-                </p>
-                <p>
-                    <a href="https://www.welcomenepal.com/">Nepal Tourism Board</a>
-                </p>
-                <p>
-                    <a href="http://www.pokharamun.gov.np/">Pokhara Metropolitan</a>
-                </p>
-                <p>
-                    <a
-                            href="https://cid.nepalpolice.gov.np/index.php/cid-wings/tourist-police"
-                    >Tourist Police Pokhara</a
-                    >
-                </p>
-            </div>
-            <!-- Grid column -->
+                <div class="col-md-9 mx-auto mb-4">
+                    <!-- Links -->
+                    <h6 class="text-uppercase font-weight-bold">Useful links</h6>
+                    <hr
+                            class="deep-purple accent-2 mb-4 mt-0 d-inline-block"
+                            style="width: 60px;"
+                    />
+                    <div class="row">
+                        @foreach($usefullinks as $link)
+                            <div class="col-md-3">
+                                <p>
+                                    <a href="{{ $link->link }}">
+                                        {{ $link->display_name }}</a
+                                    >
+                                </p>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+
+
+        <!-- Grid column -->
 
             <!-- Grid column -->
             <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">

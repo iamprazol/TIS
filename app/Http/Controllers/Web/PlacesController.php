@@ -25,7 +25,7 @@ class PlacesController extends Controller
     public function store(Request $request){
         $this->validate($request, [
             'place_name' => 'required|min:2|string|unique:places',
-            'picture' => 'required|max:15360|dimensions:min_width=1500,min_height=500|mimes:jpeg,jpg,png',
+            'picture' => 'required|max:15360|dimensions:min_width=500,min_height=200|mimes:jpeg,jpg,png',
         ]);
 
         $file = $request->file('picture');
@@ -51,7 +51,7 @@ class PlacesController extends Controller
     public function update(Request $request, $id){
         $this->validate($request, [
             'place_name' => 'required|min:2|string',
-            'picture' => 'max:15360|dimensions:min_width=1500,min_height=500|mimes:jpeg,jpg,png',
+            'picture' => 'max:15360|dimensions:min_width=500,min_height=200|mimes:jpeg,jpg,png',
         ]);
 
         $place = Places::find($id);

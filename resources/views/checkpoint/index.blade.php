@@ -42,13 +42,21 @@
                                 <tr>
                                     <td>{{ $checkpoint->checkpoint_name }}</td>
                                     <td>
-                                        <form action="{{ route('checkpoint.destroy', ['id' => $checkpoint->id]) }}" method="post">
-                                            @csrf
+                                        @if($checkpoint->information->count() == 0 && $checkpoint->exitinfo->count() == 0)
+                                            <form action="{{ route('checkpoint.destroy', ['id' => $checkpoint->id]) }}" method="post">
+                                                @csrf
+                                                <a class="btn  btn-sm btn-primary" href="{{ route('checkpoint.edit', ['id' => $checkpoint->id]) }}">{{ __('Edit') }}</a>
+                                                <button class="btn btn-sm btn-warning" type="button" class="dropdown-item" onclick="confirm('{{ __("No Entry and Exit Information associated with this checkpoint. Are you sure you want to delete this checkpoint?") }}') ? this.parentElement.submit() : ''">
+                                                    {{ __('Delete') }}
+                                                </button>
+                                            </form>
+                                        @else
                                             <a class="btn  btn-sm btn-primary" href="{{ route('checkpoint.edit', ['id' => $checkpoint->id]) }}">{{ __('Edit') }}</a>
-                                            <button class="btn btn-sm btn-warning" type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this checkpoint? All the datas related with this checkpoint will be deleted!!!") }}') ? this.parentElement.submit() : ''">
+                                            <button class="btn btn-sm btn-outline-warning" type="button" class="dropdown-item" onclick="confirm('{{ __("You cannot delete this checkpoint. There are ".$checkpoint->information->count()." Entry Informations and ". $checkpoint->exitinfo->count() . " Exit Information associated with this checkpoint ") }}') ? this.parentElement.submit() : ''">
                                                 {{ __('Delete') }}
                                             </button>
-                                        </form>
+                                        @endif
+
                                     </td>
                                 </tr>
                             @endforeach

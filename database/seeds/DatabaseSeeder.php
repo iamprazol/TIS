@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
         $this->call(ContactUsTableSeeder::class);
         $this->call(DistrictsTableSeeder::class);
         $this->call(PlacesTableSeeder::class);
+        $this->call(LinkTableSeeder::class);
+        $this->call(MessageTableSeeder::class);
         factory('App\Purpose', 10)->create();
         factory('App\Countries', 30)->create();
         factory('App\Information', 320)->create();

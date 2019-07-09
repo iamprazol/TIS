@@ -102,5 +102,28 @@
 
         $("#edit").popover({ trigger: "hover" });
 
+        /** Dropdowns **/
+        $('.dropdown-toggle').click(function () {
+            console.log($(this).attr('aria-expanded'));
+            console.log(this);
+            if ($(this).attr('aria-expanded') === "false") {
+                var menuID = $(this).attr('id'),
+                    parentScope = $(this).parent().parent();
+                parentScope.find('ul').removeClass('open').attr('aria-expanded', false);
+                parentScope.find('ul[aria-labelledby=' + menuID + ']').addClass('open')
+                parentScope.find('button[aria-expanded=true]').attr('aria-expanded', false);
+                $(this).attr('aria-expanded', true);
+            } else {
+                $(this).attr('aria-expanded', false);
+                var menuID = $(this).attr('id');
+                $(this).siblings().each(function () {
+                    console.log($(this).siblings());
+                    if ($(this).attr('aria-labelledby') == menuID) {
+                        $(this).removeClass('open');
+                    }
+                });
+            }
+        });
+
     </script>
 </html>
